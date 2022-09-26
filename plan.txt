@@ -1,0 +1,50 @@
+Za³o¿enie: Przechowywanie danych admina i user'a w pliku tekstowym (albo xml/json?) jako "ma³a baza danych"?
+
+Strona startowa - USER - frontend
+
+1. Zaloguj siê (1a)
+1a: Pierwsze kroki u¿ytkownika.
+- logowanie lub rejestracja w serwisie kantor
+- dodanie rachunku bakowego. Aby dokonaæ wymiany waluty u¿ytkownik musi posiadaæ min. 2 rachunki (PLN i jeden obcy)
+- wp³aæ pieni¹dze z banku do panelu
+- mailowe potwierdzenie wp³aty
+
+2. Widoczny na stronie Kalkulator walut.
+
+3. Widoczny na stronie kurs kilku walut z podzia³em na kupno i sprzeda¿ (tak jak np na kantor.pl)
+
+USER (po zalogowaniu):
+
+4. Menu po zalogowaniu: Dodaj konto bankowe-4a; stan konta-4b; wp³ata-4c; wyp³ata-4d; wymiana waluty-4e; historia transakcji-4f;
+
+4a: Dodanie rachunku bakowego. Aby dokonaæ wymiany waluty u¿ytkownik musi posiadaæ min. 2 rachunki (PLN i jeden obcy)
+
+4e: U¿ytkownik musi wybraæ: 
+- kierunek transakcji - kupno/sprzeda¿ (mo¿liwoœæ kupna i sprzeda¿y pojawia siê tylko wtedy gdy mamy œrodki na kontach w ró¿nych walutach);
+- waluta (któr¹ chcemy sprzedaæ/kupiæ); 
+- przelew na konto (wybieramy nasze konto lub opcja przewalutowanie); 
+- podajemy kwotê do wymiany; 
+- pokazuje siê kurs danej waluty;
+- pokazuje siê przeliczona wartoœæ
+- pokazuje sie koszt transakcji
+- "Wykonaj"
+
+2. Widoczny na stronie Kalkulator walut.
+3. Widoczny na stronie kurs kilku walut z podzia³em na kupno i sprzeda¿ (tak jak np na kantor.pl)
+
+ADMIN - backend:
+1. Podanie wartoœci dostêpnych œrodków w kantorze + dodanie dostêpnych walut.
+2. Wprowadzenie kursu walut - (Jak czêsto odœwie¿ane s¹ dane wejœciowe?).
+3. Edycja kursu walut
+4. Usuñ kurs walut (w przypadku braku dostêpnej waluty)
+5. Przeliczanie waluty (Wyœwietlenie jej w kilku miejscach)
+6. Zarz¹dzanie stanem - stan dostêpnej waluty do sprzeda¿y; stan zasobu kantoru. 
+7. Zarz¹dzanie stanem u¿ytkownika (limit dla u¿ytkownika w zale¿noœci od dostêpnych œrodków,
+   oraz górny limit kupna/sprzeda¿y?)
+8. Obliczanie prowizji kantoru w zale¿noœci od podjêtych przez u¿ytkownika dzia³añ (lub z góry zak³adamy 2% od ka¿dej transakcji)
+9. Zmiana prowizji w zale¿noœci od kwoty (wtedy od razu zmiana kosztów transakcji u u¿ytkownika)
+10. Historia operacji(?)
+
+
+
+
