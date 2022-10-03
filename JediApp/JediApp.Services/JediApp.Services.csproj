@@ -10,4 +10,12 @@
     <ProjectReference Include="..\JediApp.Database\JediApp.Database.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Domain\" />
+    <Folder Include="Configuration\" />
+    <Folder Include="Dto\" />
+    <Folder Include="Data\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+
 </Project>
