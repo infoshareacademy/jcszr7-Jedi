@@ -13,7 +13,7 @@ namespace JediApp.Services.Services
         User GetUserById(Guid id);
         User GetUserByLogin(string login);
         List<User> GetAllUsers();
-        void AddUser(User user);
+        User AddUser(User user);
         bool IfLoginIsUnique(User user);
 
     }

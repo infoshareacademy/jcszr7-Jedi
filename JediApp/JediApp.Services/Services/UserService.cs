@@ -32,13 +32,14 @@ namespace JediApp.Services.Services
             return _userRepository.GetAllUsers();
         }
 
-        public void AddUser(User user)
+        public User AddUser(User user)
         {
             if (IfLoginIsUnique(user))
             {
-                _userRepository.AddUser(user);
+              return _userRepository.AddUser(user);
             }
 
+            return null;
         }
 
         public bool IfLoginIsUnique(User user)

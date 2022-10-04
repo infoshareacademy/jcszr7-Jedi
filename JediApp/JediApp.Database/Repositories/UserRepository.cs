@@ -10,12 +10,15 @@ namespace JediApp.Database.Repositories
     public class UserRepository : IUserRepository
     {
         private readonly string fileName = "..//..//..//..//users.csv";
-        public void AddUser (User user)
+        public User AddUser (User user)
         {
+            var id = Guid.NewGuid();
             using (StreamWriter file = new StreamWriter(fileName, true))
             {
-                file.WriteLine($"{Guid.NewGuid()};{user.Login};{user.Password}");
+                file.WriteLine($"{id};{user.Login};{user.Password};{user.Role}");
             }
+
+            return new User { Id = id, Login = user.Login, Password = user.Password, Role = user.Role };
         }
 
         public List<User> GetAllUsers()
@@ -30,7 +33,7 @@ namespace JediApp.Database.Repositories
             {
                 var columns = line.Split(';');
                 Guid.TryParse(columns[0], out var newGuid);
-                users.Add(new User { Id = newGuid, Login = columns[1], Password = columns[2] });
+                users.Add(new User { Id = newGuid, Login = columns[1], Password = columns[2], Role = columns[3] });
             }
             return users;
         }
