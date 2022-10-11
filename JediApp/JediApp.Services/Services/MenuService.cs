@@ -1,4 +1,6 @@
-﻿using JediApp.Services.Helpers;
+﻿using JediApp.Database.Domain;
+using JediApp.Database.Repositories;
+using JediApp.Services.Helpers;
 
 namespace JediApp.Services.Services
 {
@@ -29,7 +31,29 @@ namespace JediApp.Services.Services
             {
                 case 1:
                     // TODO: Add login ser
-                    bool isUserAdmin = false; //Hardcoded for now. Should be determined during Login
+
+                    Console.WriteLine("Enter your login.");
+                    string login = Console.ReadLine();
+                    Console.WriteLine("Enter password");
+                    string password = Console.ReadLine();
+
+                    User user = new UserRepository().GetLoginPassword(login,password);
+
+                    if (user != null)
+                    {
+                        if (user.Login == login)
+                        {
+                            Console.WriteLine("Password provided is correct");
+                            Console.WriteLine($"Welcome {user.Login}");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("User password / login error.");
+                    }
+
+                    bool isUserAdmin = (user.Role=="admin");
+                    
                     if (isUserAdmin)
                     {
                         AdminMenu();
@@ -39,6 +63,7 @@ namespace JediApp.Services.Services
                         UserMenu();
                     }
                     break;
+
                 case 2:
                     _menuUserActions.RegisterUser();
                     WelcomeMenu();

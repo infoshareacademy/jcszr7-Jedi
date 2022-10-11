@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,7 +10,7 @@ namespace JediApp.Database.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private readonly string fileName = @"\\";
+        private readonly string fileName = @"C...";
         public User AddUser (User user)
         {
             var id = Guid.NewGuid();
@@ -33,7 +34,7 @@ namespace JediApp.Database.Repositories
             {
                 var columns = line.Split(';');
                 Guid.TryParse(columns[0], out var newGuid);
-                users.Add(new User { Id = newGuid,Login = columns[1], Password = columns[2], Role = columns[3] });
+                users.Add(new User { Id = newGuid, Login = columns[1], Password = columns[2], Role = columns[3] });
             }
             return users;
         }
@@ -61,10 +62,11 @@ namespace JediApp.Database.Repositories
             foreach (var line in usersFromFile)
             {
                 var columns = line.Split(';');
-                users.Add(new User { Login = columns[1], Password = columns[2] });
+                if (columns.Length == 4)
+                users.Add(new User { Login = columns[1], Password = columns[2], Role = columns[3]});
             }
 
-            User user = users.FirstOrDefault(x => x.Login == login && x.Password == password);
+            User user = users.FirstOrDefault(x => x.Login == login && x.Password == password );
 
             return user;
         }
