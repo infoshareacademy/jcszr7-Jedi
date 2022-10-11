@@ -9,7 +9,7 @@ namespace JediApp.Database.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private readonly string fileName = "..//..//..//..//users.csv";
+        private readonly string fileName = @"\\";
         public User AddUser (User user)
         {
             var id = Guid.NewGuid();
@@ -18,7 +18,7 @@ namespace JediApp.Database.Repositories
                 file.WriteLine($"{id};{user.Login};{user.Password};{user.Role}");
             }
 
-            return new User { Id = id, Login = user.Login, Password = user.Password, Role = user.Role };
+            return new User{ Id = id, Login = user.Login, Password = user.Password, Role = user.Role };
         }
 
         public List<User> GetAllUsers()
@@ -33,7 +33,7 @@ namespace JediApp.Database.Repositories
             {
                 var columns = line.Split(';');
                 Guid.TryParse(columns[0], out var newGuid);
-                users.Add(new User { Id = newGuid, Login = columns[1], Password = columns[2], Role = columns[3] });
+                users.Add(new User { Id = newGuid,Login = columns[1], Password = columns[2], Role = columns[3] });
             }
             return users;
         }
@@ -50,6 +50,23 @@ namespace JediApp.Database.Repositories
             List<User> users = GetAllUsers();
 
             return users.SingleOrDefault(x => x.Login == login);
+        }
+
+        public User GetLoginPassword(string login, string password)
+        {
+            List<User> users = new List<User>();
+
+            var usersFromFile = File.ReadAllLines(fileName);
+
+            foreach (var line in usersFromFile)
+            {
+                var columns = line.Split(';');
+                users.Add(new User { Login = columns[1], Password = columns[2] });
+            }
+
+            User user = users.FirstOrDefault(x => x.Login == login && x.Password == password);
+
+            return user;
         }
     }
 }

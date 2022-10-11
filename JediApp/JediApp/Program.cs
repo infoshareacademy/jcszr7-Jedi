@@ -2,6 +2,7 @@
 using JediApp.Database.Domain;
 using JediApp.Database.Repositories;
 using JediApp.Services.Services;
+using System.Runtime.Intrinsics.X86;
 
 Console.WriteLine("**** JediApp ****");
 
@@ -87,7 +88,34 @@ while (true)
 
 }
 
+//Console.WriteLine("Enter your login.");
+//string login = Console.ReadLine();
+//Console.WriteLine("Enter password");
+//string password = Console.ReadLine();
 
+//var userCheck = userRepo.GetLoginPassword(login, password); 
+
+//while (true)
+//{
+//    if (userCheck != null)
+//    {
+//        if (userCheck.Login == login)
+//        {
+//            Console.WriteLine("Password provided is correct");
+//            Console.WriteLine($"Welcome {userCheck.Login}");
+//            //menu method user
+//        }
+//        break;
+//    }
+//    else
+//    {
+//        Console.WriteLine("User password / login error.");
+//        Thread.Sleep(3000);
+//        break;
+//        //back to main menu
+//    }
+
+//}
 
 
 

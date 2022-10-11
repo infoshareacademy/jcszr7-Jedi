@@ -13,5 +13,6 @@ namespace JediApp.Database.Repositories
         User GetUserByLogin(string login);
         List<User> GetAllUsers();
         User AddUser(User user);
+        User GetLoginPassword(string login, string password);
     }
 }
