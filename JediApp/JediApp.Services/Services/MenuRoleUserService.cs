@@ -15,7 +15,7 @@ namespace JediApp.Services.Services
         public void RegisterUser()
         {
             var user = new User();
-            user.Role = "user";
+            user.Role = UserRole.User;  //jako enum albo tabela w bazie
 
             Console.WriteLine("Enter new login");
             user.Login = MenuOptionsHelper.CheckString(Console.ReadLine());
