@@ -148,13 +148,24 @@ namespace JediApp.Services.Services
             }
         }
 
-        private void PrintExchangeOfficeBoard()
+        private void PrintExchangeOfficeBoard(string searchBy = null)
         {
             Console.Clear();
-            Console.WriteLine("*=== Exchange Office Board ===*");
-            Console.WriteLine("| BuyAt | SellAt | ShortName | Name               | Country");
+            List<Currency> exchangeOfficeBoard;
+            if (searchBy is null)
+            {
+                exchangeOfficeBoard = _exchangeOfficeBoardSevice.GetAllCurrencies();
+                Console.WriteLine("*=== Exchange Office Board ===*");
 
-            var exchangeOfficeBoard = _exchangeOfficeBoardSevice.GetAllCurrencies();
+            }
+            else
+            {
+                
+                exchangeOfficeBoard = _exchangeOfficeBoardSevice.BrowseCurrency(searchBy);
+                Console.WriteLine($"Result: {exchangeOfficeBoard.Count()}");
+            }
+
+            Console.WriteLine("| BuyAt | SellAt | ShortName | Name               | Country");
             for (int i = 0; i < exchangeOfficeBoard.Count(); i++)
             {
                 WriteAt($"| {exchangeOfficeBoard[i].BuyAt}", 0, i + 2);
@@ -165,23 +176,28 @@ namespace JediApp.Services.Services
                 Console.WriteLine();
             }
             Console.WriteLine("\nMenu:");
-            Console.WriteLine("1. Search Exchange Office Board");
-            Console.WriteLine("2. Exit");
+            Console.WriteLine("1. Search for currency");
+            Console.WriteLine("2. Show all curriences");
+            Console.WriteLine("3. Exit");
             Console.WriteLine("You choose: ");
 
-            int selectedOption = MenuOptionsHelper.GetUserSelectionAndValidate(1, 2);
+            int selectedOption = MenuOptionsHelper.GetUserSelectionAndValidate(1, 3);
 
             switch (selectedOption)
             {
                 case 1:
-                    Console.WriteLine("searching...");
-                    WelcomeMenu();
+                    Console.Write("searching... type name, shortname or country:");
+                    searchBy = MenuOptionsHelper.CheckString(Console.ReadLine());
+                    PrintExchangeOfficeBoard(searchBy);
                     break;
                 case 2:
-                    Console.WriteLine("searching...");
+                    Console.Clear();
+                    PrintExchangeOfficeBoard();
+                    break;
+                case 3:
                     Console.Clear();
                     WelcomeMenu();
-                    break;                
+                    break;
                 default: throw new Exception($"Option {selectedOption} not supported");
             };
             
