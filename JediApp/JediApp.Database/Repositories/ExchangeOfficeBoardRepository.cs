@@ -47,7 +47,9 @@ namespace JediApp.Database.Repositories
         {
             List<Currency> currencies = GetAllCurrencies();
 
-            return currencies.Where(x => x.Name == query || x.ShortName == query || x.Country == query).ToList();
+            return currencies.Where(x => x.Name.ToLowerInvariant().Contains(query.ToLowerInvariant()) 
+                                      || x.ShortName.ToLowerInvariant().Contains(query.ToLowerInvariant())
+                                      || x.Country.ToLowerInvariant().Contains(query.ToLowerInvariant())).ToList();
         }
 
     }
