@@ -10,7 +10,7 @@ namespace JediApp.Database.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private readonly string fileName = @"C...";
+        private readonly string fileName = "..//..//..//..//users.csv"; //może przeniść do klasy statycznej ???
         public User AddUser (User user)
         {
             var id = Guid.NewGuid();
@@ -34,7 +34,8 @@ namespace JediApp.Database.Repositories
             {
                 var columns = line.Split(';');
                 Guid.TryParse(columns[0], out var newGuid);
-                users.Add(new User { Id = newGuid, Login = columns[1], Password = columns[2], Role = columns[3] });
+                Enum.TryParse(columns[3], out UserRole userRole);
+                users.Add(new User { Id = newGuid, Login = columns[1], Password = columns[2], Role = userRole });
             }
             return users;
         }

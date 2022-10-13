@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace JediApp.Database.Domain
 {
-    public class User : Base
+    public class ExchangeOfficeBoard
     {
-        public string Login { get; set; }
-        public string Password { get; set; }
-        public UserRole Role { get; set; }
+        public List<Currency> Board { get; set; }
     }
 }

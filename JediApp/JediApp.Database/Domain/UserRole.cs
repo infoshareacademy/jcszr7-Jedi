@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace JediApp.Database.Domain
 {
-    public class User : Base
+    public enum UserRole
     {
-        public string Login { get; set; }
-        public string Password { get; set; }
-        public UserRole Role { get; set; }
+        Admin,
+        User
     }
 }
