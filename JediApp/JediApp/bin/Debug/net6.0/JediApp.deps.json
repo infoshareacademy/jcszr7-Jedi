@@ -1,0 +1,49 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "JediApp/1.0.0": {
+        "dependencies": {
+          "JediApp.Services": "1.0.0"
+        },
+        "runtime": {
+          "JediApp.dll": {}
+        }
+      },
+      "JediApp.Database/1.0.0": {
+        "runtime": {
+          "JediApp.Database.dll": {}
+        }
+      },
+      "JediApp.Services/1.0.0": {
+        "dependencies": {
+          "JediApp.Database": "1.0.0"
+        },
+        "runtime": {
+          "JediApp.Services.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "JediApp/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "JediApp.Database/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "JediApp.Services/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

@@ -1,0 +1,15 @@
+C:\Users\Albert\Desktop\jcszr7-Jedi\JediApp\JediApp.Services\bin\Debug\net6.0\JediApp.Services.deps.json
+C:\Users\Albert\Desktop\jcszr7-Jedi\JediApp\JediApp.Services\bin\Debug\net6.0\JediApp.Services.dll
+C:\Users\Albert\Desktop\jcszr7-Jedi\JediApp\JediApp.Services\bin\Debug\net6.0\JediApp.Services.pdb
+C:\Users\Albert\Desktop\jcszr7-Jedi\JediApp\JediApp.Services\bin\Debug\net6.0\JediApp.Database.dll
+C:\Users\Albert\Desktop\jcszr7-Jedi\JediApp\JediApp.Services\bin\Debug\net6.0\JediApp.Database.pdb
+C:\Users\Albert\Desktop\jcszr7-Jedi\JediApp\JediApp.Services\obj\Debug\net6.0\JediApp.Services.csproj.AssemblyReference.cache
+C:\Users\Albert\Desktop\jcszr7-Jedi\JediApp\JediApp.Services\obj\Debug\net6.0\JediApp.Services.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Albert\Desktop\jcszr7-Jedi\JediApp\JediApp.Services\obj\Debug\net6.0\JediApp.Services.AssemblyInfoInputs.cache
+C:\Users\Albert\Desktop\jcszr7-Jedi\JediApp\JediApp.Services\obj\Debug\net6.0\JediApp.Services.AssemblyInfo.cs
+C:\Users\Albert\Desktop\jcszr7-Jedi\JediApp\JediApp.Services\obj\Debug\net6.0\JediApp.Services.csproj.CoreCompileInputs.cache
+C:\Users\Albert\Desktop\jcszr7-Jedi\JediApp\JediApp.Services\obj\Debug\net6.0\JediApp.Services.csproj.CopyComplete
+C:\Users\Albert\Desktop\jcszr7-Jedi\JediApp\JediApp.Services\obj\Debug\net6.0\JediApp.Services.dll
+C:\Users\Albert\Desktop\jcszr7-Jedi\JediApp\JediApp.Services\obj\Debug\net6.0\refint\JediApp.Services.dll
+C:\Users\Albert\Desktop\jcszr7-Jedi\JediApp\JediApp.Services\obj\Debug\net6.0\JediApp.Services.pdb
+C:\Users\Albert\Desktop\jcszr7-Jedi\JediApp\JediApp.Services\obj\Debug\net6.0\ref\JediApp.Services.dll

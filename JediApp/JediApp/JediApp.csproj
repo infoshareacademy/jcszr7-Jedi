@@ -7,8 +7,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\JediApp.Services\JediApp.Services.csproj" />
-  </ItemGroup>
-
 </Project>
