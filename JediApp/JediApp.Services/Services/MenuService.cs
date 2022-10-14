@@ -55,9 +55,9 @@ namespace JediApp.Services.Services
                         Console.WriteLine("User password / login error.");
                     }
 
-                    bool isUserAdmin = (user.Role=="admin");
+                    //bool isUserAdmin = (user.Role=="admin");
                     
-                    if (isUserAdmin)
+                    if (user.Role == UserRole.Admin)
                     {
                         AdminMenu();
                     }

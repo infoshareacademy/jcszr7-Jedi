@@ -63,8 +63,9 @@ namespace JediApp.Database.Repositories
             foreach (var line in usersFromFile)
             {
                 var columns = line.Split(';');
+                Enum.TryParse(columns[3], out UserRole userRole);
                 if (columns.Length == 4)
-                users.Add(new User { Login = columns[1], Password = columns[2], Role = columns[3]});
+                users.Add(new User { Login = columns[1], Password = columns[2], Role = userRole });
             }
 
             User user = users.FirstOrDefault(x => x.Login == login && x.Password == password );
