@@ -2,7 +2,8 @@
 using JediApp.Database.Domain;
 using JediApp.Database.Repositories;
 using JediApp.Services.Services;
-using System.Runtime.Intrinsics.X86;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 Console.WriteLine("**** JediApp ****");
 
@@ -22,15 +23,45 @@ var currencyPLN = new Currency() //add first currency PLN
     SellAt = 1
 };
 
-IUserRepository userRepo = new UserRepository();
-IUserService userService = new UserService(userRepo);
-IExchangeOfficeBoardRepository exchangeOfficeBoardRepo = new ExchangeOfficeBoardRepository();
-IExchangeOfficeBoardService exchangeOfficeBoardSevice = new ExchangeOfficeBoardService(exchangeOfficeBoardRepo);
-IMenuService menuService = new MenuService(userService, exchangeOfficeBoardSevice);
+using IHost host = Host.CreateDefaultBuilder(args)
+    .ConfigureServices((_, services) =>
+        services
+            //.AddTransient<ITransientOperation, DefaultOperation>() //example
+            //.AddScoped<IScopedOperation, DefaultOperation>()       //example
+            //.AddSingleton<ISingletonOperation, DefaultOperation>() //example
+            //.AddTransient<OperationLogger>()                       //example
+            .AddScoped<IUserRepository, UserRepository>()
+            .AddScoped<IUserService, UserService>()
+            .AddScoped<IExchangeOfficeBoardRepository, ExchangeOfficeBoardRepository>()
+            .AddScoped<IExchangeOfficeBoardService, ExchangeOfficeBoardService>()
+            .AddSingleton<UserService>()
+            .AddSingleton<ExchangeOfficeBoardService>()
+            .AddSingleton<MenuService>()
+            )
+    .Build();
 
+var userService = host.Services.GetRequiredService<UserService>();
 userService.AddUser(adminUser);
-exchangeOfficeBoardSevice.AddCurrency(currencyPLN);
+
+var exchangeOfficeBoardService = host.Services.GetRequiredService<ExchangeOfficeBoardService>();
+exchangeOfficeBoardService.AddCurrency(currencyPLN);
+
+//var menuService = host.Services.GetRequiredService<MenuService>();
+//menuService.WelcomeMenu();
+
+host.Services.GetRequiredService<MenuService>().WelcomeMenu();
+
+//IUserRepository userRepo = new UserRepository();
+//IUserService userService = new UserService(userRepo);
+//IExchangeOfficeBoardRepository exchangeOfficeBoardRepo = new ExchangeOfficeBoardRepository();
+//IExchangeOfficeBoardService exchangeOfficeBoardSevice = new ExchangeOfficeBoardService(exchangeOfficeBoardRepo);
+//IMenuService menuService = new MenuService(userService, exchangeOfficeBoardSevice);
+
+//userService.AddUser(adminUser);
+//exchangeOfficeBoardSevice.AddCurrency(currencyPLN);
 
 
 //test menu
-menuService.WelcomeMenu();
+//menuService.WelcomeMenu();
+
+

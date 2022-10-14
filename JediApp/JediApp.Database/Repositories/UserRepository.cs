@@ -1,5 +1,6 @@
 ﻿using JediApp.Database.Domain;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -51,7 +52,7 @@ namespace JediApp.Database.Repositories
         {
             List<User> users = GetAllUsers();
 
-            return users.SingleOrDefault(x => x.Login == login);
+            return users.SingleOrDefault(x => x.Login.ToLowerInvariant().Contains(login.ToLowerInvariant()));
         }
 
         public User GetLoginPassword(string login, string password)
