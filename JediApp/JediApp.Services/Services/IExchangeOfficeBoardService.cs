@@ -7,6 +7,7 @@ namespace JediApp.Services.Services
         public Currency AddCurrency(Currency currency);
         List<Currency> GetAllCurrencies();
         Currency GetCurrencyById(Guid id);
+        bool DeleteCurrencyByShortName(string shortName);
         List<Currency> BrowseCurrency(string query);
     }
 }

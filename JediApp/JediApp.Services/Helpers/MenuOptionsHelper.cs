@@ -56,5 +56,26 @@
             }
 
         }
+
+        public static decimal CheckDecimal(string input)
+        {
+            decimal output;
+            string tryInput = input;
+            while (true)
+            {
+
+                if (decimal.TryParse(tryInput, out output))
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Wrong data! Please insert a decimal !");
+                    tryInput = Console.ReadLine();
+                }
+            }
+
+            return output;
+        }
     }
 }

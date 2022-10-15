@@ -8,7 +8,6 @@ namespace JediApp.Database.Repositories
         List<Currency> GetAllCurrencies();
         Currency GetCurrencyById(Guid id);
         List<Currency> BrowseCurrency(string query);
-
-
+        bool DeleteCurrency(Guid id);
     }
 }
