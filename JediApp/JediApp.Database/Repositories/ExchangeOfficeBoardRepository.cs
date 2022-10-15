@@ -33,7 +33,7 @@ namespace JediApp.Database.Repositories
                 decimal.TryParse(columns[5], out var sell);
                 currencies.Add(new Currency { Id = newGuid, Name = columns[1], ShortName = columns[2], Country = columns[3], BuyAt = buy, SellAt = sell});
             }
-            return currencies;
+            return currencies.OrderBy(c => c.ShortName).ToList();
         }
 
         public Currency GetCurrencyById(Guid id)
@@ -52,5 +52,25 @@ namespace JediApp.Database.Repositories
                                       || x.Country.ToLowerInvariant().Contains(query.ToLowerInvariant())).ToList();
         }
 
+        public bool DeleteCurrency(Guid id)
+        {
+            try
+            {
+                var allCurriences = GetAllCurrencies().Where(c => c.Id != id).ToList();
+                File.Delete(fileName);
+                using (StreamWriter file = new StreamWriter(fileName, true))
+                {
+                    foreach (var currency in allCurriences)
+                    {
+                        file.WriteLine($"{id};{currency.Name};{currency.ShortName};{currency.Country};{currency.BuyAt};{currency.SellAt}");
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

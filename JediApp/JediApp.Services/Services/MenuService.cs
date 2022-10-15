@@ -14,9 +14,10 @@ namespace JediApp.Services.Services
         public MenuService(IUserService userService, IExchangeOfficeBoardService exchangeOfficeBoardSevice)
         {
             _userService = userService;
-            _menuUserActions = new MenuRoleUserService(_userService);
-            _menuAdminActions = new MenuRoleAdminService(_userService);
             _exchangeOfficeBoardSevice = exchangeOfficeBoardSevice;
+            _menuUserActions = new MenuRoleUserService(_userService);
+            _menuAdminActions = new MenuRoleAdminService(_userService, _exchangeOfficeBoardSevice);
+            
         }
 
         public void WelcomeMenu()
@@ -73,6 +74,7 @@ namespace JediApp.Services.Services
                     break;
                 case 3:
                     PrintExchangeOfficeBoard();
+                    ExchangeOfficeBoardMenu();
                     WelcomeMenu();
                     break;
                 case 4: Console.WriteLine("Exit from app, bye, bye!!!");
@@ -89,10 +91,12 @@ namespace JediApp.Services.Services
             Console.WriteLine("\nMenu: please select option:");
             Console.WriteLine("1. Search by login");
             Console.WriteLine("2. All user list");
-            Console.WriteLine("3. Exit");
+            Console.WriteLine("3. Add a new currency");
+            Console.WriteLine("4. Delete the currency");
+            Console.WriteLine("5. Exit");
             Console.WriteLine("You choose: ");
 
-            int selectedOption = MenuOptionsHelper.GetUserSelectionAndValidate(1, 3);
+            int selectedOption = MenuOptionsHelper.GetUserSelectionAndValidate(1, 5);
 
             switch (selectedOption)
             {
@@ -103,6 +107,13 @@ namespace JediApp.Services.Services
                     _menuAdminActions.ListAllUsers();
                     break;
                 case 3:
+                    _menuAdminActions.AddCurrency();                    
+                    break;
+                case 4:
+                    PrintExchangeOfficeBoard();
+                    _menuAdminActions.DeleteCurrency();
+                    break;
+                case 5:
                     WelcomeMenu();
                     break;
                 default: throw new Exception($"Option {selectedOption} not supported");
@@ -184,7 +195,7 @@ namespace JediApp.Services.Services
             }
             else
             {
-                
+
                 exchangeOfficeBoard = _exchangeOfficeBoardSevice.BrowseCurrency(searchBy);
                 Console.WriteLine($"Result: {exchangeOfficeBoard.Count()}");
             }
@@ -199,6 +210,12 @@ namespace JediApp.Services.Services
                 WriteAt($"| {exchangeOfficeBoard[i].Country}", 50, i + 2);
                 Console.WriteLine();
             }
+
+        }
+
+        private void ExchangeOfficeBoardMenu()
+        {
+
             Console.WriteLine("\nMenu:");
             Console.WriteLine("1. Search for currency");
             Console.WriteLine("2. Show all curriences");
@@ -207,16 +224,20 @@ namespace JediApp.Services.Services
 
             int selectedOption = MenuOptionsHelper.GetUserSelectionAndValidate(1, 3);
 
+            string searchBy;
+
             switch (selectedOption)
             {
                 case 1:
                     Console.Write("searching... type name, shortname or country:");
                     searchBy = MenuOptionsHelper.CheckString(Console.ReadLine());
                     PrintExchangeOfficeBoard(searchBy);
+                    ExchangeOfficeBoardMenu();
                     break;
                 case 2:
                     Console.Clear();
                     PrintExchangeOfficeBoard();
+                    ExchangeOfficeBoardMenu();
                     break;
                 case 3:
                     Console.Clear();
@@ -224,7 +245,6 @@ namespace JediApp.Services.Services
                     break;
                 default: throw new Exception($"Option {selectedOption} not supported");
             };
-            
         }
 
         private void WriteAt(string s, int x, int y)
