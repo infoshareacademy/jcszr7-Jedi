@@ -55,6 +55,13 @@ namespace JediApp.Database.Repositories
             return users.SingleOrDefault(x => x.Login.ToLowerInvariant().Contains(login.ToLowerInvariant()));
         }
 
+        public List<User> BrowseUsers(string query)
+        {
+            List<User> currencies = GetAllUsers();
+
+            return currencies.Where(x => x.Login.ToLowerInvariant().Contains(query.ToLowerInvariant())).ToList();
+        }
+
         public User GetLoginPassword(string login, string password)
         {
             List<User> users = new List<User>();

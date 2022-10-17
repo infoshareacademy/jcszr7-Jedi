@@ -42,6 +42,11 @@ namespace JediApp.Services.Services
             return null;
         }
 
+        public List<User> BrowseUsers(string query)
+        {
+            return _userRepository.BrowseUsers(query);
+        }
+
         public bool IfLoginIsUnique(User user)
         {
             foreach (var _user in GetAllUsers())

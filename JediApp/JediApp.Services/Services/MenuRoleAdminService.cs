@@ -1,5 +1,6 @@
 ﻿using JediApp.Database.Domain;
 using JediApp.Services.Helpers;
+using System.Linq;
 
 namespace JediApp.Services.Services
 {
@@ -18,10 +19,14 @@ namespace JediApp.Services.Services
         {
             Console.WriteLine("Enter login");
             var testLogin = MenuOptionsHelper.CheckString(Console.ReadLine());
-            var testUserByLogin = _userService.GetUserByLogin(testLogin);
+            var testUserByLogin = _userService.BrowseUsers(testLogin);
             if (testUserByLogin != null)
             {
-                Console.WriteLine($"Id: {testUserByLogin.Id} Login: {testUserByLogin.Login} Password: {testUserByLogin.Password} Role: {testUserByLogin.Role}");
+                foreach (var user in testUserByLogin)
+                {
+                    Console.WriteLine($"Id: {user.Id} Login: {user.Login} Password: {user.Password} Role: {user.Role}");
+                }
+                
             }
             else
             {
