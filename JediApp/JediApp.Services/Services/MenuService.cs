@@ -11,13 +11,12 @@ namespace JediApp.Services.Services
         private readonly MenuRoleAdminService _menuAdminActions;
         private readonly IExchangeOfficeBoardService _exchangeOfficeBoardSevice;
 
-        public MenuService(IUserService userService, IExchangeOfficeBoardService exchangeOfficeBoardSevice)
+        public MenuService(IUserService userService, IExchangeOfficeBoardService exchangeOfficeBoardSevice, IAvailableMoneyOnStockRepository availableMoneyOnStock)
         {
             _userService = userService;
             _exchangeOfficeBoardSevice = exchangeOfficeBoardSevice;
             _menuUserActions = new MenuRoleUserService(_userService);
-            _menuAdminActions = new MenuRoleAdminService(_userService, _exchangeOfficeBoardSevice);
-            
+            _menuAdminActions = new MenuRoleAdminService(_userService, _exchangeOfficeBoardSevice, availableMoneyOnStock);
         }
 
         public void WelcomeMenu()
@@ -93,10 +92,12 @@ namespace JediApp.Services.Services
             Console.WriteLine("2. All user list");
             Console.WriteLine("3. Add a new currency");
             Console.WriteLine("4. Delete the currency");
-            Console.WriteLine("5. Exit");
+            Console.WriteLine("5. Add money to stock");
+            Console.WriteLine("6. Show available money on stock");
+            Console.WriteLine("7. Exit");
             Console.WriteLine("You choose: ");
 
-            int selectedOption = MenuOptionsHelper.GetUserSelectionAndValidate(1, 5);
+            int selectedOption = MenuOptionsHelper.GetUserSelectionAndValidate(1, 7);
 
             switch (selectedOption)
             {
@@ -114,6 +115,12 @@ namespace JediApp.Services.Services
                     _menuAdminActions.DeleteCurrency();
                     break;
                 case 5:
+                    _menuAdminActions.AddMoneyToStock();
+                    break;
+                case 6:
+                    _menuAdminActions.ShowAvailableMoneyOnStock();
+                    break;
+                case 7:
                     WelcomeMenu();
                     break;
                 default: throw new Exception($"Option {selectedOption} not supported");
