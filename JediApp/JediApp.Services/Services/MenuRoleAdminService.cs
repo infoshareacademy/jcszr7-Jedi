@@ -111,7 +111,7 @@ namespace JediApp.Services.Services
         public void ShowAvailableMoneyOnStock()
         {
             var moneyOnStock = _availableMoneyOnStock.GetAvailableMoneyOnStock();
-            Console.WriteLine("Dostępne środki kantoru:");
+            Console.WriteLine("Available money in exchange office:");
             foreach (MoneyOnStock item in moneyOnStock)
             {
                 Console.WriteLine($"{item.Value} {item.CurrencyName}");
