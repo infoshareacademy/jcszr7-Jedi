@@ -4,9 +4,11 @@ using JediApp.Database.Repositories;
 using JediApp.Services.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
+using System.Net;
+using System.Text.Json;
 
 Console.WriteLine("**** JediApp ****");
-
 
 //add app admin user
 var adminUser = new User();
@@ -34,6 +36,8 @@ using IHost host = Host.CreateDefaultBuilder(args)
             .AddScoped<IUserService, UserService>()
             .AddScoped<IExchangeOfficeBoardRepository, ExchangeOfficeBoardRepository>()
             .AddScoped<IExchangeOfficeBoardService, ExchangeOfficeBoardService>()
+            .AddScoped<INbpJsonRepository, NbpJsonRepository>()
+            .AddScoped<INbpJsonService, NbpJsonService>()
             .AddScoped<IAvailableMoneyOnStockRepository, AvailableMoneyOnStockRepository>()
             .AddSingleton<UserService>()
             .AddSingleton<ExchangeOfficeBoardService>()

@@ -54,6 +54,7 @@ namespace JediApp.Database.Repositories
 
         public bool DeleteCurrency(Guid id)
         {
+            
             try
             {
                 var allCurriences = GetAllCurrencies().Where(c => c.Id != id).ToList();
