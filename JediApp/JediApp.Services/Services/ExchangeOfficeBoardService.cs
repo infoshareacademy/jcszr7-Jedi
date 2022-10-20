@@ -43,7 +43,12 @@ namespace JediApp.Services.Services
 
         public bool DeleteCurrencyByShortName(string shortName)
         {
-            var currnecy = GetAllCurrencies().FirstOrDefault(c => c.ShortName == shortName);
+            var currnecy = GetAllCurrencies().FirstOrDefault(c => c.ShortName.ToLowerInvariant().Equals(shortName.ToLowerInvariant()));
+
+            if (currnecy == null)
+            {
+                return false;
+            }
             return _exchangeOfficeBoardRepository.DeleteCurrency(currnecy.Id);
         }
 

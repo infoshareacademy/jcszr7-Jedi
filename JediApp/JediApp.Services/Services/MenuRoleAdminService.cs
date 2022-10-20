@@ -1,7 +1,6 @@
 ﻿using JediApp.Database.Domain;
 using JediApp.Database.Repositories;
 using JediApp.Services.Helpers;
-using System.Linq;
 
 namespace JediApp.Services.Services
 {
@@ -9,6 +8,15 @@ namespace JediApp.Services.Services
     {
         private readonly IUserService _userService;
         private readonly IExchangeOfficeBoardService _exchangeOfficeBoardSevice;
+
+        private readonly INbpJsonService _nbpJsonService;
+
+        public MenuRoleAdminService(IUserService userService, IExchangeOfficeBoardService exchangeOfficeBoardSevice, INbpJsonService nbpJsonService)
+        {
+            _userService = userService;
+            _exchangeOfficeBoardSevice = exchangeOfficeBoardSevice;
+            _nbpJsonService = nbpJsonService;
+
         private readonly IAvailableMoneyOnStockRepository _availableMoneyOnStock;
 
         public MenuRoleAdminService(IUserService userService, IExchangeOfficeBoardService exchangeOfficeBoardSevice, IAvailableMoneyOnStockRepository availableMoneyOnStock)
@@ -16,6 +24,7 @@ namespace JediApp.Services.Services
             _userService = userService;
             _exchangeOfficeBoardSevice = exchangeOfficeBoardSevice;
             _availableMoneyOnStock = availableMoneyOnStock;
+
         }
 
         public void SearchByLogin()
@@ -45,7 +54,6 @@ namespace JediApp.Services.Services
                 Console.WriteLine($"Id: {item.Id} Login: {item.Login} Password: {item.Password}  Role: {item.Role}");
             }
         }
-
         public void AddCurrency()
         {
             Console.WriteLine("Add a new currency to the exchange office");
@@ -60,7 +68,7 @@ namespace JediApp.Services.Services
             Console.WriteLine("Enter SellAt");
             var sellAt = MenuOptionsHelper.CheckDecimal(Console.ReadLine());
 
-  
+
             _exchangeOfficeBoardSevice.AddCurrency(new Currency()
             {
                 Name = name,
@@ -70,7 +78,6 @@ namespace JediApp.Services.Services
                 SellAt = sellAt
             });
         }
-
         public void DeleteCurrency()
         {
             Console.WriteLine("Enter shortname of currency you want to delete (x = abort):");
@@ -82,7 +89,30 @@ namespace JediApp.Services.Services
                 {
                     Console.WriteLine($"{shortName} has been deleted");
                 }
+                else
+                {
+                    Console.WriteLine($"{shortName} has not exist");
+                }
             }
+        }
+        public void AddCurrencyFromNbpApi()
+
+        {
+            List<Currency> nbpCurrencies = _nbpJsonService.GetAllCurrencies();
+
+            foreach (var currency in nbpCurrencies)
+            {
+                _exchangeOfficeBoardSevice.AddCurrency(new Currency()
+                {
+                    Name = currency.Name,
+                    ShortName = currency.ShortName,
+                    Country = currency.Country,
+                    BuyAt = currency.BuyAt,
+                    SellAt = currency.SellAt
+                });
+            }
+
+
         }
 
         public void AddMoneyToStock()
@@ -95,6 +125,7 @@ namespace JediApp.Services.Services
                 Console.WriteLine($"{i + 1}. Currency: {availableCurrencies[i].Name}, Country: {availableCurrencies[i].Country}");
             }
             var selectedCurrencyIndex = MenuOptionsHelper.GetUserSelectionAndValidate(1, availableCurrencies.Count);
+
 
             Console.WriteLine($"You selected {availableCurrencies[selectedCurrencyIndex - 1].Name}");
             Console.WriteLine("Enter amout of money:");
