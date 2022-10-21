@@ -8,23 +8,15 @@ namespace JediApp.Services.Services
     {
         private readonly IUserService _userService;
         private readonly IExchangeOfficeBoardService _exchangeOfficeBoardSevice;
-
+        private readonly IAvailableMoneyOnStockRepository _availableMoneyOnStock;
         private readonly INbpJsonService _nbpJsonService;
 
-        public MenuRoleAdminService(IUserService userService, IExchangeOfficeBoardService exchangeOfficeBoardSevice, INbpJsonService nbpJsonService)
+        public MenuRoleAdminService(IUserService userService, IExchangeOfficeBoardService exchangeOfficeBoardSevice, IAvailableMoneyOnStockRepository availableMoneyOnStock, INbpJsonService nbpJsonService)
         {
             _userService = userService;
             _exchangeOfficeBoardSevice = exchangeOfficeBoardSevice;
             _nbpJsonService = nbpJsonService;
-
-        private readonly IAvailableMoneyOnStockRepository _availableMoneyOnStock;
-
-        public MenuRoleAdminService(IUserService userService, IExchangeOfficeBoardService exchangeOfficeBoardSevice, IAvailableMoneyOnStockRepository availableMoneyOnStock)
-        {
-            _userService = userService;
-            _exchangeOfficeBoardSevice = exchangeOfficeBoardSevice;
             _availableMoneyOnStock = availableMoneyOnStock;
-
         }
 
         public void SearchByLogin()
