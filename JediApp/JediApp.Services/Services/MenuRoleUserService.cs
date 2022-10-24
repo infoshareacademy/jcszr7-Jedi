@@ -40,5 +40,18 @@ namespace JediApp.Services.Services
                 }
             }
         }
+        public void RegisterWalletToUser(Guid userid)
+        {
+            var user = _userService.GetUserById(userid);
+            Console.WriteLine("Enter the currency and its ammount");
+            var newcurrencycode = MenuOptionsHelper.CheckString(Console.ReadLine());
+            var newcurrencyamount = MenuOptionsHelper.CheckDecimal(Console.ReadLine());
+            string fileName = "..//..//..//..//userwallets.csv";
+            using (StreamWriter file = new StreamWriter(fileName, true))
+            {
+                file.WriteLine($"{user.Wallet.Id};{user.Login};{newcurrencycode};{newcurrencyamount}");
+            }
+        }
+
     }
 }

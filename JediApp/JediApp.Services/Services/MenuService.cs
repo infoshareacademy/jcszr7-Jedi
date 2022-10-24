@@ -11,6 +11,7 @@ namespace JediApp.Services.Services
         private readonly MenuRoleAdminService _menuAdminActions;
         private readonly IExchangeOfficeBoardService _exchangeOfficeBoardSevice;
         private readonly INbpJsonService _nbpJsonService;
+        private User CurrentUser; 
 
 
 
@@ -46,14 +47,14 @@ namespace JediApp.Services.Services
                     Console.WriteLine("Enter password");
                     string password = Console.ReadLine();
 
-                    User user = new UserRepository().GetLoginPassword(login,password);
+                    CurrentUser = new UserRepository().GetLoginPassword(login,password);
 
-                    if (user != null)
+                    if (CurrentUser != null)
                     {
-                        if (user.Login == login)
+                        if (CurrentUser.Login == login)
                         {
                             Console.WriteLine("Password provided is correct");
-                            Console.WriteLine($"Welcome {user.Login}");
+                            Console.WriteLine($"Welcome {CurrentUser.Login}");
                         }
                     }
                     else
@@ -63,7 +64,7 @@ namespace JediApp.Services.Services
 
                     //bool isUserAdmin = (user.Role=="admin");
                     
-                    if (user.Role == UserRole.Admin)
+                    if (CurrentUser.Role == UserRole.Admin)
                     {
                         AdminMenu();
                     }
@@ -174,6 +175,8 @@ namespace JediApp.Services.Services
             {
                 case 1:
                     Console.WriteLine("Navigate to: Add new account number");
+                    _menuUserActions.RegisterWalletToUser(CurrentUser.Id);
+
                     break;
                 case 2:
                     Console.WriteLine("Navigate to: Deposit");
