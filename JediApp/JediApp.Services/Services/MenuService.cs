@@ -106,7 +106,8 @@ namespace JediApp.Services.Services
             Console.WriteLine("5. Add money to stock");
             Console.WriteLine("6. Show available money on stock");
             Console.WriteLine("7. Add Currencies from NBP API");
-            Console.WriteLine("8. Exit");
+            Console.WriteLine("8. Exchange calculator");
+            Console.WriteLine("9. Exit");
             Console.WriteLine("You choose: ");
 
             int selectedOption = MenuOptionsHelper.GetUserSelectionAndValidate(1, 8);
@@ -139,6 +140,9 @@ namespace JediApp.Services.Services
                     PrintExchangeOfficeBoard();
                     break;
                 case 8:
+                    _menuAdminActions.CurrencyCalculate();
+                    break;
+                case 9:
                     WelcomeMenu();
                     break;
                 default: throw new Exception($"Option {selectedOption} not supported");

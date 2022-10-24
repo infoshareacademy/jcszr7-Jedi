@@ -140,6 +140,43 @@ namespace JediApp.Services.Services
                 Console.WriteLine($"{item.Value} {item.CurrencyName}");
             }
         }
+
+        public bool CurrencyCalculate()
+        {
+            var listCurrients = _exchangeOfficeBoardSevice.GetAllCurrencies();
+
+            while (true)
+            {
+                foreach (var cur in listCurrients)
+                {
+                    Console.WriteLine($"{cur.ShortName}-{cur.BuyAt}-{cur.SellAt}");
+                }
+
+                Console.Write("\nEnter short name:");
+                var option = Helpers.MenuOptionsHelper.CheckString(Console.ReadLine().ToUpper());
+
+                var resultShort = listCurrients.FirstOrDefault(x => x.ShortName == option);
+                var sell = resultShort.SellAt;
+
+                if (resultShort == null)
+                {
+                    Console.WriteLine("No currency");
+                    var menuOption = Helpers.MenuOptionsHelper.GetBackToMainMenuQuestion();
+                }
+
+                Console.Write("Enter amount the exchange: ");
+                var valuePln = Helpers.MenuOptionsHelper.CheckDecimal(Console.ReadLine());
+
+                var result = valuePln / sell;
+
+                Console.WriteLine($"{resultShort.ShortName}: {result:F}\n");
+                Console.WriteLine("Exit enter x, another operation y");
+
+                if (Console.ReadLine() == "x")
+                    break;
+            }
+            return false;
+        }
     }
 }
 
