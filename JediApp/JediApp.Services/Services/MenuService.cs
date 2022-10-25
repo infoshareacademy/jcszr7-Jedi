@@ -42,9 +42,9 @@ namespace JediApp.Services.Services
                     // TODO: Add login ser
 
                     Console.WriteLine("Enter your login.");
-                    string login = Console.ReadLine();
+                    string login = Helpers.MenuOptionsHelper.CheckString(Console.ReadLine());
                     Console.WriteLine("Enter password");
-                    string password = Console.ReadLine();
+                    string password = Helpers.MenuOptionsHelper.CheckString(Console.ReadLine());
 
                     User user = new UserRepository().GetLoginPassword(login,password);
 
@@ -60,8 +60,6 @@ namespace JediApp.Services.Services
                     {
                         Console.WriteLine("User password / login error.");
                     }
-
-                    //bool isUserAdmin = (user.Role=="admin");
                     
                     if (user.Role == UserRole.Admin)
                     {
