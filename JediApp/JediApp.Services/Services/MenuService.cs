@@ -43,9 +43,9 @@ namespace JediApp.Services.Services
                     // TODO: Add login ser
 
                     Console.WriteLine("Enter your login.");
-                    string login = Console.ReadLine();
+                    string login = Helpers.MenuOptionsHelper.CheckString(Console.ReadLine());
                     Console.WriteLine("Enter password");
-                    string password = Console.ReadLine();
+                    string password = Helpers.MenuOptionsHelper.CheckString(Console.ReadLine());
 
                     CurrentUser = new UserRepository().GetLoginPassword(login,password);
 
@@ -61,8 +61,6 @@ namespace JediApp.Services.Services
                     {
                         Console.WriteLine("User password / login error.");
                     }
-
-                    //bool isUserAdmin = (user.Role=="admin");
                     
                     if (CurrentUser.Role == UserRole.Admin)
                     {
@@ -107,7 +105,8 @@ namespace JediApp.Services.Services
             Console.WriteLine("5. Add money to stock");
             Console.WriteLine("6. Show available money on stock");
             Console.WriteLine("7. Add Currencies from NBP API");
-            Console.WriteLine("8. Exit");
+            Console.WriteLine("8. Exchange calculator");
+            Console.WriteLine("9. Exit");
             Console.WriteLine("You choose: ");
 
             int selectedOption = MenuOptionsHelper.GetUserSelectionAndValidate(1, 8);
@@ -140,6 +139,9 @@ namespace JediApp.Services.Services
                     PrintExchangeOfficeBoard();
                     break;
                 case 8:
+                    _menuAdminActions.CurrencyCalculate();
+                    break;
+                case 9:
                     WelcomeMenu();
                     break;
                 default: throw new Exception($"Option {selectedOption} not supported");
