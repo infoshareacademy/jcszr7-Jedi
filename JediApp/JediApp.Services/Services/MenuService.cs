@@ -1,6 +1,7 @@
 ﻿using JediApp.Database.Domain;
 using JediApp.Database.Repositories;
 using JediApp.Services.Helpers;
+using System.Reflection.Metadata.Ecma335;
 
 namespace JediApp.Services.Services
 {
@@ -11,7 +12,7 @@ namespace JediApp.Services.Services
         private readonly MenuRoleAdminService _menuAdminActions;
         private readonly IExchangeOfficeBoardService _exchangeOfficeBoardSevice;
         private readonly INbpJsonService _nbpJsonService;
-        private User CurrentUser; 
+        private User CurrentUser;
 
 
 
@@ -40,28 +41,31 @@ namespace JediApp.Services.Services
             switch (selectedOption)
             {
                 case 1:
-                    // TODO: Add login ser
 
-                    Console.WriteLine("Enter your login.");
-                    string login = Helpers.MenuOptionsHelper.CheckString(Console.ReadLine());
-                    Console.WriteLine("Enter password");
-                    string password = Helpers.MenuOptionsHelper.CheckString(Console.ReadLine());
+                    List<User> users = new List<User>();
 
-                    CurrentUser = new UserRepository().GetLoginPassword(login,password);
-
-                    if (CurrentUser != null)
+                    while (true)
                     {
-                        if (CurrentUser.Login == login)
+                        Console.WriteLine("Enter your login.");
+                        string login = Helpers.MenuOptionsHelper.CheckString(Console.ReadLine());
+
+                        Console.WriteLine("Enter password");
+                        string password = Helpers.MenuOptionsHelper.CheckString(Console.ReadLine());
+
+                        CurrentUser = new UserRepository().GetLoginPassword(login, password);
+
+                        if (CurrentUser != null)
                         {
                             Console.WriteLine("Password provided is correct");
                             Console.WriteLine($"Welcome {CurrentUser.Login}");
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("User password / login error.");
                         }
                     }
-                    else
-                    {
-                        Console.WriteLine("User password / login error.");
-                    }
-                    
+
                     if (CurrentUser.Role == UserRole.Admin)
                     {
                         AdminMenu();
@@ -86,14 +90,15 @@ namespace JediApp.Services.Services
                     ExchangeOfficeBoardMenu("NBP Today Rates");
                     WelcomeMenu();
                     break;
-                case 5: Console.WriteLine("Exit from app, bye, bye!!!");
+                case 5:
+                    Console.WriteLine("Exit from app, bye, bye!!!");
                     Environment.Exit(0);
                     break;
                 default: throw new Exception($"Option {selectedOption} not supported");
             };
         }
 
-        
+
 
         public void AdminMenu()
         {
@@ -109,7 +114,7 @@ namespace JediApp.Services.Services
             Console.WriteLine("9. Exit");
             Console.WriteLine("You choose: ");
 
-            int selectedOption = MenuOptionsHelper.GetUserSelectionAndValidate(1, 8);
+            int selectedOption = MenuOptionsHelper.GetUserSelectionAndValidate(1, 9);
 
 
             switch (selectedOption)
@@ -121,7 +126,7 @@ namespace JediApp.Services.Services
                     _menuAdminActions.ListAllUsers();
                     break;
                 case 3:
-                    _menuAdminActions.AddCurrency();                    
+                    _menuAdminActions.AddCurrency();
                     break;
                 case 4:
                     PrintExchangeOfficeBoard();
@@ -263,7 +268,7 @@ namespace JediApp.Services.Services
                 Console.WriteLine($"Result: {nbpRates.Count()}");
             }
 
-        Console.WriteLine("| Ask | Bid | Code | Currency");
+            Console.WriteLine("| Ask | Bid | Code | Currency");
             for (int i = 0; i < nbpRates.Count(); i++)
             {
                 WriteAt($"| {nbpRates[i].BuyAt}", 0, i + 2);
