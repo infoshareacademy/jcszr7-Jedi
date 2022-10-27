@@ -5,6 +5,8 @@ namespace JediApp.Services.Services
 {
     public class MenuRoleUserService
     {
+        private readonly string fileNameWallet = @"C:\Users\Albert\Desktop\jcszr7-Jedi\JediApp\userwallets.csv";
+
         private readonly IUserService _userService;
 
         public MenuRoleUserService(IUserService userService)
@@ -40,17 +42,37 @@ namespace JediApp.Services.Services
                 }
             }
         }
+
         public void RegisterWalletToUser(Guid userid)
         {
             var user = _userService.GetUserById(userid);
             Console.WriteLine("Enter the currency and its ammount");
             var newcurrencycode = MenuOptionsHelper.CheckString(Console.ReadLine());
             var newcurrencyamount = MenuOptionsHelper.CheckDecimal(Console.ReadLine());
-            string fileName = "..//..//..//..//userwallets.csv";
-            using (StreamWriter file = new StreamWriter(fileName, true))
+
+            using (StreamWriter file = new StreamWriter(fileNameWallet, true))
             {
                 file.WriteLine($"{user.Wallet.Id};{user.Login};{newcurrencycode};{newcurrencyamount}");
             }
+        }
+
+        public void GetWallet(User user)
+        {
+            List<dynamic> list = new List<dynamic>();
+            string logString = (user.Wallet.Id).ToString();
+
+            var usersFromFile = File.ReadAllLines(fileNameWallet);
+
+            foreach (var line in usersFromFile)
+            {
+                string[] columns = line.Split(";");
+
+                list.Add(new { idUzytko = columns[0], waluta = columns[2], ilosc = decimal.Parse(columns[3]) });
+            }
+
+            var listItem = list.FirstOrDefault(x => x.idUzytko == logString);
+
+            Console.WriteLine($"{listItem.waluta}-{listItem.ilosc} ");
         }
 
     }
