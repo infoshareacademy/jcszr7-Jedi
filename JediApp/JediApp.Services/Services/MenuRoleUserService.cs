@@ -59,7 +59,7 @@ namespace JediApp.Services.Services
         public void GetWallet(User user)
         {
             List<dynamic> list = new List<dynamic>();
-            string logString = (user.Wallet.Id).ToString();
+            string userWalletId = (user.Wallet.Id).ToString();
 
             var usersFromFile = File.ReadAllLines(fileNameWallet);
 
@@ -67,14 +67,14 @@ namespace JediApp.Services.Services
             {
                 string[] columns = line.Split(";");
 
-                list.Add(new { idUzytko = columns[0], waluta = columns[2], ilosc = decimal.Parse(columns[3]) });
+                list.Add(new { idWallet = columns[0], currenc = columns[2], quantity = decimal.Parse(columns[3]) });
             }
 
-            var listItem = list.Where(x => x.idUzytko == logString);
+            var listWallet = list.Where(x => x.idWallet == userWalletId);
 
-            foreach (var item in listItem)
+            foreach (var item in listWallet)
             {
-                Console.WriteLine($"{item.waluta}-{item.ilosc}");
+                Console.WriteLine($"{item.currenc}-{item.quantity}");
             }
         }
 
