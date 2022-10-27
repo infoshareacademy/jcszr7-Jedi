@@ -173,7 +173,8 @@ namespace JediApp.Services.Services
             Console.WriteLine("4. Exchange");
             Console.WriteLine("5. History");
             Console.WriteLine("6. Currency calculator");
-            Console.WriteLine("7. Exit");
+            Console.WriteLine("7. Account balance");
+            Console.WriteLine("8. Exit");
             Console.WriteLine("You choose: ");
 
             int selectedOption = MenuOptionsHelper.GetUserSelectionAndValidate(1, 7);
@@ -201,6 +202,9 @@ namespace JediApp.Services.Services
                     Console.WriteLine("Navigate to: Currency calculator");
                     break;
                 case 7:
+                    _menuUserActions.GetWallet(CurrentUser);
+                    break;
+                case 8:
                     WelcomeMenu();
                     break;
                 default: throw new Exception($"Option {selectedOption} not supported");
