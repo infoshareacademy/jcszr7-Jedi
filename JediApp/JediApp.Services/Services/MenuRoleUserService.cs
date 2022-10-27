@@ -5,7 +5,7 @@ namespace JediApp.Services.Services
 {
     public class MenuRoleUserService
     {
-        private readonly string fileNameWallet = @"C:\Users\Albert\Desktop\jcszr7-Jedi\JediApp\userwallets.csv";
+        private readonly string fileNameWallet = "//userwallets.csv";
 
         private readonly IUserService _userService;
 
@@ -70,9 +70,12 @@ namespace JediApp.Services.Services
                 list.Add(new { idUzytko = columns[0], waluta = columns[2], ilosc = decimal.Parse(columns[3]) });
             }
 
-            var listItem = list.FirstOrDefault(x => x.idUzytko == logString);
+            var listItem = list.Where(x => x.idUzytko == logString);
 
-            Console.WriteLine($"{listItem.waluta}-{listItem.ilosc} ");
+            foreach (var item in listItem)
+            {
+                Console.WriteLine($"{item.waluta}-{item.ilosc}");
+            }
         }
 
     }
