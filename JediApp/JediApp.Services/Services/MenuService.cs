@@ -1,7 +1,6 @@
 ﻿using JediApp.Database.Domain;
 using JediApp.Database.Repositories;
 using JediApp.Services.Helpers;
-using System.Reflection.Metadata.Ecma335;
 
 namespace JediApp.Services.Services
 {
@@ -16,13 +15,13 @@ namespace JediApp.Services.Services
 
 
 
-        public MenuService(IUserService userService, IExchangeOfficeBoardService exchangeOfficeBoardSevice, IAvailableMoneyOnStockRepository availableMoneyOnStock, INbpJsonService nbpJsonService)
+        public MenuService(IUserService userService, IUserWalletRepository userWalletRepository, IExchangeOfficeBoardService exchangeOfficeBoardSevice, IAvailableMoneyOnStockRepository availableMoneyOnStock, INbpJsonService nbpJsonService)
 
         {
             _userService = userService;
             _nbpJsonService = nbpJsonService;
             _exchangeOfficeBoardSevice = exchangeOfficeBoardSevice;
-            _menuUserActions = new MenuRoleUserService(_userService);
+            _menuUserActions = new MenuRoleUserService(_userService, userWalletRepository, exchangeOfficeBoardSevice);
             _menuAdminActions = new MenuRoleAdminService(_userService, _exchangeOfficeBoardSevice, availableMoneyOnStock, _nbpJsonService);
         }
 
@@ -184,13 +183,14 @@ namespace JediApp.Services.Services
                 case 1:
                     Console.WriteLine("Navigate to: Add new account number");
                     _menuUserActions.RegisterWalletToUser(CurrentUser.Id);
-
                     break;
                 case 2:
                     Console.WriteLine("Navigate to: Deposit");
+                    _menuUserActions.Deposit(CurrentUser);
                     break;
                 case 3:
                     Console.WriteLine("Navigate to: Withdrawal");
+                    _menuUserActions.Withdrawal(CurrentUser);
                     break;
                 case 4:
                     Console.WriteLine("Navigate to: Exchange");

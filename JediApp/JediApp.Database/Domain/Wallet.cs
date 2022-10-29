@@ -9,7 +9,7 @@ namespace JediApp.Database.Domain
 {
     public class Wallet : Base
     {
-        public  Guid UserId  { get; set; }
+        public Guid UserId { get; set; }
         public List<WalletPosition> WalletStatus { get; set; }
         public string printwallet()
         {
@@ -20,7 +20,7 @@ namespace JediApp.Database.Domain
             }
             return (result);
         }
-        
+
         public Wallet()
         {
             WalletStatus = new List<WalletPosition>();
@@ -39,9 +39,14 @@ namespace JediApp.Database.Domain
         public decimal CurrencyAmount { get; set; }
         public Currency Currency { get; set; }
         public Guid WalletId { get; set; }
+        public string UserName { get; set; }
         public WalletPosition()
         {
             WalletId = Guid.NewGuid();
+        }
+        public WalletPosition(string walletId)
+        {
+            WalletId = Guid.Parse(walletId);
         }
     }
 }
