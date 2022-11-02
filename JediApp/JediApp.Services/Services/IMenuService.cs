@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace JediApp.Services.Services
+﻿namespace JediApp.Services.Services
 {
     public interface IMenuService
     {

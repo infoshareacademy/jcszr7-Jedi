@@ -10,17 +10,21 @@ namespace JediApp.Services.Services
         private readonly IExchangeOfficeBoardService _exchangeOfficeBoardSevice;
         private readonly IAvailableMoneyOnStockRepository _availableMoneyOnStock;
         private readonly INbpJsonService _nbpJsonService;
+        private readonly ITransactionHistoryService _transactionHistoryService;
 
-        public MenuRoleAdminService(IUserService userService, IExchangeOfficeBoardService exchangeOfficeBoardSevice, IAvailableMoneyOnStockRepository availableMoneyOnStock, INbpJsonService nbpJsonService)
+        public MenuRoleAdminService(IUserService userService, IExchangeOfficeBoardService exchangeOfficeBoardSevice, IAvailableMoneyOnStockRepository availableMoneyOnStock, INbpJsonService nbpJsonService, ITransactionHistoryService transactionHistoryService)
         {
             _userService = userService;
             _exchangeOfficeBoardSevice = exchangeOfficeBoardSevice;
             _nbpJsonService = nbpJsonService;
             _availableMoneyOnStock = availableMoneyOnStock;
+            _transactionHistoryService = transactionHistoryService;
         }
 
         public void SearchByLogin()
         {
+            Console.Clear();
+
             Console.WriteLine("Enter login");
             var testLogin = MenuOptionsHelper.CheckString(Console.ReadLine());
             var testUserByLogin = _userService.BrowseUsers(testLogin);
@@ -40,6 +44,8 @@ namespace JediApp.Services.Services
 
         public void ListAllUsers()
         {
+            Console.Clear();
+
             Console.WriteLine("List of users:");
             foreach (var item in _userService.GetAllUsers())
             {
@@ -48,6 +54,8 @@ namespace JediApp.Services.Services
         }
         public void AddCurrency()
         {
+            Console.Clear();
+
             Console.WriteLine("Add a new currency to the exchange office");
             Console.WriteLine("Enter Name");
             var name = MenuOptionsHelper.CheckString(Console.ReadLine());
@@ -176,6 +184,15 @@ namespace JediApp.Services.Services
                     break;
             }
             return false;
+        }
+
+        public void TransactionHistory()
+        {
+            var allTransactionsHistory = _transactionHistoryService.GetAllUsersHistories();
+
+            Console.Clear();
+            Console.WriteLine("Transactions history for all users");
+            allTransactionsHistory.ForEach(x => Console.WriteLine($"{x.DateOfTransaction} {x.UserLogin} {x.Description} {x.CurrencyName} {x.Amount}"));
         }
     }
 }

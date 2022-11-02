@@ -11,22 +11,27 @@ namespace JediApp.Services.Services
         private readonly MenuRoleAdminService _menuAdminActions;
         private readonly IExchangeOfficeBoardService _exchangeOfficeBoardSevice;
         private readonly INbpJsonService _nbpJsonService;
+        private readonly ITransactionHistoryService _transactionHistoryService;
         private User CurrentUser;
 
 
 
-        public MenuService(IUserService userService, IUserWalletRepository userWalletRepository, IExchangeOfficeBoardService exchangeOfficeBoardSevice, IAvailableMoneyOnStockRepository availableMoneyOnStock, INbpJsonService nbpJsonService)
+        public MenuService(IUserService userService, IUserWalletRepository userWalletRepository, IExchangeOfficeBoardService exchangeOfficeBoardSevice, IAvailableMoneyOnStockRepository availableMoneyOnStock, INbpJsonService nbpJsonService, ITransactionHistoryService transactionHistoryService)
 
         {
             _userService = userService;
             _nbpJsonService = nbpJsonService;
             _exchangeOfficeBoardSevice = exchangeOfficeBoardSevice;
-            _menuUserActions = new MenuRoleUserService(_userService, userWalletRepository, exchangeOfficeBoardSevice);
-            _menuAdminActions = new MenuRoleAdminService(_userService, _exchangeOfficeBoardSevice, availableMoneyOnStock, _nbpJsonService);
+            _transactionHistoryService = transactionHistoryService;
+            _menuUserActions = new MenuRoleUserService(_userService, userWalletRepository, _exchangeOfficeBoardSevice, _transactionHistoryService);
+            _menuAdminActions = new MenuRoleAdminService(_userService, _exchangeOfficeBoardSevice, availableMoneyOnStock, _nbpJsonService, _transactionHistoryService);
+            
         }
 
         public void WelcomeMenu()
         {
+            Console.Clear();
+            Console.WriteLine("**** JediApp ****");
             Console.WriteLine("\nWelcome! Please select option:");
             Console.WriteLine("1. Login User");
             Console.WriteLine("2. Register User");
@@ -36,6 +41,7 @@ namespace JediApp.Services.Services
             Console.WriteLine("You choose: ");
 
             int selectedOption = MenuOptionsHelper.GetUserSelectionAndValidate(1, 5);
+            Console.Clear();
 
             switch (selectedOption)
             {
@@ -101,6 +107,8 @@ namespace JediApp.Services.Services
 
         public void AdminMenu()
         {
+            Console.Clear();
+
             Console.WriteLine("\nMenu: please select option:");
             Console.WriteLine("1. Search by login");
             Console.WriteLine("2. All user list");
@@ -110,10 +118,11 @@ namespace JediApp.Services.Services
             Console.WriteLine("6. Show available money on stock");
             Console.WriteLine("7. Add Currencies from NBP API");
             Console.WriteLine("8. Exchange calculator");
-            Console.WriteLine("9. Exit");
+            Console.WriteLine("9. Exchange Office Transaction History");
+            Console.WriteLine("10. Exit");
             Console.WriteLine("You choose: ");
 
-            int selectedOption = MenuOptionsHelper.GetUserSelectionAndValidate(1, 9);
+            int selectedOption = MenuOptionsHelper.GetUserSelectionAndValidate(1, 10);
 
 
             switch (selectedOption)
@@ -132,10 +141,10 @@ namespace JediApp.Services.Services
                     _menuAdminActions.DeleteCurrency();
                     break;
                 case 5:
-                    _menuAdminActions.ShowAvailableMoneyOnStock();
+                    _menuAdminActions.AddMoneyToStock();
                     break;
                 case 6:
-                    _menuAdminActions.AddMoneyToStock();
+                    _menuAdminActions.ShowAvailableMoneyOnStock();
                     break;
                 case 7:
                     PrintExchangeOfficeBoard();
@@ -146,6 +155,9 @@ namespace JediApp.Services.Services
                     _menuAdminActions.CurrencyCalculate();
                     break;
                 case 9:
+                    _menuAdminActions.TransactionHistory();
+                    break;
+                case 10:
                     WelcomeMenu();
                     break;
                 default: throw new Exception($"Option {selectedOption} not supported");
@@ -165,6 +177,8 @@ namespace JediApp.Services.Services
 
         public void UserMenu()
         {
+            Console.Clear();
+
             Console.WriteLine("\nMenu: please select option:");
             Console.WriteLine("1. Add new account number");
             Console.WriteLine("2. Deposit");
@@ -176,7 +190,7 @@ namespace JediApp.Services.Services
             Console.WriteLine("8. Exit");
             Console.WriteLine("You choose: ");
 
-            int selectedOption = MenuOptionsHelper.GetUserSelectionAndValidate(1, 7);
+            int selectedOption = MenuOptionsHelper.GetUserSelectionAndValidate(1, 8);
 
             switch (selectedOption)
             {
@@ -197,6 +211,7 @@ namespace JediApp.Services.Services
                     break;
                 case 5:
                     Console.WriteLine("Navigate to: History");
+                    _menuUserActions.GetUserHistory(CurrentUser);
                     break;
                 case 6:
                     Console.WriteLine("Navigate to: Currency calculator");

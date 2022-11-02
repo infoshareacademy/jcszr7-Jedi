@@ -9,16 +9,20 @@ namespace JediApp.Services.Services
         private readonly IUserService _userService;
         private readonly IUserWalletRepository _userWalletRepository;
         private readonly IExchangeOfficeBoardService _exchangeOfficeBoardSevice;
+        private readonly ITransactionHistoryService _transactionHistoryService;
 
-        public MenuRoleUserService(IUserService userService, IUserWalletRepository userWalletRepository, IExchangeOfficeBoardService exchangeOfficeBoardSevice)
+        public MenuRoleUserService(IUserService userService, IUserWalletRepository userWalletRepository, IExchangeOfficeBoardService exchangeOfficeBoardSevice, ITransactionHistoryService transactionHistoryService)
         {
             _userService = userService;
             _userWalletRepository = userWalletRepository;
             _exchangeOfficeBoardSevice = exchangeOfficeBoardSevice;
+            _transactionHistoryService = transactionHistoryService;
         }
 
         public void RegisterUser()
         {
+            Console.Clear();
+
             var user = new User();
             user.Role = UserRole.User;  //jako enum albo tabela w bazie
 
@@ -58,6 +62,8 @@ namespace JediApp.Services.Services
 
         public Wallet GetWallet(User user)
         {
+            Console.Clear();
+
             var userWallet = _userWalletRepository.GetWallet(user.Wallet.Id);
 
             Console.WriteLine($"User: {user.Login} - your current balance:");
@@ -71,6 +77,8 @@ namespace JediApp.Services.Services
 
         public void Deposit(User user)
         {
+            Console.Clear();
+
             var availableCurrencies = _exchangeOfficeBoardSevice.GetAllCurrencies();
             Console.WriteLine("Select available currency:");
 
@@ -90,10 +98,14 @@ namespace JediApp.Services.Services
             Console.WriteLine("Deposit successfull!\n");
 
             PrintWalletCurrencySaldo(user, selectedCurrencyName);
+
+            _transactionHistoryService.AddTransaction(new TransactionHistory { Id = Guid.NewGuid(), UserId = user.Id, UserLogin = user.Login, CurrencyName = selectedCurrencyName, Amount = deposit, DateOfTransaction = DateTime.Now, Description = "Deposit" });
         }
 
         public void Withdrawal(User user)
         {
+            Console.Clear();
+
             var userWallet = _userWalletRepository.GetWallet(user.Wallet.Id);
             if (!userWallet.WalletStatus.Any())
             {
@@ -118,6 +130,8 @@ namespace JediApp.Services.Services
             Console.WriteLine("Withdrawal successfull!\n");
 
             PrintWalletCurrencySaldo(user, selectedCurrencyName);
+
+            _transactionHistoryService.AddTransaction(new TransactionHistory { Id = Guid.NewGuid(), UserId = user.Id, UserLogin = user.Login, CurrencyName = selectedCurrencyName, Amount = withdrawal, DateOfTransaction = DateTime.Now, Description = "Withdrawal" });
         }
 
         private void PrintWalletCurrencySaldo(User user, string selectedCurrencyName)
@@ -126,6 +140,17 @@ namespace JediApp.Services.Services
             var currentSaldo = userWallet.WalletStatus.Where(a => a.Currency.ShortName.Equals(selectedCurrencyName, StringComparison.InvariantCultureIgnoreCase)).SingleOrDefault();
 
             Console.WriteLine($"Your current saldo of '{selectedCurrencyName}' is {currentSaldo.CurrencyAmount}");
+        }
+
+        public void GetUserHistory(User user)
+        {
+            var transactionHistory = _transactionHistoryService.GetUserHistoryByUserId(user.Id);
+
+            Console.Clear();
+            Console.WriteLine($"Transactions history for Login: {user.Login}");
+            transactionHistory.ForEach(x => Console.WriteLine($"{x.DateOfTransaction} {x.Description} {x.CurrencyName} {x.Amount}"));
+
+
         }
     }
 }
