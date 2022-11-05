@@ -112,8 +112,27 @@ namespace JediApp.Services.Services
             var selectedCurrencyName = userWallet.WalletStatus[selectedCurrencyIndex - 1].Currency.ShortName;
 
             Console.WriteLine($"You selected: {selectedCurrencyName}");
-            Console.WriteLine("Enter amout of money for withdrawal:");
-            var withdrawal = MenuOptionsHelper.CheckDecimal(Console.ReadLine());
+
+            decimal withdrawal;
+
+            while (true)
+            {
+                Console.WriteLine("Enter amout of money for withdrawal:");
+
+                withdrawal = MenuOptionsHelper.CheckDecimal(Console.ReadLine());
+
+                var currentSaldo = GetCurrencySaldo(user, selectedCurrencyName);
+                if (withdrawal > currentSaldo)
+                {
+                    Console.WriteLine("You do not have available funds on the account.");
+                    Console.WriteLine("Please enter correct amount.");
+                    continue;
+                }
+                else
+                {
+                    break;
+                }
+            }
 
             _userWalletRepository.Withdrawal(user.Wallet.Id, user.Login, selectedCurrencyName, withdrawal);
 
@@ -124,12 +143,19 @@ namespace JediApp.Services.Services
             _transactionHistoryService.AddTransaction(new TransactionHistory { Id = Guid.NewGuid(), UserId = user.Id, UserLogin = user.Login, CurrencyName = selectedCurrencyName, Amount = withdrawal, DateOfTransaction = DateTime.Now, Description = "Withdrawal" });
         }
 
-        private void PrintWalletCurrencySaldo(User user, string selectedCurrencyName)
+        private decimal GetCurrencySaldo(User user, string selectedCurrencyName)
         {
             var userWallet = _userWalletRepository.GetWallet(user.Wallet.Id);
             var currentSaldo = userWallet.WalletStatus.Where(a => a.Currency.ShortName.Equals(selectedCurrencyName, StringComparison.InvariantCultureIgnoreCase)).SingleOrDefault();
 
-            Console.WriteLine($"Your current saldo of '{selectedCurrencyName}' is {currentSaldo.CurrencyAmount}");
+            return currentSaldo.CurrencyAmount;
+        }
+
+        private void PrintWalletCurrencySaldo(User user, string selectedCurrencyName)
+        {
+            var currentSaldo = GetCurrencySaldo(user, selectedCurrencyName);
+
+            Console.WriteLine($"Your current saldo of '{selectedCurrencyName}' is {currentSaldo}");
         }
 
         public void GetUserHistory(User user)
