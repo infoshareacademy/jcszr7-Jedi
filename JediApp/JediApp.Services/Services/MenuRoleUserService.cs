@@ -50,16 +50,6 @@ namespace JediApp.Services.Services
             }
         }
 
-        public void RegisterWalletToUser(Guid userid)
-        {
-            var user = _userService.GetUserById(userid);
-            Console.WriteLine("Enter the currency and its ammount");
-            var newcurrencycode = MenuOptionsHelper.CheckString(Console.ReadLine());
-            var newcurrencyamount = MenuOptionsHelper.CheckDecimal(Console.ReadLine());
-
-            _userWalletRepository.RegisterWalletToUser(user.Wallet.Id, user.Login, newcurrencycode, newcurrencyamount);
-        }
-
         public Wallet GetWallet(User user)
         {
             Console.Clear();

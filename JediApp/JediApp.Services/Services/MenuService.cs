@@ -180,46 +180,41 @@ namespace JediApp.Services.Services
             Console.Clear();
 
             Console.WriteLine("\nMenu: please select option:");
-            Console.WriteLine("1. Add new account number");
-            Console.WriteLine("2. Deposit");
-            Console.WriteLine("3. Withdrawal");
-            Console.WriteLine("4. Exchange");
-            Console.WriteLine("5. History");
-            Console.WriteLine("6. Currency calculator");
-            Console.WriteLine("7. Account balance");
-            Console.WriteLine("8. Exit");
+            Console.WriteLine("1. Deposit");
+            Console.WriteLine("2. Withdrawal");
+            Console.WriteLine("3. Exchange");
+            Console.WriteLine("4. History");
+            Console.WriteLine("5. Currency calculator");
+            Console.WriteLine("6. Account balance");
+            Console.WriteLine("7. Exit");
             Console.WriteLine("You choose: ");
 
-            int selectedOption = MenuOptionsHelper.GetUserSelectionAndValidate(1, 8);
+            int selectedOption = MenuOptionsHelper.GetUserSelectionAndValidate(1, 7);
 
             switch (selectedOption)
             {
                 case 1:
-                    Console.WriteLine("Navigate to: Add new account number");
-                    _menuUserActions.RegisterWalletToUser(CurrentUser.Id);
-                    break;
-                case 2:
                     Console.WriteLine("Navigate to: Deposit");
                     _menuUserActions.Deposit(CurrentUser);
                     break;
-                case 3:
+                case 2:
                     Console.WriteLine("Navigate to: Withdrawal");
                     _menuUserActions.Withdrawal(CurrentUser);
                     break;
-                case 4:
+                case 3:
                     Console.WriteLine("Navigate to: Exchange");
                     break;
-                case 5:
+                case 4:
                     Console.WriteLine("Navigate to: History");
                     _menuUserActions.GetUserHistory(CurrentUser);
                     break;
-                case 6:
+                case 5:
                     Console.WriteLine("Navigate to: Currency calculator");
                     break;
-                case 7:
+                case 6:
                     _menuUserActions.GetWallet(CurrentUser);
                     break;
-                case 8:
+                case 7:
                     WelcomeMenu();
                     break;
                 default: throw new Exception($"Option {selectedOption} not supported");
