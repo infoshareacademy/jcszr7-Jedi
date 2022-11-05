@@ -69,7 +69,7 @@ namespace JediApp.Services.Services
             Console.WriteLine($"User: {user.Login} - your current balance:");
             foreach (var item in userWallet.WalletStatus)
             {
-                Console.WriteLine($"{item.Currency}-{item.CurrencyAmount}");
+                Console.WriteLine($"{item.Currency.ShortName}-{item.CurrencyAmount}");
             }
 
             return userWallet;
