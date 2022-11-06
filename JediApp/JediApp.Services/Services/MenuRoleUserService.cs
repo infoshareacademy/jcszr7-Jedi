@@ -56,10 +56,10 @@ namespace JediApp.Services.Services
 
             var userWallet = _userWalletRepository.GetWallet(user.Wallet.Id);
 
-            Console.WriteLine($"User: {user.Login} - your current balance:");
+            Console.WriteLine($"User: {user.Login} : your current balance:");
             foreach (var item in userWallet.WalletStatus)
             {
-                Console.WriteLine($"{item.Currency.ShortName}-{item.CurrencyAmount}");
+                Console.WriteLine($"{item.Currency.ShortName}:{item.CurrencyAmount}");
             }
 
             return userWallet;

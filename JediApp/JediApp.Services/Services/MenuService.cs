@@ -209,7 +209,8 @@ namespace JediApp.Services.Services
                     _menuUserActions.GetUserHistory(CurrentUser);
                     break;
                 case 5:
-                    Console.WriteLine("Navigate to: Currency calculator");
+                    //Console.WriteLine("Navigate to: Currency calculator");
+                    _menuAdminActions.CurrencyCalculate();
                     break;
                 case 6:
                     _menuUserActions.GetWallet(CurrentUser);
