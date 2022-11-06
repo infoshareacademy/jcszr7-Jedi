@@ -4,7 +4,7 @@ namespace JediApp.Database.Repositories
 {
     public class UserWalletRepository : IUserWalletRepository
     {
-        private readonly string _fileNameWallet = @"C:\Users\Albert\Desktop\jcszr7-Jedi\userwallets.csv";
+        private readonly string _fileNameWallet = @"..//..//..//..//userwallets.csv";
 
         public void RegisterWalletToUser(Guid walletId, string userLogin, string newCurrencyCode, decimal newCurrencyAmount)
         {
