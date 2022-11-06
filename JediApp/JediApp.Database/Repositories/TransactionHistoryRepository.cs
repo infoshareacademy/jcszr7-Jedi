@@ -4,7 +4,7 @@ namespace JediApp.Database.Repositories
 {
     public class TransactionHistoryRepository : ITransactionHistoryRepository
     {
-        private readonly string fileName = @"..//..//..//..//TransactionHistory.csv"; //może przeniść do klasy statycznej ???
+        private readonly string fileName = "..//..//..//..//TransactionHistory.csv"; //może przeniść do klasy statycznej ???
         public bool AddTransaction(TransactionHistory transactionHistory)
         {            
             using (StreamWriter file = new StreamWriter(fileName, true))
