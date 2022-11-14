@@ -4,7 +4,9 @@ namespace JediApp.Database.Repositories
 {
     public class ExchangeOfficeBoardRepository : IExchangeOfficeBoardRepository
     {
-        private readonly string fileName = "..//..//..//..//ExchangeOfficeBoard.csv"; //może przeniść do klasy statycznej ???
+        //private readonly string fileName = "..//..//..//..//ExchangeOfficeBoard.csv"; //może przeniść do klasy statycznej ???
+        private readonly string fileName = "..//ExchangeOfficeBoard.csv"; //może przeniść do klasy statycznej ???
+ 
         public Currency AddCurrency(Currency currency)
         {
             var id = Guid.NewGuid();
@@ -31,7 +33,7 @@ namespace JediApp.Database.Repositories
                 Guid.TryParse(columns[0], out var newGuid);
                 decimal.TryParse(columns[4], out var buy);
                 decimal.TryParse(columns[5], out var sell);
-                currencies.Add(new Currency { Id = newGuid, Name = columns[1], ShortName = columns[2], Country = columns[3], BuyAt = buy, SellAt = sell});
+                currencies.Add(new Currency { Id = newGuid, Name = columns[1], ShortName = columns[2], Country = columns[3], BuyAt = buy, SellAt = sell });
             }
             return currencies.OrderBy(c => c.ShortName).ToList();
         }
