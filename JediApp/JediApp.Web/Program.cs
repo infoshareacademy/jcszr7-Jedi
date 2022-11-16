@@ -1,7 +1,13 @@
+using JediApp.Database.Repositories;
+using JediApp.Services.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IExchangeOfficeBoardRepository, ExchangeOfficeBoardRepository>();
+builder.Services.AddScoped<IExchangeOfficeBoardService, ExchangeOfficeBoardService>();
 
 var app = builder.Build();
 
