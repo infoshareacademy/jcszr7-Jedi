@@ -29,9 +29,10 @@ namespace JediApp.Web.Controllers
         }
 
         // GET: ExchangeOfficeBoardController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(Guid id)
         {
-            return View();
+            var currency = _exchangeOfficeBoardService.GetCurrencyById(id);
+            return View(currency);
         }
 
         // GET: ExchangeOfficeBoardController/Create
@@ -43,10 +44,16 @@ namespace JediApp.Web.Controllers
         // POST: ExchangeOfficeBoardController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Currency newCurrency)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(newCurrency);
+            }
             try
             {
+                newCurrency = _exchangeOfficeBoardService.AddCurrency(newCurrency);
+
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -56,18 +63,44 @@ namespace JediApp.Web.Controllers
         }
 
         // GET: ExchangeOfficeBoardController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(Guid id)
         {
-            return View();
+            var currency = _exchangeOfficeBoardService.GetCurrencyById(id);
+            if(currency != null)
+            {
+                return View(currency);
+            }
+            else
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            //return View();
         }
 
         // POST: ExchangeOfficeBoardController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        //public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Guid id, Currency currency)
         {
+            //try
+            //{
+            //    return RedirectToAction(nameof(Index));
+            //}
+            //catch
+            //{
+            //    return View();
+            //}
+
+            if (!ModelState.IsValid)
+            {
+                return View(currency);
+            }
+
             try
             {
+                _exchangeOfficeBoardService.UpdateCurrency(id, currency);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -77,18 +110,23 @@ namespace JediApp.Web.Controllers
         }
 
         // GET: ExchangeOfficeBoardController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(Guid id)
         {
-            return View();
+            var currency = _exchangeOfficeBoardService.GetCurrencyById(id);
+
+            return View(currency);
         }
 
         // POST: ExchangeOfficeBoardController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(Guid id, IFormCollection collection)
         {
             try
             {
+                var currencyToDelete = _exchangeOfficeBoardService.GetCurrencyById(id);
+                _exchangeOfficeBoardService.DeleteCurrencyByShortName(currencyToDelete.ShortName);
+
                 return RedirectToAction(nameof(Index));
             }
             catch

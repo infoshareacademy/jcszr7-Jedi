@@ -54,6 +54,30 @@ namespace JediApp.Database.Repositories
                                       || x.Country.ToLowerInvariant().Contains(query.ToLowerInvariant())).ToList();
         }
 
+        public bool UpdateCurrency(Guid id, Currency currencyToEdit)
+        {
+
+            try
+            {
+                var allCurriences = GetAllCurrencies().Where(c => c.Id != id).ToList();
+                File.Delete(fileName);
+                using (StreamWriter file = new StreamWriter(fileName, true))
+                {
+                    foreach (var currency in allCurriences)
+                    {
+                        file.WriteLine($"{currency.Id};{currency.Name};{currency.ShortName};{currency.Country};{currency.BuyAt};{currency.SellAt}");
+                    }
+
+                    file.WriteLine($"{currencyToEdit.Id};{currencyToEdit.Name};{currencyToEdit.ShortName};{currencyToEdit.Country};{currencyToEdit.BuyAt};{currencyToEdit.SellAt}");
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+
         public bool DeleteCurrency(Guid id)
         {
             
@@ -65,7 +89,7 @@ namespace JediApp.Database.Repositories
                 {
                     foreach (var currency in allCurriences)
                     {
-                        file.WriteLine($"{id};{currency.Name};{currency.ShortName};{currency.Country};{currency.BuyAt};{currency.SellAt}");
+                        file.WriteLine($"{currency.Id};{currency.Name};{currency.ShortName};{currency.Country};{currency.BuyAt};{currency.SellAt}");
                     }
                 }
             }
