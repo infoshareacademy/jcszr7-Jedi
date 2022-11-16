@@ -35,6 +35,17 @@ namespace JediApp.Services.Services
             return _exchangeOfficeBoardRepository.BrowseCurrency(query);
         }
 
+        public bool UpdateCurrency(Guid id, Currency currencyToEdit)
+        {
+            var currnecy = GetAllCurrencies().FirstOrDefault(c => c.Id == id);
+
+            if (currnecy == null)
+            {
+                return false;
+            }
+            return _exchangeOfficeBoardRepository.UpdateCurrency(id, currencyToEdit);
+        }
+
         public bool DeleteCurrencyByShortName(string shortName)
         {
             var currnecy = GetAllCurrencies().FirstOrDefault(c => c.ShortName.ToLowerInvariant().Equals(shortName.ToLowerInvariant()));
