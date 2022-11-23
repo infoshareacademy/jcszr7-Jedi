@@ -4,7 +4,7 @@ namespace JediApp.Database.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private readonly string fileName = "..//..//..//..//Users.csv"; //może przeniść do klasy statycznej ???
+        private readonly string fileName = @"C:\Users\Albert\Desktop\jcszr7-Jedi\JediApp\Users.csv"; //może przeniść do klasy statycznej ???
         public User AddUser (User user)
         {
             var id = Guid.NewGuid();

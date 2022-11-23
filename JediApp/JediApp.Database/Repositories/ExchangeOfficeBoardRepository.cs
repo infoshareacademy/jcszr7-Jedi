@@ -4,7 +4,7 @@ namespace JediApp.Database.Repositories
 {
     public class ExchangeOfficeBoardRepository : IExchangeOfficeBoardRepository
     {
-        private readonly string fileName = @"C:\Users\Albert\Desktop\tes\jcszr7-Jedi\JediApp\ExchangeOfficeBoard.csv"; //może przeniść do klasy statycznej ???
+        private readonly string fileName = @"C:\Users\Albert\Desktop\jcszr7-Jedi\JediApp\ExchangeOfficeBoard.csv"; //może przeniść do klasy statycznej ???
         public Currency AddCurrency(Currency currency)
         {
             var id = Guid.NewGuid();

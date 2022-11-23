@@ -5,7 +5,7 @@ namespace JediApp.Database.Repositories
     public class AvailableMoneyOnStockRepository : IAvailableMoneyOnStockRepository
 
     {
-        private readonly string fileName = @"C:\Users\Albert\Desktop\tes\jcszr7-Jedi\JediApp\AvailableMoneyOnStock.csv";
+        private readonly string fileName = @"C:\Users\Albert\Desktop\jcszr7-Jedi\JediApp\AvailableMoneyOnStock.csv";
         public void AddMoneyToStock(MoneyOnStock moneyOnStock)
         {
             var currentMoneyOnStock = GetAvailableMoneyOnStock();
