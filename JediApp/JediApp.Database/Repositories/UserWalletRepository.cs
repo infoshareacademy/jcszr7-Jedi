@@ -76,26 +76,40 @@ namespace JediApp.Database.Repositories
             var allWalletsExceptUser = GetAllWallets().Where(a => a.Id != walletId);
             var userWallet = GetWallet(walletId);
 
+            if (File.Exists(_fileNameWallet))
+                File.Delete(_fileNameWallet);
+
             var userCurrency = userWallet.WalletStatus.Where(w => w.Currency.ShortName.Equals(currencyCode)).SingleOrDefault();
             if (userCurrency != null)
             {
                 if (isDeposit)
                 {
-                    amount = amount + userCurrency.CurrencyAmount;
+                    userCurrency.CurrencyAmount += amount;
                 }
                 else
                 {
-                    amount = userCurrency.CurrencyAmount - amount;
+                    userCurrency.CurrencyAmount -= amount;
                 }
             }
-
-            if (File.Exists(_fileNameWallet))
-                File.Delete(_fileNameWallet);
-
-            // Add user money deposit
+            else
+            {
+                userWallet.WalletStatus.Add(new WalletPosition
+                {
+                    Currency = new Currency
+                    {
+                        ShortName = currencyCode
+                    },
+                    CurrencyAmount = amount,
+                });
+            }
+            
+            // Add all users positions
             using (StreamWriter file = new StreamWriter(_fileNameWallet, true))
             {
-                file.WriteLine($"{walletId};{userName};{currencyCode};{amount}");
+                foreach (var previousPoistions in userWallet.WalletStatus)
+                {
+                    file.WriteLine($"{walletId};{userName};{previousPoistions.Currency.ShortName};{previousPoistions.CurrencyAmount}");
+                }
             }
 
             // Add all other deposits from memory
