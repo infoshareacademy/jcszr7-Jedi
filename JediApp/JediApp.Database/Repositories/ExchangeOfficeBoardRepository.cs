@@ -4,7 +4,9 @@ namespace JediApp.Database.Repositories
 {
     public class ExchangeOfficeBoardRepository : IExchangeOfficeBoardRepository
     {
-        private readonly string fileName = @"C:\Users\Albert\Desktop\jcszr7-Jedi\JediApp\ExchangeOfficeBoard.csv"; //może przeniść do klasy statycznej ???
+        //private readonly string fileName = "..//..//..//..//ExchangeOfficeBoard.csv"; //może przeniść do klasy statycznej ???
+        private readonly string fileName = "..//ExchangeOfficeBoard.csv"; //może przeniść do klasy statycznej ???
+ 
         public Currency AddCurrency(Currency currency)
         {
             var id = Guid.NewGuid();
@@ -31,7 +33,7 @@ namespace JediApp.Database.Repositories
                 Guid.TryParse(columns[0], out var newGuid);
                 decimal.TryParse(columns[4], out var buy);
                 decimal.TryParse(columns[5], out var sell);
-                currencies.Add(new Currency { Id = newGuid, Name = columns[1], ShortName = columns[2], Country = columns[3], BuyAt = buy, SellAt = sell});
+                currencies.Add(new Currency { Id = newGuid, Name = columns[1], ShortName = columns[2], Country = columns[3], BuyAt = buy, SellAt = sell });
             }
             return currencies.OrderBy(c => c.ShortName).ToList();
         }
@@ -52,6 +54,30 @@ namespace JediApp.Database.Repositories
                                       || x.Country.ToLowerInvariant().Contains(query.ToLowerInvariant())).ToList();
         }
 
+        public bool UpdateCurrency(Guid id, Currency currencyToEdit)
+        {
+
+            try
+            {
+                var allCurriences = GetAllCurrencies().Where(c => c.Id != id).ToList();
+                File.Delete(fileName);
+                using (StreamWriter file = new StreamWriter(fileName, true))
+                {
+                    foreach (var currency in allCurriences)
+                    {
+                        file.WriteLine($"{currency.Id};{currency.Name};{currency.ShortName};{currency.Country};{currency.BuyAt};{currency.SellAt}");
+                    }
+
+                    file.WriteLine($"{currencyToEdit.Id};{currencyToEdit.Name};{currencyToEdit.ShortName};{currencyToEdit.Country};{currencyToEdit.BuyAt};{currencyToEdit.SellAt}");
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+
         public bool DeleteCurrency(Guid id)
         {
             
@@ -63,7 +89,7 @@ namespace JediApp.Database.Repositories
                 {
                     foreach (var currency in allCurriences)
                     {
-                        file.WriteLine($"{id};{currency.Name};{currency.ShortName};{currency.Country};{currency.BuyAt};{currency.SellAt}");
+                        file.WriteLine($"{currency.Id};{currency.Name};{currency.ShortName};{currency.Country};{currency.BuyAt};{currency.SellAt}");
                     }
                 }
             }
