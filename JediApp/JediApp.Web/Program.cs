@@ -8,6 +8,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IExchangeOfficeBoardRepository, ExchangeOfficeBoardRepository>();
 builder.Services.AddScoped<IExchangeOfficeBoardService, ExchangeOfficeBoardService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 var app = builder.Build();
 

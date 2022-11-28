@@ -203,6 +203,7 @@ namespace JediApp.Services.Services
                     break;
                 case 3:
                     Console.WriteLine("Navigate to: Exchange");
+                    _menuUserActions.Exchange(CurrentUser);
                     break;
                 case 4:
                     Console.WriteLine("Navigate to: History");
