@@ -1,7 +1,4 @@
 ﻿using JediApp.Database.Domain;
-using JediApp.Database.Repositories;
-using JediApp.Services.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JediApp.Web.Controllers
@@ -66,7 +63,7 @@ namespace JediApp.Web.Controllers
         public ActionResult Edit(Guid id)
         {
             var currency = _exchangeOfficeBoardService.GetCurrencyById(id);
-            if(currency != null)
+            if (currency != null)
             {
                 return View(currency);
             }
