@@ -3,7 +3,7 @@ using JediApp.Database.Repositories;
 
 namespace JediApp.Services.Services
 {
-    public class UserService : IUserService
+    public class UserService
     {
         private readonly IUserRepository _userRepository;
         public UserService(IUserRepository userRepository)
@@ -27,30 +27,30 @@ namespace JediApp.Services.Services
             return _userRepository.GetAllUsers();
         }
 
-        public User AddUser(User user)
-        {
-            if (IfLoginIsUnique(user))
-            {
-              return _userRepository.AddUser(user);
-            }
+        //public User AddUser(User user)
+        //{
+        //    if (IfLoginIsUnique(user))
+        //    {
+        //      return _userRepository.AddUser(user);
+        //    }
 
-            return null;
-        }
+        //    return null;
+        //}
 
         public List<User> BrowseUsers(string query)
         {
             return _userRepository.BrowseUsers(query);
         }
 
-        public bool IfLoginIsUnique(User user)
-        {
-            foreach (var _user in GetAllUsers())
-            {
-                if(user.Login.Equals(_user.Login))
-                    return false;
-            }
-            return true;
-        }
+        //public bool IfLoginIsUnique(User user)
+        //{
+        //    foreach (var _user in GetAllUsers())
+        //    {
+        //        if(user.Login.Equals(_user.Login))
+        //            return false;
+        //    }
+        //    return true;
+        //}
         
     }
 }

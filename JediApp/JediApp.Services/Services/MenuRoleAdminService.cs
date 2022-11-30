@@ -21,37 +21,37 @@ namespace JediApp.Services.Services
             _transactionHistoryService = transactionHistoryService;
         }
 
-        public void SearchByLogin()
-        {
-            Console.Clear();
+        //public void SearchByLogin()
+        //{
+        //    Console.Clear();
 
-            Console.WriteLine("Enter login");
-            var testLogin = MenuOptionsHelper.CheckString(Console.ReadLine());
-            var testUserByLogin = _userService.BrowseUsers(testLogin);
-            if (testUserByLogin != null)
-            {
-                foreach (var user in testUserByLogin)
-                {
-                    Console.WriteLine($"Id: {user.Id} Login: {user.Login} Password: {user.Password} Role: {user.Role}");
-                }
+        //    Console.WriteLine("Enter login");
+        //    var testLogin = MenuOptionsHelper.CheckString(Console.ReadLine());
+        //    var testUserByLogin = _userService.BrowseUsers(testLogin);
+        //    if (testUserByLogin != null)
+        //    {
+        //        foreach (var user in testUserByLogin)
+        //        {
+        //            Console.WriteLine($"Id: {user.Id} Login: {user.Login} Password: {user.Password} Role: {user.Role}");
+        //        }
                 
-            }
-            else
-            {
-                Console.WriteLine($"Login {testLogin} has not been found ");
-            }
-        }
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine($"Login {testLogin} has not been found ");
+        //    }
+        //}
 
-        public void ListAllUsers()
-        {
-            Console.Clear();
+        //public void ListAllUsers()
+        //{
+        //    Console.Clear();
 
-            Console.WriteLine("List of users:");
-            foreach (var item in _userService.GetAllUsers())
-            {
-                Console.WriteLine($"Id: {item.Id} Login: {item.Login} Password: {item.Password}  Role: {item.Role}");
-            }
-        }
+        //    Console.WriteLine("List of users:");
+        //    foreach (var item in _userService.GetAllUsers())
+        //    {
+        //        Console.WriteLine($"Id: {item.Id} Login: {item.Login} Password: {item.Password}  Role: {item.Role}");
+        //    }
+        //}
         public void AddCurrency()
         {
             Console.Clear();

@@ -8,10 +8,10 @@ using Microsoft.Extensions.Hosting;
 
 
 //add app admin user
-var adminUser = new User();
-adminUser.Login = "admin";
-adminUser.Password = "admin";
-adminUser.Role = UserRole.Admin;
+//var adminUser = new User();
+//adminUser.Login = "admin";
+//adminUser.Password = "admin";
+//adminUser.Role = UserRole.Admin;
 
 var currencyPLN = new Currency() //add first currency PLN
 {
@@ -29,8 +29,8 @@ using IHost host = Host.CreateDefaultBuilder(args)
             //.AddScoped<IScopedOperation, DefaultOperation>()       //example
             //.AddSingleton<ISingletonOperation, DefaultOperation>() //example
             //.AddTransient<OperationLogger>()                       //example
-            .AddScoped<IUserRepository, UserRepository>()
-            .AddScoped<IUserService, UserService>()
+            
+            
             .AddScoped<IExchangeOfficeBoardRepository, ExchangeOfficeBoardRepository>()
             .AddScoped<IExchangeOfficeBoardService, ExchangeOfficeBoardService>()
             .AddScoped<INbpJsonRepository, NbpJsonRepository>()
@@ -46,7 +46,7 @@ using IHost host = Host.CreateDefaultBuilder(args)
     .Build();
 
 var userService = host.Services.GetRequiredService<UserService>();
-userService.AddUser(adminUser);
+
 
 var exchangeOfficeBoardService = host.Services.GetRequiredService<ExchangeOfficeBoardService>();
 exchangeOfficeBoardService.AddCurrency(currencyPLN);
@@ -54,7 +54,7 @@ exchangeOfficeBoardService.AddCurrency(currencyPLN);
 //var menuService = host.Services.GetRequiredService<MenuService>();
 //menuService.WelcomeMenu();
 
-host.Services.GetRequiredService<MenuService>().WelcomeMenu();
+
 
 //IUserRepository userRepo = new UserRepository();
 //IUserService userService = new UserService(userRepo);
