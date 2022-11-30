@@ -3,6 +3,7 @@ using JediApp.Services.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using JediApp.Web.Areas.Identity.Data;
+using JediApp.Database.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("JediAppDbContextConnection") ?? throw new InvalidOperationException("Connection string 'JediAppDbContextConnection' not found.");
@@ -10,7 +11,7 @@ var connectionString = builder.Configuration.GetConnectionString("JediAppDbConte
 builder.Services.AddDbContext<JediAppDbContext>(options =>
     options.UseSqlServer(connectionString));
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<JediAppDbContext>();
 
 // Add services to the container.
