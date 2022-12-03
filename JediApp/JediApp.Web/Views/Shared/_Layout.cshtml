@@ -12,7 +12,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">JediApp.Web</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">JediApp Web</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -28,9 +28,28 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="ExchangeOfficeBoard" asp-action="Index">Exchange Office Board</a>
                         </li>
-                    </ul>
+
+                        <li class="nav-item">
+                            <div class="dropdown m-auto">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Admin
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">List Users</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        
+                       
                 </div>
-                <partial name="_LoginPartial" />
+                </ul>
+
+
+
+            </div>
+            <partial name="_LoginPartial" />
             </div>
         </nav>
     </header>

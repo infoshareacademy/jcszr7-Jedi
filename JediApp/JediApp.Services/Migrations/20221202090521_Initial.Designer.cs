@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JediApp.Services.Migrations
 {
     [DbContext(typeof(JediAppDbContext))]
-    [Migration("20221130102459_Initial")]
+    [Migration("20221202090521_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

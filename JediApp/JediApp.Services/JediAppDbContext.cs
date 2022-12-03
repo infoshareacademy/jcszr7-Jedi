@@ -24,6 +24,7 @@ public class JediAppDbContext : IdentityDbContext<User>
 
 public class ApplicationUserEntityConfiguration : IEntityTypeConfiguration<User>
 {
+   
     public void Configure(EntityTypeBuilder<User> builder)
     {
         builder.Property(u=>u.FirstName).HasMaxLength(50);
