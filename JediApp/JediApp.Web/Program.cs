@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using JediApp.Web.Areas.Identity.Data;
 using JediApp.Database.Domain;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("JediAppDbContextConnection") ?? throw new InvalidOperationException("Connection string 'JediAppDbContextConnection' not found.");
@@ -11,8 +12,14 @@ var connectionString = builder.Configuration.GetConnectionString("JediAppDbConte
 builder.Services.AddDbContext<JediAppDbContext>(options =>
     options.UseSqlServer(connectionString));
 
-builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
-    .AddEntityFrameworkStores<JediAppDbContext>();
+builder.Services.AddIdentity<User, IdentityRole>()
+            .AddEntityFrameworkStores<JediAppDbContext>()
+            .AddDefaultTokenProviders();
+
+//builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
+//    .AddEntityFrameworkStores<JediAppDbContext>();
+
+builder.Services.AddRazorPages();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -34,7 +41,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-app.UseAuthentication();;
+app.UseAuthentication(); ;
 
 app.UseAuthorization();
 
