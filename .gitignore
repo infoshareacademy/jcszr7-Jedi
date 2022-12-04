@@ -398,3 +398,5 @@ FodyWeavers.xsd
 *.sln.iml
 /JediApp/Userwallets.csv
 /JediApp/JediApp.Web/appsettings.json
+/JediApp/JediApp.Web/Properties/serviceDependencies.json
+/JediApp/JediApp.Web/Properties/serviceDependencies.local.json
