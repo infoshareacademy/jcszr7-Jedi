@@ -24,8 +24,9 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<JediAppDbContext>(options =>
             options.UseSqlServer(connectionString));
 
-//builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-//    .AddEntityFrameworkStores<JediAppDbbContext>();
+
+//builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
+//    .AddEntityFrameworkStores<JediAppDbContext>();
 
 //builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
 //   .AddEntityFrameworkStores<JediAppDbContext>();
