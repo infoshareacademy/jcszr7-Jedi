@@ -1,9 +1,7 @@
-﻿using JediApp.Database.Domain;
-using JediApp.Web.Areas.Identity.Data;
+﻿using JediApp.Web.Areas.Identity.Data;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-
 
 namespace JediApp.Web.Controllers
 {
@@ -22,110 +20,73 @@ namespace JediApp.Web.Controllers
             return View(await db.ToListAsync());
         }
 
-        public async Task<IActionResult> Details(string id)
+        // GET: UserController/Details/5
+        public ActionResult Details(int id)
         {
-            if (id == null || _dbContext.Users == null)
-            {
-                return NotFound();
-            }
-
-            var user = await _dbContext.Users.FirstOrDefaultAsync(x=>x.Id==id);
-                //.Include(x => x.Id)
-                //.FirstOrDefaultAsync(x=>x.Id == id);
-                
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            return View(user);
+            return View();
         }
 
-        public async Task<IActionResult> Edit(Guid? id)
+        // GET: UserController/Create
+        public ActionResult Create()
         {
-            if (id == null || _dbContext.Users == null)
-            {
-                return NotFound();
-            }
-
-            var user = await _dbContext.Users.FindAsync(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-            ViewData["UserId"] = new SelectList(_dbContext.Set<User>(), "Id", "Id", user.Id);
-            return View(user);
+            return View();
         }
-       
-        public async Task<IActionResult> Edit(string id, [Bind("FirstName,LastName")] User user)
-        {
-            if (id != user.Id)
-            {
-                return NotFound();
-            }
 
-            if (ModelState.IsValid)
+        // POST: UserController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(IFormCollection collection)
+        {
+            try
             {
-                try
-                {
-                    _dbContext.Update(user);
-                    await _dbContext.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UsersExists(user.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_dbContext.Set<User>(), "Id", "Id", user.Id);
-            return View(user);
+            catch
+            {
+                return View();
+            }
         }
 
-        public async Task<IActionResult> Delete(string id)
+        // GET: UserController/Edit/5
+        public ActionResult Edit(int id)
         {
-            if (id == null || _dbContext.Users == null)
-            {
-                return NotFound();
-            }
-
-            var user = await _dbContext.Users
-                .FirstOrDefaultAsync(m => m.Id == id);
-
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            return View(user);
+            return View();
         }
 
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        // POST: UserController/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, IFormCollection collection)
         {
-            if (_dbContext.Users == null)
+            try
             {
-                return Problem("Entity set 'WebMvcDbHouseBillsWebMvcContext.Bill'  is null.");
+                return RedirectToAction(nameof(Index));
             }
-            var user = await _dbContext.Users.FindAsync(id);
-            if (user != null)
+            catch
             {
-                _dbContext.Users.Remove(user);
+                return View();
             }
-
-            await _dbContext.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
-        private bool UsersExists(string id)
+        // GET: UserController/Delete/5
+        public ActionResult Delete(int id)
         {
-            return _dbContext.Users.Any(e => e.Id == id);
+            return View();
         }
 
+        // POST: UserController/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int id, IFormCollection collection)
+        {
+            try
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
     }
 }
