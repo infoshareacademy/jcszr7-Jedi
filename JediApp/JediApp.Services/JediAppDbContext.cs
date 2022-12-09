@@ -11,6 +11,11 @@ public class JediAppDbContext : IdentityDbContext<User>
 
     public DbSet<User> Users { get; set; }
 
+    public JediAppDbContext()
+    {
+
+    }
+
     public JediAppDbContext(DbContextOptions<JediAppDbContext> options)
         : base(options)
     {
