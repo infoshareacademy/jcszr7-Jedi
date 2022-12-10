@@ -110,7 +110,7 @@ namespace JediApp.Web.Controllers
         {
             if (_dbContext.Users == null)
             {
-                return Problem("Entity set 'WebMvcDbHouseBillsWebMvcContext.Bill'  is null.");
+                return Problem("Entity set 'JediAppDbContextConnection.User'  is null.");
             }
             var user = await _dbContext.Users.FindAsync(id);
             if (user != null)
