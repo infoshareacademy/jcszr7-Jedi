@@ -7,6 +7,7 @@ using JediApp.Database.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using JediApp.Services;
 using JediApp.Services.Interfaces;
+using JediApp.Services.Repositories;
 
 //var builder = WebApplication.CreateBuilder(args);
 //var connectionString = builder.Configuration.GetConnectionString("JediAppDbContextConnection") ?? throw new InvalidOperationException("Connection string 'JediAppDbContextConnection' not found.");
@@ -19,6 +20,7 @@ builder.Services.AddDbContext<JediAppDbContext>(options =>
 //    .AddEntityFrameworkStores<JediAppDbContext>();
 var connectionString = builder.Configuration.GetConnectionString("JediAppDbContextConnection") ?? throw new InvalidOperationException("Connection string 'HouseBillsWebMvcDbContextConnection' not found.");
 
+builder.Services.AddTransient<IUserRepository, UserRepository>();
 
 builder.Services.AddControllers();
 

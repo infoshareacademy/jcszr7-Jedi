@@ -2,6 +2,8 @@
 using JediApp.Database.Domain;
 using JediApp.Database.Repositories;
 using JediApp.Web.Areas.Identity.Data;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
 
 namespace JediApp.Services.Repositories
 {
@@ -14,7 +16,12 @@ namespace JediApp.Services.Repositories
             _jediAppDbContext = jediAppDbContext;
         }
 
+        public List<User> GetAllUsers()
+        {
+            List<User> userList =_jediAppDbContext.Users.ToList();
 
+            return userList;
+        }
 
         public List<User> BrowseUsers(string query)
         {
@@ -40,12 +47,7 @@ namespace JediApp.Services.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<User> GetAllUsers()
-        {
-            var userList = _jediAppDbContext.Users;
-
-            return userList;
-        }
+       
         //public User AddUser (User user)
         //{
         //    var id = Guid.NewGuid();

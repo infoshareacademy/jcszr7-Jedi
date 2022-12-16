@@ -16,10 +16,10 @@ namespace JediApp.Services.Services
             return _userRepository.GetUserById(id);
         }
 
-        public User GetUserByLogin(string login)
-        {
-            return _userRepository.GetUserByLogin(login);
-        }
+        //public User GetUserByLogin(string login)
+        //{
+        //    return _userRepository.GetUserByLogin(login);
+        //}
 
         public List<User> GetAllUsers()
         {
@@ -37,10 +37,10 @@ namespace JediApp.Services.Services
         //    return null;
         //}
 
-        public List<User> BrowseUsers(string query)
-        {
-            return _userRepository.BrowseUsers(query);
-        }
+        //public List<User> BrowseUsers(string query)
+        //{
+        //    return _userRepository.BrowseUsers(query);
+        //}
 
         //public bool IfLoginIsUnique(User user)
         //{

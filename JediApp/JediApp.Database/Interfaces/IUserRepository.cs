@@ -5,10 +5,8 @@ namespace JediApp.Database.Repositories
     public interface IUserRepository
     {
         User GetUserById(Guid id);
-        User GetUserByLogin(string login);
-        void GetAllUsers();
-        List<User> BrowseUsers(string query);
+        List<User> GetAllUsers();
         User AddUser(User user);
-        User GetLoginPassword(string login, string password);
+        
     }
 }
