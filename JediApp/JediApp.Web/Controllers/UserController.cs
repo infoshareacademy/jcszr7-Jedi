@@ -18,6 +18,8 @@ namespace JediApp.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
+            ViewData["activePage"] = "AdminUser";
+
             var db = _dbContext.Users;
             return View(await db.ToListAsync());
         }

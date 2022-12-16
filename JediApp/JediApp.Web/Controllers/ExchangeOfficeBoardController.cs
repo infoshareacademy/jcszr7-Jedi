@@ -23,6 +23,8 @@ namespace JediApp.Web.Controllers
         // GET: ExchangeOfficeBoardController
         public ActionResult Index()
         {
+            ViewData["activePage"] = "AdminExchange";
+
             var model = _exchangeOfficeBoardService.GetAllCurrencies();
 
             return View(model);
