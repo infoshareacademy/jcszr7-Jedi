@@ -6,6 +6,7 @@ using JediApp.Web.Areas.Identity.Data;
 using JediApp.Database.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using JediApp.Services;
+using JediApp.Services.Interfaces;
 
 //var builder = WebApplication.CreateBuilder(args);
 //var connectionString = builder.Configuration.GetConnectionString("JediAppDbContextConnection") ?? throw new InvalidOperationException("Connection string 'JediAppDbContextConnection' not found.");

@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using JediApp.Database.Domain;
 using JediApp.Database.Repositories;
+using JediApp.Services.Interfaces;
 using JediApp.Services.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

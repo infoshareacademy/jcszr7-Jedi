@@ -1,6 +1,6 @@
 ﻿using JediApp.Database.Domain;
 using JediApp.Database.Repositories;
-using JediApp.Services.Services;
+using JediApp.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

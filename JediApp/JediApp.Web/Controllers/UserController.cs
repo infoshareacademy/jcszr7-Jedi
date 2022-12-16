@@ -1,5 +1,5 @@
 ﻿using JediApp.Database.Domain;
-using JediApp.Web.Areas.Identity.Data;
+using JediApp.Services.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -9,27 +9,28 @@ namespace JediApp.Web.Controllers
 {
     public class UserController : Controller
     {
-        private readonly JediAppDbContext _dbContext;
+        private readonly UserRepository _userRepository;
 
-        public UserController(JediAppDbContext dbContext)
+        public UserController(UserRepository userRepository)
         {
-            _dbContext = dbContext;
+            _userRepository = userRepository;
         }
 
         public async Task<IActionResult> Index()
         {
-            var db = _dbContext.Users;
-            return View(await db.ToListAsync());
+            var model = _userRepository.GetAllUsers();
+
+            return View(await model.ToListAsync());
         }
 
         public async Task<IActionResult> Details(string id)
         {
-            if (id == null || _dbContext.Users == null)
+            if (id == null || _userRepository.Users == null)
             {
                 return NotFound();
             }
 
-            var user = await _dbContext.Users.FirstOrDefaultAsync(x=>x.Id==id);
+            var user = await _userRepository.Users.FirstOrDefaultAsync(x=>x.Id==id);
                 //.Include(x => x.Id)
                 //.FirstOrDefaultAsync(x=>x.Id == id);
                 
@@ -43,17 +44,17 @@ namespace JediApp.Web.Controllers
 
         public async Task<IActionResult> Edit(Guid? id)
         {
-            if (id == null || _dbContext.Users == null)
+            if (id == null || _userRepository.Users == null)
             {
                 return NotFound();
             }
 
-            var user = await _dbContext.Users.FindAsync(id);
+            var user = await _userRepository.Users.FindAsync(id);
             if (user == null)
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_dbContext.Set<User>(), "Id", "Id", user.Id);
+            ViewData["UserId"] = new SelectList(_userRepository.Set<User>(), "Id", "Id", user.Id);
             return View(user);
         }
        
@@ -68,8 +69,8 @@ namespace JediApp.Web.Controllers
             {
                 try
                 {
-                    _dbContext.Update(user);
-                    await _dbContext.SaveChangesAsync();
+                    _userRepository.Update(user);
+                    await _userRepository.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -84,18 +85,18 @@ namespace JediApp.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_dbContext.Set<User>(), "Id", "Id", user.Id);
+            ViewData["UserId"] = new SelectList(_userRepository.Set<User>(), "Id", "Id", user.Id);
             return View(user);
         }
 
         public async Task<IActionResult> Delete(string id)
         {
-            if (id == null || _dbContext.Users == null)
+            if (id == null || _userRepository.Users == null)
             {
                 return NotFound();
             }
 
-            var user = await _dbContext.Users
+            var user = await _userRepository.Users
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (user == null)

@@ -1,10 +1,51 @@
-﻿using JediApp.Database.Domain;
+﻿
+using JediApp.Database.Domain;
+using JediApp.Database.Repositories;
+using JediApp.Web.Areas.Identity.Data;
 
-namespace JediApp.Database.Repositories
+namespace JediApp.Services.Repositories
 {
-    public class UserRepository
+    public class UserRepository: IUserRepository
     {
-        private readonly string fileName = "..//..//..//..//Users.csv"; //może przeniść do klasy statycznej ???
+        private readonly JediAppDbContext _jediAppDbContext;
+
+        public UserRepository(JediAppDbContext jediAppDbContext)
+        {
+            _jediAppDbContext = jediAppDbContext;
+        }
+
+
+
+        public List<User> BrowseUsers(string query)
+        {
+            throw new NotImplementedException();
+        }
+
+        public User GetLoginPassword(string login, string password)
+        {
+            throw new NotImplementedException();
+        }
+
+        public User GetUserById(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public User GetUserByLogin(string login)
+        {
+            throw new NotImplementedException();
+        }
+        public User AddUser(User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<User> GetAllUsers()
+        {
+            var userList = _jediAppDbContext.Users;
+
+            return userList;
+        }
         //public User AddUser (User user)
         //{
         //    var id = Guid.NewGuid();
@@ -61,15 +102,15 @@ namespace JediApp.Database.Repositories
         //{
         //    List<User> users = GetAllUsers();
 
-            //var usersFromFile = File.ReadAllLines(fileName);
+        //var usersFromFile = File.ReadAllLines(fileName);
 
-            //foreach (var line in usersFromFile)
-            //{
-            //    var columns = line.Split(';');
-            //    Enum.TryParse(columns[3], out UserRole userRole);
-            //    if (columns.Length == 5)
-            //    users.Add(new User { Login = columns[1], Password = columns[2], Id = Guid.Parse(columns[0]),  Role = userRole });
-            //}
+        //foreach (var line in usersFromFile)
+        //{
+        //    var columns = line.Split(';');
+        //    Enum.TryParse(columns[3], out UserRole userRole);
+        //    if (columns.Length == 5)
+        //    users.Add(new User { Login = columns[1], Password = columns[2], Id = Guid.Parse(columns[0]),  Role = userRole });
+        //}
 
         //    User user = users.FirstOrDefault(x => x.Login == login && x.Password == password );
 

@@ -1,6 +1,6 @@
 ﻿using JediApp.Database.Domain;
 
-namespace JediApp.Services.Services
+namespace JediApp.Services.Interfaces
 {
     public interface IExchangeOfficeBoardService
     {

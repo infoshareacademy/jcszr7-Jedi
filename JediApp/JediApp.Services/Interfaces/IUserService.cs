@@ -1,14 +1,15 @@
 ﻿using JediApp.Database.Domain;
 
-namespace JediApp.Database.Repositories
+namespace JediApp.Services.Interfaces
 {
-    public interface IUserRepository
+    public interface IUserService
     {
         User GetUserById(Guid id);
         User GetUserByLogin(string login);
-        List<User> GetAllUsers();
+        void GetAllUsers();
         List<User> BrowseUsers(string query);
         User AddUser(User user);
-        User GetLoginPassword(string login, string password);
+        bool IfLoginIsUnique(User user);
+
     }
 }

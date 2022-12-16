@@ -1,4 +1,4 @@
-﻿namespace JediApp.Services.Services
+﻿namespace JediApp.Services.Interfaces
 {
     public interface IMenuService
     {
