@@ -283,84 +283,90 @@
                     <span>Dashboard</span>
                 </a>
             </li>
+            @if(User.IsInRole("Admin"))
+            {
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-target="#admin-nav" data-bs-toggle="collapse" aria-expanded="true" asp-area="" asp-controller="Home" asp-action="Index">
+                        <i class="bi bi-layout-text-window-reverse"></i>
+                        <span>Admin Panel</span>
+                    </a>
+                    <ul id="admin-nav" class="nav-content collapse @(adminPages.Contains(ViewData["activePage"]) ? "show" : "")" data-bs-parent="#sidebar-nav" style="">
+                        <li>
+                            <a class="@(ViewData["activePage"] == "AdminUser" ? "active" : "")" asp-area="" asp-controller="User" asp-action="Index">
+                                <i class="bi bi-circle"></i>
+                                <span>Users</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="@(ViewData["activePage"] == "AdminExchange" ? "active" : "")" asp-area="" asp-controller="ExchangeOfficeBoard" asp-action="Index">
+                                <i class="bi bi-circle"></i>
+                                <span>Exchange</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="@(ViewData["activePage"] == "MoneyStock" ? "active" : "")" asp-area="" asp-controller="MoneyStock" asp-action="Index">
+                                <i class="bi bi-circle"></i>
+                                <span>Money Stock</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="@(ViewData["activePage"] == "AdminTransactionHistory" ? "active" : "")" asp-area="" asp-controller="AdminTransactionHistory" asp-action="Index">
+                                <i class="bi bi-circle"></i>
+                                <span>Transaction History</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            }
 
-            <li class="nav-item">
-                <a class="nav-link" data-bs-target="#admin-nav" data-bs-toggle="collapse" aria-expanded="true" asp-area="" asp-controller="Home" asp-action="Index">
-                    <i class="bi bi-layout-text-window-reverse"></i>
-                    <span>Admin Panel</span>
-                </a>
-                <ul id="admin-nav" class="nav-content collapse @(adminPages.Contains(ViewData["activePage"]) ? "show" : "")" data-bs-parent="#sidebar-nav" style="">
-                    <li>
-                        <a class="@(ViewData["activePage"] == "AdminUser" ? "active" : "")"  asp-area="" asp-controller="User" asp-action="Index">
-                            <i class="bi bi-circle"></i>
-                            <span>Users</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="@(ViewData["activePage"] == "AdminExchange" ? "active" : "")" asp-area="" asp-controller="ExchangeOfficeBoard" asp-action="Index">
-                            <i class="bi bi-circle"></i>
-                            <span>Exchange</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="@(ViewData["activePage"] == "MoneyStock" ? "active" : "")" asp-area="" asp-controller="MoneyStock" asp-action="Index">
-                            <i class="bi bi-circle"></i>
-                            <span>Money Stock</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="@(ViewData["activePage"] == "AdminTransactionHistory" ? "active" : "")" asp-area="" asp-controller="AdminTransactionHistory" asp-action="Index">
-                            <i class="bi bi-circle"></i>
-                            <span>Transaction History</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
+            @if(User.IsInRole("User"))
+            {
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-target="#finances-nav" data-bs-toggle="collapse" aria-expanded="true" asp-area="" asp-controller="Home" asp-action="Index">
+                        <i class="bi bi-cash-coin"></i>
+                        <span>User Finances</span>
+                    </a>
+                    <ul id="finances-nav" class="nav-content collapse  @(userPages.Contains(ViewData["activePage"]) ? "show" : "")" data-bs-parent="#sidebar-nav" style="">
+                        <li>
+                            <a class="@(ViewData["activePage"] == "AccountBalance" ? "active" : "")" asp-area="" asp-controller="UserAccountBalance" asp-action="Index">
+                                <i class="bi bi-circle"></i>
+                                <span>Account Balance</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="@(ViewData["activePage"] == "UserExchange" ? "active" : "")" asp-area="" asp-controller="UserExchangeOfficeBoard" asp-action="Index">
+                                <i class="bi bi-circle"></i>
+                                <span>Exchange</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="@(ViewData["activePage"] == "UserTransactionHistory" ? "active" : "")" asp-area="" asp-controller="UserTransactionHistory" asp-action="Index">
+                                <i class="bi bi-circle"></i>
+                                <span>Transaction History</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            }
+           
 
-            <li class="nav-item">
-                <a class="nav-link" data-bs-target="#finances-nav" data-bs-toggle="collapse" aria-expanded="true" asp-area="" asp-controller="Home" asp-action="Index">
-                    <i class="bi bi-cash-coin"></i>
-                    <span>User Finances</span>
-                </a>
-                <ul id="finances-nav" class="nav-content collapse  @(userPages.Contains(ViewData["activePage"]) ? "show" : "")" data-bs-parent="#sidebar-nav" style="">
-                    <li>
-                        <a class="@(ViewData["activePage"] == "AccountBalance" ? "active" : "")" asp-area="" asp-controller="UserAccountBalance" asp-action="Index">
-                            <i class="bi bi-circle"></i>
-                            <span>Account Balance</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="@(ViewData["activePage"] == "UserExchange" ? "active" : "")" asp-area="" asp-controller="UserExchangeOfficeBoard" asp-action="Index">
-                            <i class="bi bi-circle"></i>
-                            <span>Exchange</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="@(ViewData["activePage"] == "UserTransactionHistory" ? "active" : "")" asp-area="" asp-controller="UserTransactionHistory" asp-action="Index">
-                            <i class="bi bi-circle"></i>
-                            <span>Transaction History</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-
-            @if (User.IsInRole("Admin"))
+           @* @if (User.IsInRole("Admin"))
             {
                 <li class="nav-item">
                     <a asp-area="" asp-controller="User" asp-action="Index" class="nav-link collapsed">
                         <span>Admin</span>
                     </a>
                 </li>
-            }
+            }*@
 
-            @if (User.IsInRole("User"))
+          @*  @if (User.IsInRole("User"))
             {
                 <li class="nav-item">
                     <a asp-area="" asp-controller="User" asp-action="Index" class="nav-link collapsed">
                         <span>User</span>
                     </a>
                 </li>
-            }
+            }*@
 
         </ul>
 
