@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\JediApp.Infrastructure\JediApp.Infrastructure.csproj" />
     <ProjectReference Include="..\JediApp.Services\JediApp.Services.csproj" />
   </ItemGroup>
 
