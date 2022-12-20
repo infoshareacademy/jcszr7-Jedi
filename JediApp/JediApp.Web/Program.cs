@@ -6,6 +6,7 @@ using JediApp.Web.Areas.Identity.Data;
 using JediApp.Database.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using JediApp.Services;
+using JediApp.Database.Interface;
 
 //var builder = WebApplication.CreateBuilder(args);
 //var connectionString = builder.Configuration.GetConnectionString("JediAppDbContextConnection") ?? throw new InvalidOperationException("Connection string 'JediAppDbContextConnection' not found.");
@@ -43,8 +44,9 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddScoped<IExchangeOfficeBoardRepository, ExchangeOfficeBoardRepository>();
-builder.Services.AddScoped<IExchangeOfficeBoardService, ExchangeOfficeBoardService>();
+builder.Services.AddTransient<IExchangeOfficeBoardRepository, ExchangeOfficeBoardRepository>();
+builder.Services.AddTransient<IExchangeOfficeBoardService, ExchangeOfficeBoardService>();
+builder.Services.AddTransient<UserRepository>();
 
 var app = builder.Build();
 

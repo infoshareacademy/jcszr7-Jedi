@@ -6,7 +6,7 @@ namespace JediApp.Database.Interface
     {
         //User GetUserById(Guid id);
         //User GetUserByLogin(string login);
-        //List<User> GetAllUsers();
+        Task<IEnumerable<User>> GetAllUsers();
         //List<User> BrowseUsers(string query);
         //User AddUser(User user);
         //User GetLoginPassword(string login, string password);

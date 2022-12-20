@@ -1,5 +1,6 @@
 ﻿using JediApp.Database.Domain;
-using JediApp.Database.Repositories;
+using JediApp.Database.Interface;
+
 
 namespace JediApp.Services.Services
 {
@@ -11,21 +12,21 @@ namespace JediApp.Services.Services
             _userRepository = userRepository;
         }
 
-        public User GetUserById(Guid id)
-        {
-            return _userRepository.GetUserById(id);
-        }
+        //public User GetUserById(Guid id)
+        //{
+        //    return _userRepository.GetUserById(id);
+        //}
 
-        public User GetUserByLogin(string login)
-        {
-            return _userRepository.GetUserByLogin(login);
-        }
+        //public User GetUserByLogin(string login)
+        //{
+        //    return _userRepository.GetUserByLogin(login);
+        //}
 
-        public List<User> GetAllUsers()
-        {
+        //public List<User> GetAllUsers()
+        //{
 
-            return _userRepository.GetAllUsers();
-        }
+        //    return _userRepository.GetAllUsers();
+        //}
 
         //public User AddUser(User user)
         //{
@@ -37,10 +38,10 @@ namespace JediApp.Services.Services
         //    return null;
         //}
 
-        public List<User> BrowseUsers(string query)
-        {
-            return _userRepository.BrowseUsers(query);
-        }
+        //public List<User> BrowseUsers(string query)
+        //{
+        //    return _userRepository.BrowseUsers(query);
+        //}
 
         //public bool IfLoginIsUnique(User user)
         //{

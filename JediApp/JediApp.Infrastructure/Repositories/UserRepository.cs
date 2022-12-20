@@ -1,10 +1,26 @@
 ﻿using JediApp.Database.Domain;
+using JediApp.Database.Interface;
+using JediApp.Web.Areas.Identity.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace JediApp.Database.Repositories
 {
-    public class UserRepository
+    public class UserRepository : IUserRepository
     {
-        private readonly string fileName = "..//..//..//..//Users.csv"; //może przeniść do klasy statycznej ???
+        private readonly JediAppDbContext _jediAppDb;
+
+        public UserRepository(JediAppDbContext jediAppDb)
+        {
+                _jediAppDb= jediAppDb;
+        }
+
+        public async Task<IEnumerable<User>> GetAllUsers()
+        {
+            var users = await _jediAppDb.Users.ToListAsync();
+
+            return users;
+        }
+
         //public User AddUser (User user)
         //{
         //    var id = Guid.NewGuid();
@@ -61,19 +77,20 @@ namespace JediApp.Database.Repositories
         //{
         //    List<User> users = GetAllUsers();
 
-            //var usersFromFile = File.ReadAllLines(fileName);
+        //var usersFromFile = File.ReadAllLines(fileName);
 
-            //foreach (var line in usersFromFile)
-            //{
-            //    var columns = line.Split(';');
-            //    Enum.TryParse(columns[3], out UserRole userRole);
-            //    if (columns.Length == 5)
-            //    users.Add(new User { Login = columns[1], Password = columns[2], Id = Guid.Parse(columns[0]),  Role = userRole });
-            //}
+        //foreach (var line in usersFromFile)
+        //{
+        //    var columns = line.Split(';');
+        //    Enum.TryParse(columns[3], out UserRole userRole);
+        //    if (columns.Length == 5)
+        //    users.Add(new User { Login = columns[1], Password = columns[2], Id = Guid.Parse(columns[0]),  Role = userRole });
+        //}
 
         //    User user = users.FirstOrDefault(x => x.Login == login && x.Password == password );
 
         //    return user;
         //}
+
     }
 }

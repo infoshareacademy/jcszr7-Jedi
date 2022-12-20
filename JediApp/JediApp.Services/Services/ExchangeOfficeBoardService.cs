@@ -1,5 +1,6 @@
 ﻿using JediApp.Database.Domain;
-using JediApp.Database.Repositories;
+using JediApp.Database.Interface;
+
 
 namespace JediApp.Services.Services
 {
