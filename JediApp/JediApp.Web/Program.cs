@@ -13,11 +13,11 @@ using JediApp.Database.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<JediAppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("JediAppDbContextConnection") ?? throw new InvalidOperationException("Connection string 'WebMvcDbHouseBillsWebMvcContext' not found.")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("JediAppDbContextConnection") ?? throw new InvalidOperationException("Connection string 'JediAppDbContextConnection' not found.")));
 
 //builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
 //    .AddEntityFrameworkStores<JediAppDbContext>();
-var connectionString = builder.Configuration.GetConnectionString("JediAppDbContextConnection") ?? throw new InvalidOperationException("Connection string 'HouseBillsWebMvcDbContextConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("JediAppDbContextConnection") ?? throw new InvalidOperationException("Connection string 'JediAppDbContextConnection' not found.");
 
 
 builder.Services.AddControllers();
