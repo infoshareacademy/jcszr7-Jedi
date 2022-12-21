@@ -7,6 +7,7 @@ namespace JediApp.Database.Interface
         Task<User> GetUserById(string id);
         //User GetUserByLogin(string login);
         Task<IEnumerable<User>> GetAllUsers();
+        void DeleteUser(User user);
         //List<User> BrowseUsers(string query);
         //User AddUser(User user);
         //User GetLoginPassword(string login, string password);

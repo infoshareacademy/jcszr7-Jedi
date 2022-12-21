@@ -34,8 +34,8 @@ builder.Services.AddDbContext<JediAppDbContext>(options =>
 
 builder.Services.AddIdentity<User, IdentityRole>()
             .AddEntityFrameworkStores<JediAppDbContext>()
-            .AddDefaultTokenProviders().
-            AddDefaultUI();
+            .AddDefaultTokenProviders()
+            .AddDefaultUI();
 
 //builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
 //    .AddEntityFrameworkStores<JediAppDbContext>();

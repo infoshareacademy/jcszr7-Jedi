@@ -9,30 +9,40 @@ namespace JediApp.Services.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        
+
         public UserService(IServiceProvider userRepository)
         {
             _userRepository = ActivatorUtilities.GetServiceOrCreateInstance<IUserRepository>(userRepository);
         }
 
-        public Task<IEnumerable<User>> GetAllUsers()
+        public async Task<IEnumerable<User>> GetAllUsers()
         {
-            var users = _userRepository.GetAllUsers();
+            var users = await  _userRepository.GetAllUsers();
 
             return users;
         }
 
-        public Task<User> GetUserById(string id)
+        public async Task<User> GetUserById(string id)
         {
-            var user = _userRepository.GetUserById(id);
+            var user = await _userRepository.GetUserById(id);
 
-            if (user == null)
-            {
-                return null;
-            }
+            return  user;
+        }
+
+        public async Task<User> Delete(string id)
+        {
+            var user = await _userRepository.GetUserById(id);
+
+            _userRepository.DeleteUser(user);
 
             return user;
         }
 
+        //public void DeleteUser(string id)
+        //{
+        //    var user = _userRepository.GetUserById(id);
+        //}
         //public User GetUserById(Guid id)
         //{
         //    return _userRepository.GetUserById(id);
@@ -73,6 +83,6 @@ namespace JediApp.Services.Services
         //    }
         //    return true;
         //}
-        
+
     }
 }

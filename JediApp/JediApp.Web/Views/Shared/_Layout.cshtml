@@ -283,8 +283,8 @@
                     <span>Dashboard</span>
                 </a>
             </li>
-            @if(User.IsInRole("Admin"))
-            {
+           @* @if(User.IsInRole("Admin"))
+            {*@
                 <li class="nav-item">
                     <a class="nav-link" data-bs-target="#admin-nav" data-bs-toggle="collapse" aria-expanded="true" asp-area="" asp-controller="Home" asp-action="Index">
                         <i class="bi bi-layout-text-window-reverse"></i>
@@ -317,10 +317,10 @@
                         </li>
                     </ul>
                 </li>
-            }
+          @*  }
 
             @if(User.IsInRole("User"))
-            {
+            {*@
                 <li class="nav-item">
                     <a class="nav-link" data-bs-target="#finances-nav" data-bs-toggle="collapse" aria-expanded="true" asp-area="" asp-controller="Home" asp-action="Index">
                         <i class="bi bi-cash-coin"></i>
@@ -347,7 +347,7 @@
                         </li>
                     </ul>
                 </li>
-            }
+            @*}*@
            
 
            @* @if (User.IsInRole("Admin"))

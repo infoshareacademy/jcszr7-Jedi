@@ -8,7 +8,8 @@ namespace JediApp.Services.Services
         //User GetUserByLogin(string login);
         Task<IEnumerable<User>> GetAllUsers();
         //List<User> BrowseUsers(string query);
-        //User AddUser(User user);
+        //void DeleteUser(string id);
+        Task<User> Delete(string id);
         //bool IfLoginIsUnique(User user);
 
     }

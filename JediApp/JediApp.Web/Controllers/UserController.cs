@@ -31,26 +31,40 @@ namespace JediApp.Web.Controllers
 
             var user = await _userService.GetUserById(id);
 
+            if (user == null)
+            {
+                return NotFound();
+            }
+
             return View(user);
         }
-        //public async Task<IActionResult> Details(string id)
-        //{
-        //    if (id == null || _dbContext.Users == null)
-        //    {
-        //        return NotFound();
-        //    }
 
-        //    var user = await _dbContext.Users.FirstOrDefaultAsync(x=>x.Id==id);
-        //        //.Include(x => x.Id)
-        //        //.FirstOrDefaultAsync(x=>x.Id == id);
-                
+        public async Task<IActionResult> Delete(string id)
+        {
+            var user = await _userService.GetUserById(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View(user);
+        }
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> DeleteConfirmed(string id)
+        //{
+        //    var user = await _userService.Delete(id);
+
         //    if (user == null)
         //    {
         //        return NotFound();
         //    }
 
-        //    return View(user);
+        //    return View();
         //}
+
 
         //public async Task<IActionResult> Edit(Guid? id)
         //{
@@ -67,7 +81,7 @@ namespace JediApp.Web.Controllers
         //    ViewData["UserId"] = new SelectList(_dbContext.Set<User>(), "Id", "Id", user.Id);
         //    return View(user);
         //}
-       
+
         //public async Task<IActionResult> Edit(string id, [Bind("FirstName,LastName")] User user)
         //{
         //    if (id != user.Id)

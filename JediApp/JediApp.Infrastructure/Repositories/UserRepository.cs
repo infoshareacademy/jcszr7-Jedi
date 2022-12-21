@@ -28,6 +28,13 @@ namespace JediApp.Database.Repositories
             return user;
         }
 
+        public void DeleteUser(User user)
+        {
+             _jediAppDb.Remove(user);
+
+            _jediAppDb.SaveChangesAsync();
+        }
+
 
         //public User AddUser (User user)
         //{
