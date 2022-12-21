@@ -4,7 +4,7 @@ namespace JediApp.Database.Interface
 {
     public interface IUserRepository
     {
-        //User GetUserById(Guid id);
+        Task<User> GetUserById(string id);
         //User GetUserByLogin(string login);
         Task<IEnumerable<User>> GetAllUsers();
         //List<User> BrowseUsers(string query);

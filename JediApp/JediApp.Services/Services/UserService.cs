@@ -1,15 +1,36 @@
 ﻿using JediApp.Database.Domain;
 using JediApp.Database.Interface;
-
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.DotNet.Scaffolding.Shared.Messaging;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace JediApp.Services.Services
 {
-    public class UserService
+    public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        public UserService(IUserRepository userRepository)
+        public UserService(IServiceProvider userRepository)
         {
-            _userRepository = userRepository;
+            _userRepository = ActivatorUtilities.GetServiceOrCreateInstance<IUserRepository>(userRepository);
+        }
+
+        public Task<IEnumerable<User>> GetAllUsers()
+        {
+            var users = _userRepository.GetAllUsers();
+
+            return users;
+        }
+
+        public Task<User> GetUserById(string id)
+        {
+            var user = _userRepository.GetUserById(id);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            return user;
         }
 
         //public User GetUserById(Guid id)

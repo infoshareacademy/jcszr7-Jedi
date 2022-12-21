@@ -1,6 +1,7 @@
 ﻿using JediApp.Database.Domain;
 using JediApp.Database.Interface;
 using JediApp.Database.Repositories;
+using JediApp.Services.Services;
 using JediApp.Web.Areas.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,20 +12,27 @@ namespace JediApp.Web.Controllers
 {
     public class UserController : Controller
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUserService _userService;
 
-        public UserController(UserRepository userRepository)
+        public UserController(UserService userService)
         {
-            _userRepository= userRepository;
+            _userService = userService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var model = await _userRepository.GetAllUsers();
+            var model = await _userService.GetAllUsers();
 
             return View(model);
         }
 
+        public async Task<IActionResult> Details(string id)
+        {
+
+            var user = await _userService.GetUserById(id);
+
+            return View(user);
+        }
         //public async Task<IActionResult> Details(string id)
         //{
         //    if (id == null || _dbContext.Users == null)

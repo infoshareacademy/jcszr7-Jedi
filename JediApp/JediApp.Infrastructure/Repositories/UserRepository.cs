@@ -21,6 +21,14 @@ namespace JediApp.Database.Repositories
             return users;
         }
 
+        public async Task<User> GetUserById(string id)
+        {
+            var user =await  _jediAppDb.Users.FindAsync(id);
+
+            return user;
+        }
+
+
         //public User AddUser (User user)
         //{
         //    var id = Guid.NewGuid();

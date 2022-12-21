@@ -45,8 +45,10 @@ builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddTransient<IExchangeOfficeBoardRepository, ExchangeOfficeBoardRepository>();
-builder.Services.AddTransient<IExchangeOfficeBoardService, ExchangeOfficeBoardService>();
-builder.Services.AddTransient<UserRepository>();
+builder.Services.AddTransient<IExchangeOfficeBoardService, ExchangeOfficeBoardService>()
+                .AddTransient<IUserRepository,UserRepository>()
+                .AddTransient<UserService>();
+
 
 var app = builder.Build();
 
