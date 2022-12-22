@@ -9,34 +9,10 @@ namespace JediApp.Services.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        
 
         public UserService(IServiceProvider userRepository)
         {
             _userRepository = ActivatorUtilities.GetServiceOrCreateInstance<IUserRepository>(userRepository);
-        }
-
-        public async Task<IEnumerable<User>> GetAllUsers()
-        {
-            var users = await  _userRepository.GetAllUsers();
-
-            return users;
-        }
-
-        public async Task<User> GetUserById(string id)
-        {
-            var user = await _userRepository.GetUserById(id);
-
-            return  user;
-        }
-
-        public async Task<User> Delete(string id)
-        {
-            var user = await _userRepository.GetUserById(id);
-
-            _userRepository.DeleteUser(user);
-
-            return user;
         }
 
         //public void DeleteUser(string id)

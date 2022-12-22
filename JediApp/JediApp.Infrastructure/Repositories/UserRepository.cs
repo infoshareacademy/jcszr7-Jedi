@@ -23,7 +23,7 @@ namespace JediApp.Database.Repositories
 
         public async Task<User> GetUserById(string id)
         {
-            var user =await  _jediAppDb.Users.FindAsync(id);
+            var user = await _jediAppDb.Users.FindAsync(id);
 
             return user;
         }

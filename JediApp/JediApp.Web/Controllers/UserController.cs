@@ -13,35 +13,31 @@ namespace JediApp.Web.Controllers
     public class UserController : Controller
     {
         private readonly IUserService _userService;
+        private readonly IUserRepository _userRepository;
 
-        public UserController(UserService userService)
+        public UserController(UserService userService, IServiceProvider userRepository)
         {
             _userService = userService;
+            _userRepository = ActivatorUtilities.GetServiceOrCreateInstance<IUserRepository>(userRepository);
         }
 
         public async Task<IActionResult> Index()
         {
-            var model = await _userService.GetAllUsers();
+            var users = await _userRepository.GetAllUsers();
 
-            return View(model);
+            return View(users);
         }
 
         public async Task<IActionResult> Details(string id)
         {
-
-            var user = await _userService.GetUserById(id);
-
-            if (user == null)
-            {
-                return NotFound();
-            }
+            var user = await _userRepository.GetUserById(id);
 
             return View(user);
         }
 
         public async Task<IActionResult> Delete(string id)
         {
-            var user = await _userService.GetUserById(id);
+            var user = await _userRepository.GetUserById(id);
 
             if (user == null)
             {
@@ -51,19 +47,21 @@ namespace JediApp.Web.Controllers
             return View(user);
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(string id)
-        //{
-        //    var user = await _userService.Delete(id);
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(string id)
+        {
+            var user = await _userRepository.GetUserById(id);
 
-        //    if (user == null)
-        //    {
-        //        return NotFound();
-        //    }
+            if (user == null)
+            {
+                return NotFound();
+            }
 
-        //    return View();
-        //}
+            _userRepository.DeleteUser(user);
+
+            return RedirectToAction("Index");
+        }
 
 
         //public async Task<IActionResult> Edit(Guid? id)
