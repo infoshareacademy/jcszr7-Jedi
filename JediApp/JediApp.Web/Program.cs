@@ -6,17 +6,18 @@ using JediApp.Web.Areas.Identity.Data;
 using JediApp.Database.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using JediApp.Services;
+using JediApp.Database.Interface;
 
 //var builder = WebApplication.CreateBuilder(args);
 //var connectionString = builder.Configuration.GetConnectionString("JediAppDbContextConnection") ?? throw new InvalidOperationException("Connection string 'JediAppDbContextConnection' not found.");
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<JediAppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("JediAppDbContextConnection") ?? throw new InvalidOperationException("Connection string 'WebMvcDbHouseBillsWebMvcContext' not found.")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("JediAppDbContextConnection") ?? throw new InvalidOperationException("Connection string 'JediAppDbContextConnection' not found.")));
 
 //builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
 //    .AddEntityFrameworkStores<JediAppDbContext>();
-var connectionString = builder.Configuration.GetConnectionString("JediAppDbContextConnection") ?? throw new InvalidOperationException("Connection string 'HouseBillsWebMvcDbContextConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("JediAppDbContextConnection") ?? throw new InvalidOperationException("Connection string 'JediAppDbContextConnection' not found.");
 
 
 builder.Services.AddControllers();
@@ -33,8 +34,8 @@ builder.Services.AddDbContext<JediAppDbContext>(options =>
 
 builder.Services.AddIdentity<User, IdentityRole>()
             .AddEntityFrameworkStores<JediAppDbContext>()
-            .AddDefaultTokenProviders().
-            AddDefaultUI();
+            .AddDefaultTokenProviders()
+            .AddDefaultUI();
 
 //builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
 //    .AddEntityFrameworkStores<JediAppDbContext>();
@@ -43,8 +44,11 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddScoped<IExchangeOfficeBoardRepository, ExchangeOfficeBoardRepository>();
-builder.Services.AddScoped<IExchangeOfficeBoardService, ExchangeOfficeBoardService>();
+builder.Services.AddTransient<IExchangeOfficeBoardRepository, ExchangeOfficeBoardRepository>();
+builder.Services.AddTransient<IExchangeOfficeBoardService, ExchangeOfficeBoardService>()
+                .AddTransient<IUserRepository, UserRepository>()
+                .AddTransient<UserService>();
+
 
 var app = builder.Build();
 

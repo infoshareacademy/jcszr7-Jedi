@@ -1,31 +1,39 @@
 ﻿using JediApp.Database.Domain;
-using JediApp.Database.Repositories;
+using JediApp.Database.Interface;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.DotNet.Scaffolding.Shared.Messaging;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace JediApp.Services.Services
 {
-    public class UserService
+    public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        public UserService(IUserRepository userRepository)
+
+        public UserService(IServiceProvider userRepository)
         {
-            _userRepository = userRepository;
+            _userRepository = ActivatorUtilities.GetServiceOrCreateInstance<IUserRepository>(userRepository);
         }
 
-        public User GetUserById(Guid id)
-        {
-            return _userRepository.GetUserById(id);
-        }
+        //public void DeleteUser(string id)
+        //{
+        //    var user = _userRepository.GetUserById(id);
+        //}
+        //public User GetUserById(Guid id)
+        //{
+        //    return _userRepository.GetUserById(id);
+        //}
 
-        public User GetUserByLogin(string login)
-        {
-            return _userRepository.GetUserByLogin(login);
-        }
+        //public User GetUserByLogin(string login)
+        //{
+        //    return _userRepository.GetUserByLogin(login);
+        //}
 
-        public List<User> GetAllUsers()
-        {
+        //public List<User> GetAllUsers()
+        //{
 
-            return _userRepository.GetAllUsers();
-        }
+        //    return _userRepository.GetAllUsers();
+        //}
 
         //public User AddUser(User user)
         //{
@@ -37,10 +45,10 @@ namespace JediApp.Services.Services
         //    return null;
         //}
 
-        public List<User> BrowseUsers(string query)
-        {
-            return _userRepository.BrowseUsers(query);
-        }
+        //public List<User> BrowseUsers(string query)
+        //{
+        //    return _userRepository.BrowseUsers(query);
+        //}
 
         //public bool IfLoginIsUnique(User user)
         //{
@@ -51,6 +59,6 @@ namespace JediApp.Services.Services
         //    }
         //    return true;
         //}
-        
+
     }
 }
