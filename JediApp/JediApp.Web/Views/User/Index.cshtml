@@ -10,7 +10,7 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table table-bordered">
+<table class="table table-striped">
     <thead>
         <tr>
             <th>
@@ -25,9 +25,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Email)
             </th>
-            <th>
+           @* <th>
                 @Html.DisplayNameFor(model => model.PhoneNumber)
-            </th>
+            </th>*@
             <th></th>
         </tr>
     </thead>
@@ -47,13 +47,17 @@
                 <td>
                     @item.Email
                 </td>
-                <td>
+               @* <td>
                     @item.PhoneNumber
-                </td>
+                </td>*@
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <input type="button" value="Edit" class="btn btn-outline-secondary btn-sm align-text-bottom " onclick="location.href='@Url.Action("Edit", "User", new { Id = item.Id } )'" />
+                    <input type="button" value="Details" class="btn btn-outline-secondary btn-sm align-text-bottom" onclick="location.href='@Url.Action("Details", "User",new { Id = item.Id } )'" />
+                    <input type="button" value="Delete" class="btn btn-outline-secondary btn-sm align-text-bottom" onclick="location.href='@Url.Action("Delete", "User",new { Id = item.Id } )'" />
+
+                    @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
                 </td>
             </tr>
         }

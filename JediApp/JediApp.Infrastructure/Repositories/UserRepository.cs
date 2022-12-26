@@ -11,7 +11,7 @@ namespace JediApp.Database.Repositories
 
         public UserRepository(JediAppDbContext jediAppDb)
         {
-                _jediAppDb= jediAppDb;
+            _jediAppDb = jediAppDb;
         }
 
         public async Task<IEnumerable<User>> GetAllUsers()
@@ -20,19 +20,24 @@ namespace JediApp.Database.Repositories
 
             return users;
         }
-
         public async Task<User> GetUserById(string id)
         {
-            var user = await _jediAppDb.Users.FindAsync(id);
-
+            var user = await _jediAppDb.Users.FirstOrDefaultAsync(u => u.Id == id);
             return user;
         }
 
         public void DeleteUser(User user)
         {
-             _jediAppDb.Remove(user);
+            _jediAppDb.Remove(user);
 
             _jediAppDb.SaveChangesAsync();
+        }
+
+        public void UpdateUser(User user)
+        {
+            
+            //_jediAppDb.Users.UpdateRange(user);
+            //_jediAppDb.SaveChangesAsync();
         }
 
 

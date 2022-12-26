@@ -4,6 +4,7 @@ using JediApp.Web.Areas.Identity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JediApp.Services.Migrations
 {
     [DbContext(typeof(JediAppDbContext))]
-    partial class JediAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221226065528_AddRelationExchOffExchBoardCurrencyMoneyOnStock")]
+    partial class AddRelationExchOffExchBoardCurrencyMoneyOnStock
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,7 +58,7 @@ namespace JediApp.Services.Migrations
 
                     b.HasIndex("ExchangeOfficeBoardId");
 
-                    b.ToTable("Currencys", (string)null);
+                    b.ToTable("Currencys");
                 });
 
             modelBuilder.Entity("JediApp.Database.Domain.ExchangeOffice", b =>
@@ -73,7 +75,7 @@ namespace JediApp.Services.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ExchangeOffices", (string)null);
+                    b.ToTable("ExchangeOffices");
                 });
 
             modelBuilder.Entity("JediApp.Database.Domain.ExchangeOfficeBoard", b =>
@@ -90,7 +92,7 @@ namespace JediApp.Services.Migrations
                     b.HasIndex("ExchangeOfficeId")
                         .IsUnique();
 
-                    b.ToTable("ExchangeOfficeBoards", (string)null);
+                    b.ToTable("ExchangeOfficeBoards");
                 });
 
             modelBuilder.Entity("JediApp.Database.Domain.MoneyOnStock", b =>
@@ -113,7 +115,7 @@ namespace JediApp.Services.Migrations
 
                     b.HasIndex("ExchangeOfficeId");
 
-                    b.ToTable("MoneyOnStocks", (string)null);
+                    b.ToTable("MoneyOnStocks");
                 });
 
             modelBuilder.Entity("JediApp.Database.Domain.TransactionHistory", b =>
@@ -150,7 +152,7 @@ namespace JediApp.Services.Migrations
 
                     b.HasIndex("UserId1");
 
-                    b.ToTable("TransactionHistory", (string)null);
+                    b.ToTable("TransactionHistory");
                 });
 
             modelBuilder.Entity("JediApp.Database.Domain.User", b =>
@@ -251,7 +253,7 @@ namespace JediApp.Services.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Wallets", (string)null);
+                    b.ToTable("Wallets");
                 });
 
             modelBuilder.Entity("JediApp.Database.Domain.WalletPosition", b =>
@@ -276,7 +278,7 @@ namespace JediApp.Services.Migrations
 
                     b.HasIndex("WalletId");
 
-                    b.ToTable("WalletPositions", (string)null);
+                    b.ToTable("WalletPositions");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

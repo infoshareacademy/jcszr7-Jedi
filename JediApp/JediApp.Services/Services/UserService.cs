@@ -15,6 +15,18 @@ namespace JediApp.Services.Services
             _userRepository = ActivatorUtilities.GetServiceOrCreateInstance<IUserRepository>(userRepository);
         }
 
+        public async Task<User> UpdateUser(User user)
+        {
+            var users = await _userRepository.GetUserById(user.Id);
+
+            users.FirstName = user.FirstName;
+            users.LastName = user.LastName;
+            users.UserName = user.UserName;
+            users.Email = user.Email;
+
+            return users;
+        }
+
         //public void DeleteUser(string id)
         //{
         //    var user = _userRepository.GetUserById(id);
