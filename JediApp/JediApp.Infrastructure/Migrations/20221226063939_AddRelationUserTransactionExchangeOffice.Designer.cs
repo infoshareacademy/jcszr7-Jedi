@@ -4,6 +4,7 @@ using JediApp.Web.Areas.Identity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JediApp.Services.Migrations
 {
     [DbContext(typeof(JediAppDbContext))]
-    partial class JediAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221226063939_AddRelationUserTransactionExchangeOffice")]
+    partial class AddRelationUserTransactionExchangeOffice
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,9 +37,6 @@ namespace JediApp.Services.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("ExchangeOfficeBoardId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -54,8 +53,6 @@ namespace JediApp.Services.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ExchangeOfficeBoardId");
-
                     b.ToTable("Currencys");
                 });
 
@@ -65,56 +62,12 @@ namespace JediApp.Services.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
 
                     b.ToTable("ExchangeOffices");
-                });
-
-            modelBuilder.Entity("JediApp.Database.Domain.ExchangeOfficeBoard", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ExchangeOfficeId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ExchangeOfficeId")
-                        .IsUnique();
-
-                    b.ToTable("ExchangeOfficeBoards");
-                });
-
-            modelBuilder.Entity("JediApp.Database.Domain.MoneyOnStock", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CurrencyName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("ExchangeOfficeId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("Value")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ExchangeOfficeId");
-
-                    b.ToTable("MoneyOnStocks");
                 });
 
             modelBuilder.Entity("JediApp.Database.Domain.TransactionHistory", b =>
@@ -137,13 +90,19 @@ namespace JediApp.Services.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UserId1")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserLogin")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId1");
 
                     b.ToTable("TransactionHistory");
                 });
@@ -166,6 +125,9 @@ namespace JediApp.Services.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<Guid>("ExchangeOfficeId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -210,7 +172,13 @@ namespace JediApp.Services.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<Guid>("WalletId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ExchangeOfficeId")
+                        .IsUnique();
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -219,6 +187,9 @@ namespace JediApp.Services.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("WalletId")
+                        .IsUnique();
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -229,14 +200,10 @@ namespace JediApp.Services.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
 
                     b.ToTable("Wallets");
                 });
@@ -399,70 +366,32 @@ namespace JediApp.Services.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("JediApp.Database.Domain.Currency", b =>
-                {
-                    b.HasOne("JediApp.Database.Domain.ExchangeOfficeBoard", "ExchangeOfficeBoard")
-                        .WithMany("Currencies")
-                        .HasForeignKey("ExchangeOfficeBoardId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ExchangeOfficeBoard");
-                });
-
-            modelBuilder.Entity("JediApp.Database.Domain.ExchangeOffice", b =>
-                {
-                    b.HasOne("JediApp.Database.Domain.User", "User")
-                        .WithOne("ExchangeOffice")
-                        .HasForeignKey("JediApp.Database.Domain.ExchangeOffice", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("JediApp.Database.Domain.ExchangeOfficeBoard", b =>
-                {
-                    b.HasOne("JediApp.Database.Domain.ExchangeOffice", "ExchangeOffice")
-                        .WithOne("ExchangeOfficeBoard")
-                        .HasForeignKey("JediApp.Database.Domain.ExchangeOfficeBoard", "ExchangeOfficeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("ExchangeOffice");
-                });
-
-            modelBuilder.Entity("JediApp.Database.Domain.MoneyOnStock", b =>
-                {
-                    b.HasOne("JediApp.Database.Domain.ExchangeOffice", "ExchangeOffice")
-                        .WithMany("MoneyOnStocks")
-                        .HasForeignKey("ExchangeOfficeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ExchangeOffice");
-                });
-
             modelBuilder.Entity("JediApp.Database.Domain.TransactionHistory", b =>
                 {
                     b.HasOne("JediApp.Database.Domain.User", "User")
                         .WithMany("TransactionHistory")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId1");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("JediApp.Database.Domain.Wallet", b =>
+            modelBuilder.Entity("JediApp.Database.Domain.User", b =>
                 {
-                    b.HasOne("JediApp.Database.Domain.User", "User")
-                        .WithOne("Wallet")
-                        .HasForeignKey("JediApp.Database.Domain.Wallet", "UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                    b.HasOne("JediApp.Database.Domain.ExchangeOffice", "ExchangeOffice")
+                        .WithOne("User")
+                        .HasForeignKey("JediApp.Database.Domain.User", "ExchangeOfficeId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.HasOne("JediApp.Database.Domain.Wallet", "Wallet")
+                        .WithOne("User")
+                        .HasForeignKey("JediApp.Database.Domain.User", "WalletId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ExchangeOffice");
+
+                    b.Navigation("Wallet");
                 });
 
             modelBuilder.Entity("JediApp.Database.Domain.WalletPosition", b =>
@@ -543,30 +472,20 @@ namespace JediApp.Services.Migrations
 
             modelBuilder.Entity("JediApp.Database.Domain.ExchangeOffice", b =>
                 {
-                    b.Navigation("ExchangeOfficeBoard")
+                    b.Navigation("User")
                         .IsRequired();
-
-                    b.Navigation("MoneyOnStocks");
-                });
-
-            modelBuilder.Entity("JediApp.Database.Domain.ExchangeOfficeBoard", b =>
-                {
-                    b.Navigation("Currencies");
                 });
 
             modelBuilder.Entity("JediApp.Database.Domain.User", b =>
                 {
-                    b.Navigation("ExchangeOffice")
-                        .IsRequired();
-
                     b.Navigation("TransactionHistory");
-
-                    b.Navigation("Wallet")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("JediApp.Database.Domain.Wallet", b =>
                 {
+                    b.Navigation("User")
+                        .IsRequired();
+
                     b.Navigation("WalletPositions");
                 });
 #pragma warning restore 612, 618

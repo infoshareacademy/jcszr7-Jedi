@@ -14,11 +14,13 @@ namespace JediApp.Web.Controllers
     {
         private readonly IUserService _userService;
         private readonly IUserRepository _userRepository;
+        private readonly JediAppDbContext _jediAppDb;
 
-        public UserController(UserService userService, IServiceProvider userRepository)
+        public UserController(UserService userService, IServiceProvider userRepository, JediAppDbContext jediAppDb)
         {
             _userService = userService;
             _userRepository = ActivatorUtilities.GetServiceOrCreateInstance<IUserRepository>(userRepository);
+            _jediAppDb = jediAppDb;
         }
 
         public async Task<IActionResult> Index()
@@ -51,7 +53,7 @@ namespace JediApp.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var user = await _userRepository.GetUserById(id);
+            var user =await _userRepository.GetUserById(id);
 
             if (user == null)
             {
@@ -63,6 +65,68 @@ namespace JediApp.Web.Controllers
             return RedirectToAction("Index");
         }
 
+        // GET: /Movies/Edit/5
+        public async Task<ActionResult> Edit(string? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user =await _userRepository.GetUserById(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View(user);
+        }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditConfirmed(User user)
+        {
+            if (ModelState.IsValid)
+            {
+                var updateUser =await _userService.UpdateUser(user); 
+
+                _jediAppDb.Update(updateUser);
+
+                await _jediAppDb.SaveChangesAsync();
+
+                return RedirectToAction("Index");
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        //public async Task<IActionResult> Edit(string id)
+        //{
+        //    var user =await _userRepository.GetUserById(id);
+
+        //    return user== null ? NotFound() : View(user);
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+
+        //public async Task<IActionResult> Edit(User user)
+        //{
+        //    //var userOld =await _userRepository.GetUserById(id); 
+
+
+        //    if (user == null) 
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    _userRepository.AddUser(user);
+
+        //    //_userService.UpdateUser(user);
+
+        //    return RedirectToAction("Index");
+        //}
 
         //public async Task<IActionResult> Edit(Guid? id)
         //{

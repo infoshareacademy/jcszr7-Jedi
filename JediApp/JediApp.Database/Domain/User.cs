@@ -7,6 +7,12 @@ namespace JediApp.Database.Domain
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+
+        //public Guid? ExchangeOfficeId { get; set; }
+
+        public ExchangeOffice ExchangeOffice { get; set; }
+        public virtual Wallet Wallet { get; set; }
+        public ICollection<TransactionHistory> TransactionHistory { get; set; }
     }
 
 

@@ -195,14 +195,14 @@ namespace JediApp.Services.Services
             return false;
         }
 
-        public void TransactionHistory()
-        {
-            var allTransactionsHistory = _transactionHistoryService.GetAllUsersHistories();
+        //public void TransactionHistory()
+        //{
+        //    var allTransactionsHistory = _transactionHistoryService.GetAllUsersHistories();
 
-            Console.Clear();
-            Console.WriteLine("Transactions history for all users");
-            allTransactionsHistory.ForEach(x => Console.WriteLine($"{x.DateOfTransaction} {x.UserLogin} {x.Description} {x.CurrencyName} {x.Amount}"));
-        }
+        //    Console.Clear();
+        //    Console.WriteLine("Transactions history for all users");
+        //    allTransactionsHistory.ForEach(x => Console.WriteLine($"{x.DateOfTransaction} {x.UserLogin} {x.Description} {x.CurrencyName} {x.Amount}"));
+        //}
     }
 }
 

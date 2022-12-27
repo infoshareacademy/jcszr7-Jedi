@@ -1,45 +1,23 @@
-﻿namespace JediApp.Database.Domain
-{
-    public class Wallet : Base
-    {
-        public Guid UserId { get; set; }
-        public List<WalletPosition> WalletStatus { get; set; }
-        public string printwallet()
-        {
-            var result = "";
-            foreach (var position in WalletStatus)
-            {
-                result += $"{position.Currency.Name};{position.Currency.ShortName};{position.CurrencyAmount};{position.WalletId}";
-            }
-            return (result);
-        }
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
+namespace JediApp.Database.Domain
+{
+    public class Wallet 
+    {
         public Wallet()
         {
-            WalletStatus = new List<WalletPosition>();
-            Id = Guid.NewGuid();
-        }
-        public Wallet(string walletid)
-        {
-            WalletStatus = new List<WalletPosition>();
-            Id = Guid.Parse(walletid);
+            Id= Guid.NewGuid();
         }
 
-    }
+        public Guid Id { get; set; }
 
-    public class WalletPosition : Base
-    {
-        public decimal CurrencyAmount { get; set; }
-        public Currency Currency { get; set; }
-        public Guid WalletId { get; set; }
-        public string UserName { get; set; }
-        public WalletPosition()
-        {
-            WalletId = Guid.NewGuid();
-        }
-        public WalletPosition(string walletId)
-        {
-            WalletId = Guid.Parse(walletId);
-        }
+        [ForeignKey("User")]
+        public string UserId { get; set; }
+
+        public User User { get; set; }
+        public ICollection<WalletPosition> WalletPositions { get; set; } 
+        
     }
+   
 }
