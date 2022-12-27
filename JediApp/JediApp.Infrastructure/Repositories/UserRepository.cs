@@ -16,7 +16,7 @@ namespace JediApp.Database.Repositories
 
         public async Task<IEnumerable<User>> GetAllUsers()
         {
-            var users = await _jediAppDb.Users.ToListAsync();
+            var users =await _jediAppDb.Users.ToListAsync();
 
             return users;
         }
@@ -35,7 +35,7 @@ namespace JediApp.Database.Repositories
 
         public void UpdateUser(User user)
         {
-            
+
             //_jediAppDb.Users.UpdateRange(user);
             //_jediAppDb.SaveChangesAsync();
         }

@@ -8,9 +8,14 @@ namespace JediApp.Database.Domain
 {
     public class ExchangeOffice
     {
+        public ExchangeOffice()
+        {
+            Id= Guid.NewGuid();
+        }
+
         public Guid Id { get; set; }
-        public Guid UserId { get; set; }
-        public Guid ExchangeOfficeBoardId { get; set; }
+        public string? UserId { get; set; }
+        
 
         public ExchangeOfficeBoard ExchangeOfficeBoard { get; set; }
         public User User { get; set; }

@@ -1,10 +1,18 @@
-﻿namespace JediApp.Database.Domain
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace JediApp.Database.Domain
 {
     public class TransactionHistory 
     {
+        public TransactionHistory()
+        {
+            Id= Guid.NewGuid();
+        }
+
         public Guid Id { get; set; }
-        public Guid UserId { get; set; }
-        public string UserLogin { get; set; }
+
+        [ForeignKey("User")]
+        public string UserId { get; set; }
         public string CurrencyName { get; set; }
         public decimal Amount { get; set; }
         public DateTime DateOfTransaction { get; set; }

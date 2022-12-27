@@ -2,6 +2,11 @@
 {
     public class ExchangeOfficeBoard
     {
+        public ExchangeOfficeBoard()
+        {
+            Id= Guid.NewGuid();
+        }
+
         public Guid Id { get; set; }
         public Guid ExchangeOfficeId { get; set; }
 

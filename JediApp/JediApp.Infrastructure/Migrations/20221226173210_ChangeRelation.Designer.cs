@@ -4,6 +4,7 @@ using JediApp.Web.Areas.Identity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JediApp.Services.Migrations
 {
     [DbContext(typeof(JediAppDbContext))]
-    partial class JediAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221226173210_ChangeRelation")]
+    partial class ChangeRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -63,6 +65,9 @@ namespace JediApp.Services.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ExchangeOfficeBoardId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UserId")
@@ -137,13 +142,19 @@ namespace JediApp.Services.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UserId1")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserLogin")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId1");
 
                     b.ToTable("TransactionHistory");
                 });
@@ -230,13 +241,13 @@ namespace JediApp.Services.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("Wallets");
                 });
@@ -426,7 +437,7 @@ namespace JediApp.Services.Migrations
                     b.HasOne("JediApp.Database.Domain.ExchangeOffice", "ExchangeOffice")
                         .WithOne("ExchangeOfficeBoard")
                         .HasForeignKey("JediApp.Database.Domain.ExchangeOfficeBoard", "ExchangeOfficeId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ExchangeOffice");
@@ -447,22 +458,16 @@ namespace JediApp.Services.Migrations
                 {
                     b.HasOne("JediApp.Database.Domain.User", "User")
                         .WithMany("TransactionHistory")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId1");
 
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("JediApp.Database.Domain.Wallet", b =>
                 {
-                    b.HasOne("JediApp.Database.Domain.User", "User")
+                    b.HasOne("JediApp.Database.Domain.User", null)
                         .WithOne("Wallet")
-                        .HasForeignKey("JediApp.Database.Domain.Wallet", "UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("User");
+                        .HasForeignKey("JediApp.Database.Domain.Wallet", "UserId");
                 });
 
             modelBuilder.Entity("JediApp.Database.Domain.WalletPosition", b =>

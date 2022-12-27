@@ -30,10 +30,10 @@ public class JediAppDbContext : IdentityDbContext<User>
     {
     }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseSqlServer(@"Server=localhost\SQLEXPRESS; Database = JediDataTest; Trusted_Connection = true; ");
-    }
+    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //{
+    //    //optionsBuilder.UseSqlServer(@"Server=localhost\SQLEXPRESS; Database = JediDataTest; Trusted_Connection = true; ");
+    //}
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -42,25 +42,42 @@ public class JediAppDbContext : IdentityDbContext<User>
         builder.ApplyConfiguration(new ApplicationUserEntityConfiguration());
 
         {
+            builder.Entity<TransactionHistory>()
+                .HasOne(u => u.User)
+                .WithMany(x => x.TransactionHistory)
+                .HasForeignKey(x => x.UserId);
+        }
+
+        {
+            builder.Entity<ExchangeOffice>()
+                .HasOne<User>(x => x.User)
+                .WithOne(u => u.ExchangeOffice)
+                .HasForeignKey<ExchangeOffice>(x => x.UserId);
+            
+        }
+
+        {
             builder.Entity<Currency>()
             .HasOne<WalletPosition>(p => p.WalletPosition)
             .WithOne(pp => pp.Currency)
             .HasForeignKey<WalletPosition>(pp => pp.CurrencyId);
         }
+
         {
             builder.Entity<ExchangeOffice>()
             .HasOne<ExchangeOfficeBoard>(p => p.ExchangeOfficeBoard)
             .WithOne(pp => pp.ExchangeOffice)
-            .HasForeignKey<ExchangeOfficeBoard>(pp => pp.ExchangeOfficeId);
+            .HasForeignKey<ExchangeOfficeBoard>(pp => pp.ExchangeOfficeId)
+            .OnDelete(DeleteBehavior.Restrict);
         }
+
         {
             builder.Entity<Wallet>()
-            .HasOne<User>(p => p.User)
-            .WithOne(pp => pp.Wallet)
-            .HasForeignKey<User>(pp => pp.WalletId);
+                .HasOne<User>(s => s.User)
+                .WithOne(ta => ta.Wallet)
+                .HasForeignKey<Wallet>(u => u.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
-
-
     }
 }
 

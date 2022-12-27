@@ -36,8 +36,6 @@ using IHost host = Host.CreateDefaultBuilder(args)
             .AddScoped<INbpJsonRepository, NbpJsonRepository>()
             .AddScoped<INbpJsonService, NbpJsonService>()
             .AddScoped<IAvailableMoneyOnStockRepository, AvailableMoneyOnStockRepository>()
-            
-            .AddScoped<ITransactionHistoryRepository, TransactionHistoryRepository>()
             .AddScoped<ITransactionHistoryService, TransactionHistoryService>()
             .AddSingleton<UserService>()
             .AddSingleton<ExchangeOfficeBoardService>()
