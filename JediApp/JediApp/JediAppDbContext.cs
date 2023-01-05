@@ -23,7 +23,7 @@ public class JediAppDbContext : IdentityDbContext<User>
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer(@"Server=localhost\SQLEXPRESS; Database = JediDataTest; Trusted_Connection = true; ");
+        optionsBuilder.UseSqlServer(@"Data Source=.;Initial Catalog=TestRela; Integrated Security=True;Connect Timeout=30;Encrypt=False; TrustServerCertificate=False; ApplicationIntent=ReadWrite; MultiSubnetFailover=False;");
     }
 
     protected override void OnModelCreating(ModelBuilder builder)
