@@ -49,18 +49,18 @@ public class JediAppDbContext : IdentityDbContext<User>
         }
 
         {
-            builder.Entity<ExchangeOffice>()
-                .HasOne<User>(x => x.User)
-                .WithOne(u => u.ExchangeOffice)
-                .HasForeignKey<ExchangeOffice>(x => x.UserId);
+            //builder.Entity<ExchangeOffice>()
+            //    .HasOne<User>(x => x.User)
+            //    .WithOne(u => u.ExchangeOffice)
+            //    .HasForeignKey<ExchangeOffice>(x => x.UserId);
             
         }
 
         {
-            builder.Entity<Currency>()
-            .HasOne<WalletPosition>(p => p.WalletPosition)
-            .WithOne(pp => pp.Currency)
-            .HasForeignKey<WalletPosition>(pp => pp.CurrencyId);
+            //builder.Entity<Currency>()
+            //.HasOne<WalletPosition>(p => p.WalletPosition)
+            //.WithOne(pp => pp.Currency)
+            //.HasForeignKey<WalletPosition>(pp => pp.CurrencyId);
         }
 
         {
@@ -70,6 +70,14 @@ public class JediAppDbContext : IdentityDbContext<User>
             .HasForeignKey<ExchangeOfficeBoard>(pp => pp.ExchangeOfficeId)
             .OnDelete(DeleteBehavior.Restrict);
         }
+
+        //{
+        //    builder.Entity<ExchangeOfficeBoard>()
+        //        .HasMany(e => e.Currencies)
+        //        .WithOne(c => c.ExchangeOfficeBoard)
+        //        .HasForeignKey(c => c.ExchangeOfficeBoardId);
+
+        //}
 
         {
             builder.Entity<Wallet>()

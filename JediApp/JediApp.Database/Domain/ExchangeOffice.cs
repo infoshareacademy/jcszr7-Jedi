@@ -13,12 +13,16 @@ namespace JediApp.Database.Domain
             Id= Guid.NewGuid();
         }
 
+        public string Name { get; set; }
+        public string Address { get; set; }
+        public int Markup { get; set; } //marża, narzut
+
         public Guid Id { get; set; }
-        public string? UserId { get; set; }
+        //public string? UserId { get; set; }
         
 
         public ExchangeOfficeBoard ExchangeOfficeBoard { get; set; }
-        public User User { get; set; }
+        //public User User { get; set; }
         public ICollection<MoneyOnStock> MoneyOnStocks { get; set; }
     }
 }

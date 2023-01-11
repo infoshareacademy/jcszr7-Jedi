@@ -44,7 +44,7 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddTransient<IExchangeOfficeBoardRepository, ExchangeOfficeBoardRepository>();
+builder.Services.AddTransient<IExchangeOfficeBoardRepository, ExchangeOfficeBoardRepositoryDB>();
 builder.Services.AddTransient<IExchangeOfficeBoardService, ExchangeOfficeBoardService>()
                 .AddTransient<IUserRepository, UserRepository>()
                 .AddTransient<UserService>();
