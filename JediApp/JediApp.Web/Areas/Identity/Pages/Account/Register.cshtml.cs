@@ -131,7 +131,7 @@ namespace JediApp.Web.Areas.Identity.Pages.Account
 
                 user.FirstName = Input.FirstName;
                 user.LastName = Input.LastName;
-                user.ExchangeOffice = new ExchangeOffice();
+                //user.ExchangeOffice = new ExchangeOffice(); /Miro, każdy user tworzy nowy kantor?
                 user.Wallet = new Wallet();
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);

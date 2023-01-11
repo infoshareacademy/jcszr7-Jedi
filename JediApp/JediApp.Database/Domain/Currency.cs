@@ -8,11 +8,12 @@
         public string Country { get; set; }
         public decimal BuyAt { get; set; }
         public decimal SellAt { get; set; }
-        public Guid WalletPositionId { get; set; }
+
+        //public Guid WalletPositionId { get; set; }
         public Guid ExchangeOfficeBoardId { get; set; }
 
         public ExchangeOfficeBoard ExchangeOfficeBoard { get; set; }
-        public WalletPosition WalletPosition { get; set; }
+        //public WalletPosition WalletPosition { get; set; }
 
 
     }

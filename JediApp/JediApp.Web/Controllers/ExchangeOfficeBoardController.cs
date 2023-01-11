@@ -8,7 +8,7 @@ namespace JediApp.Web.Controllers
 {
     public class ExchangeOfficeBoardController : Controller
     {
-        IExchangeOfficeBoardService _exchangeOfficeBoardService;
+        private readonly IExchangeOfficeBoardService _exchangeOfficeBoardService;
 
         public ExchangeOfficeBoardController(IExchangeOfficeBoardService exchangeOfficeBoardService)
         {
@@ -48,13 +48,17 @@ namespace JediApp.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Currency newCurrency)
         {
+            _exchangeOfficeBoardService.AddCurrency(newCurrency);
+
+            return RedirectToAction(nameof(Index));
+
             if (!ModelState.IsValid)
             {
                 return View(newCurrency);
             }
             try
             {
-                newCurrency = _exchangeOfficeBoardService.AddCurrency(newCurrency);
+                _exchangeOfficeBoardService.AddCurrency(newCurrency);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -68,7 +72,7 @@ namespace JediApp.Web.Controllers
         public ActionResult Edit(Guid id)
         {
             var currency = _exchangeOfficeBoardService.GetCurrencyById(id);
-            if(currency != null)
+            if (currency != null)
             {
                 return View(currency);
             }
@@ -80,7 +84,7 @@ namespace JediApp.Web.Controllers
             //return View();
         }
 
-        // POST: ExchangeOfficeBoardController/Edit/5
+        //// POST: ExchangeOfficeBoardController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         //public ActionResult Edit(int id, IFormCollection collection)
@@ -94,6 +98,10 @@ namespace JediApp.Web.Controllers
             //{
             //    return View();
             //}
+
+            _exchangeOfficeBoardService.UpdateCurrency(id, currency);
+
+            return RedirectToAction(nameof(Index));
 
             if (!ModelState.IsValid)
             {
@@ -111,7 +119,7 @@ namespace JediApp.Web.Controllers
             }
         }
 
-        // GET: ExchangeOfficeBoardController/Delete/5
+        //// GET: ExchangeOfficeBoardController/Delete/5
         public ActionResult Delete(Guid id)
         {
             var currency = _exchangeOfficeBoardService.GetCurrencyById(id);

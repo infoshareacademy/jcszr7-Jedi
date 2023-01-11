@@ -10,7 +10,7 @@ namespace JediApp.Database.Domain
 
         //public Guid? ExchangeOfficeId { get; set; }
 
-        public ExchangeOffice ExchangeOffice { get; set; }
+        //public ExchangeOffice ExchangeOffice { get; set; }
         public virtual Wallet Wallet { get; set; }
         public ICollection<TransactionHistory> TransactionHistory { get; set; }
     }
