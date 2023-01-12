@@ -1,7 +1,6 @@
 ﻿using JediApp.Database.Domain;
 using JediApp.Database.Interface;
 using JediApp.Web.Areas.Identity.Data;
-using Microsoft.EntityFrameworkCore;
 
 namespace JediApp.Database.Repositories
 {
