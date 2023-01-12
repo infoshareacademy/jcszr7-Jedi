@@ -44,10 +44,16 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddControllersWithViews();
 
+//register repos
 builder.Services.AddTransient<IExchangeOfficeBoardRepository, ExchangeOfficeBoardRepositoryDB>();
-builder.Services.AddTransient<IExchangeOfficeBoardService, ExchangeOfficeBoardService>()
-                .AddTransient<IUserRepository, UserRepository>()
-                .AddTransient<UserService>();
+builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddTransient<INbpJsonRepository, NbpJsonRepository>();
+
+//register services
+builder.Services.AddTransient<IExchangeOfficeBoardService, ExchangeOfficeBoardService>();
+builder.Services.AddTransient<UserService>();
+builder.Services.AddTransient<INbpJsonService, NbpJsonService>();
+
 
 
 var app = builder.Build();

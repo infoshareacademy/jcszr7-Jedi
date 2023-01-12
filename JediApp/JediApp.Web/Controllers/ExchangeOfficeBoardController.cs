@@ -9,10 +9,12 @@ namespace JediApp.Web.Controllers
     public class ExchangeOfficeBoardController : Controller
     {
         private readonly IExchangeOfficeBoardService _exchangeOfficeBoardService;
+        private readonly INbpJsonService _nbpJsonService;
 
-        public ExchangeOfficeBoardController(IExchangeOfficeBoardService exchangeOfficeBoardService)
+        public ExchangeOfficeBoardController(IExchangeOfficeBoardService exchangeOfficeBoardService, INbpJsonService nbpJsonService)
         {
             _exchangeOfficeBoardService = exchangeOfficeBoardService;
+            _nbpJsonService = nbpJsonService;
         }
 
         //public ExchangeOfficeBoardController()
@@ -144,5 +146,52 @@ namespace JediApp.Web.Controllers
                 return View();
             }
         }
+
+        // POST: ExchangeOfficeBoardController/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddCurrencyFromNbpApi()
+        {
+
+            List<Currency> nbpCurrencies = _nbpJsonService.GetAllCurrencies();
+
+            foreach (var currency in nbpCurrencies)
+            {
+                _exchangeOfficeBoardService.AddCurrency(new Currency()
+                {
+                    Name = currency.Name,
+                    ShortName = currency.ShortName,
+                    Country = currency.Country,
+                    BuyAt = currency.BuyAt,
+                    SellAt = currency.SellAt
+                });
+            }
+
+            return RedirectToAction(nameof(Index));
+
+            
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Markup()
+        {
+
+            var currencies = _exchangeOfficeBoardService.GetAllCurrencies();
+
+            foreach (var currency in currencies)
+            {
+                //spread 5%
+                currency.BuyAt *= (decimal)1.025;
+                currency.SellAt *= (decimal)0.975;
+                _exchangeOfficeBoardService.UpdateCurrency(currency.Id, currency);
+               
+            }
+
+            return RedirectToAction(nameof(Index));
+
+
+        }
+        
     }
 }
