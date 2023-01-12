@@ -48,11 +48,13 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IExchangeOfficeBoardRepository, ExchangeOfficeBoardRepositoryDB>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<INbpJsonRepository, NbpJsonRepository>();
+builder.Services.AddTransient<ITransactionHistoryRepository, TransactionHistoryRepositoryDB>();
 
 //register services
 builder.Services.AddTransient<IExchangeOfficeBoardService, ExchangeOfficeBoardService>();
 builder.Services.AddTransient<UserService>();
 builder.Services.AddTransient<INbpJsonService, NbpJsonService>();
+builder.Services.AddTransient<ITransactionHistoryService, TransactionHistoryService>();
 
 
 

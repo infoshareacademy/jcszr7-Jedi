@@ -1,2 +1,46 @@
-﻿Admin Transaction History
+﻿
+
+@model IEnumerable<JediApp.Database.Domain.TransactionHistory>
+
+@{
+    ViewData["Title"] = "All Users Transaction History";
+}
+
+<h2>Admin Transaction History</h2>
+
+<div class=" pb-3">
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                @*<th>ID</th>*@
+                <th>Name</th>
+                <th>Email</th>
+                <th>CurrencyName</th>
+                <th>Amount</th>
+                <th>DateOfTransaction</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                    <tr>
+                    @*<td>@item.Id</td>*@
+                        <td>@item.User.FirstName @item.User.LastName</td>
+                        <td>@item.User.Email</td>
+                        <td>@item.CurrencyName</td>
+                        <td>@item.Amount</td>
+                        <td>@item.DateOfTransaction</td>
+                        <td>@item.Description</td>                                    
+                    </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+
+
+
+
 
