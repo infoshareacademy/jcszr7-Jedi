@@ -286,7 +286,7 @@
     </header><!-- End Header -->
     @{
         string[] adminPages = new string[] { "AdminUser", "MoneyStock", "AdminExchange", "AdminTransactionHistory" };
-        string[] userPages = new string[] { "AccountBalance", "UserExchange", "UserTransactionHistory" };
+        string[] userPages = new string[] { "AccountBalance", "UserDeposit", "UserExchange", "UserWithdrawal", "UserTransactionHistory" };
     }
     <!-- ======= Sidebar ======= -->
     <aside id="sidebar" class="sidebar">
@@ -298,8 +298,8 @@
                     <span>Dashboard</span>
                 </a>
             </li>
-           @* @if(User.IsInRole("Admin"))
-            {*@
+           @if(User.IsInRole("Admin"))
+           {
                 <li class="nav-item">
                     <a class="nav-link" data-bs-target="#admin-nav" data-bs-toggle="collapse" aria-expanded="true" asp-area="" asp-controller="Home" asp-action="Index">
                         <i class="bi bi-layout-text-window-reverse"></i>
@@ -332,10 +332,10 @@
                         </li>
                     </ul>
                 </li>
-          @*  }
+          }
 
-            @if(User.IsInRole("User"))
-            {*@
+            @if(User.Identity.IsAuthenticated && !User.IsInRole("Admin"))
+            {
                 <li class="nav-item">
                     <a class="nav-link" data-bs-target="#finances-nav" data-bs-toggle="collapse" aria-expanded="true" asp-area="" asp-controller="Home" asp-action="Index">
                         <i class="bi bi-cash-coin"></i>
@@ -349,9 +349,21 @@
                             </a>
                         </li>
                         <li>
+                            <a class="@(ViewData["activePage"] == "UserDeposit" ? "active" : "")" asp-area="" asp-controller="UserDeposit" asp-action="Index">
+                                <i class="bi bi-circle"></i>
+                                <span>Deposit</span>
+                            </a>
+                        </li>
+                        <li>
                             <a class="@(ViewData["activePage"] == "UserExchange" ? "active" : "")" asp-area="" asp-controller="UserExchangeOfficeBoard" asp-action="Index">
                                 <i class="bi bi-circle"></i>
                                 <span>Exchange</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="@(ViewData["activePage"] == "UserWithdrawal" ? "active" : "")" asp-area="" asp-controller="UserWithdrawal" asp-action="Index">
+                                <i class="bi bi-circle"></i>
+                                <span>Withdrawal</span>
                             </a>
                         </li>
                         <li>
@@ -362,7 +374,7 @@
                         </li>
                     </ul>
                 </li>
-            @*}*@
+            }
            
 
            @* @if (User.IsInRole("Admin"))
