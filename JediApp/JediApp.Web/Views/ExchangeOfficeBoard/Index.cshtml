@@ -4,17 +4,20 @@
     ViewData["Title"] = "Exchange Office Board";
 }
 
-<h2>Exchange Office Board</h2>
+<h2>Admin Exchange Office Board</h2>
 
 <p>
     @*<a asp-action="Create">Create New</a>*@
     
     <form asp-action="AddCurrencyFromNbpApi">
-        <input type="button" value="Create New Currency" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "ExchangeOfficeBoard" )'" />
-        <input type="submit" value="Add Currency From Nbp Api" class="btn btn-danger" />
+        <input type="button" value="Create new currency" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "ExchangeOfficeBoard" )'" />
+        <input type="submit" value="Import currency from NBP Api" class="btn btn-danger" />
     </form>
-        <form asp-action="Markup">
-        <input type="submit" value="Add 5% Markup to the all Currencies" class="btn btn-info" />
+</p>
+<p>
+    <form asp-action="Markup">
+        <input type="button" value="Go to the change markup settings" class="btn btn-primary" onclick="location.href='@Url.Action("Index", "AdminExchangeOfficeSettings" )'" />
+        <input type="submit" value="Add markup to the all currencies" class="btn btn-danger" />
     </form>
 </p>
 
@@ -25,11 +28,11 @@
             <tr>
                 @*<th>ID</th>*@
                 <th>Name</th>
-                <th>ShortName</th>
+                <th>Short Name</th>
                 <th>Country</th>
-                <th>BuyAt</th>
-                <th>SellAt</th>
-                <th>Details</th>
+                <th>Buy At</th>
+                <th>Sell At</th>
+                <th>Options</th>
             </tr>
         </thead>
         <tbody>

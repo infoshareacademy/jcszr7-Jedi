@@ -285,7 +285,7 @@
         <partial name="_LoginPartial" />
     </header><!-- End Header -->
     @{
-        string[] adminPages = new string[] { "AdminUser", "MoneyStock", "AdminExchange", "AdminTransactionHistory" };
+        string[] adminPages = new string[] { "AdminUser", "MoneyStock", "AdminExchange", "AdminTransactionHistory", "AdminExchangeOfficeSettings" };
         string[] userPages = new string[] { "AccountBalance", "UserDeposit", "UserExchange", "UserWithdrawal", "UserTransactionHistory" };
     }
     <!-- ======= Sidebar ======= -->
@@ -330,6 +330,10 @@
                                 <span>Transaction History</span>
                             </a>
                         </li>
+                                        <a class="@(ViewData["activePage"] == "AdminExchangeOfficeSettings" ? "active" : "")" asp-area="" asp-controller="AdminExchangeOfficeSettings" asp-action="Index">
+                                    <i class="bi bi-circle"></i>
+                                        <span>Settings</span>
+                                </a>
                     </ul>
                 </li>
           }
