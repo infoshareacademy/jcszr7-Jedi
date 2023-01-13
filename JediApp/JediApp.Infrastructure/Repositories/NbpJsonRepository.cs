@@ -28,7 +28,7 @@ namespace JediApp.Database.Repositories
                     {
                         //decimal.TryParse(currency.ask, out var ask);
                         //decimal.TryParse(currency.bid, out var bid);
-                        currencies.Add(new Currency { Id = Guid.NewGuid(), Name = currency.currency, ShortName = currency.code, Country = " ", BuyAt = currency.ask, SellAt = currency.bid });
+                        currencies.Add(new Currency { Id = Guid.NewGuid(), Name = currency.currency, ShortName = currency.code, Country = "bd", BuyAt = currency.ask, SellAt = currency.bid });
 
                     }
                 }
