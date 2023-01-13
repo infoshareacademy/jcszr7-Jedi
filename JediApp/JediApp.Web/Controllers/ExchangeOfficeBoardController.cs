@@ -10,11 +10,14 @@ namespace JediApp.Web.Controllers
     {
         private readonly IExchangeOfficeBoardService _exchangeOfficeBoardService;
         private readonly INbpJsonService _nbpJsonService;
+        private readonly IExchangeOfficeService _exchangeOfficeService;
 
-        public ExchangeOfficeBoardController(IExchangeOfficeBoardService exchangeOfficeBoardService, INbpJsonService nbpJsonService)
+
+        public ExchangeOfficeBoardController(IExchangeOfficeBoardService exchangeOfficeBoardService, INbpJsonService nbpJsonService, IExchangeOfficeService exchangeOfficeService)
         {
             _exchangeOfficeBoardService = exchangeOfficeBoardService;
             _nbpJsonService = nbpJsonService;
+            _exchangeOfficeService = exchangeOfficeService;
         }
 
         //public ExchangeOfficeBoardController()
@@ -181,9 +184,13 @@ namespace JediApp.Web.Controllers
 
             foreach (var currency in currencies)
             {
+                
+                var markup = _exchangeOfficeService.GetAllExchangeOffices().FirstOrDefault().Markup;
                 //spread 5%
-                currency.BuyAt *= (decimal)1.025;
-                currency.SellAt *= (decimal)0.975;
+                //currency.BuyAt *= (decimal)1.025;
+                //currency.SellAt *= (decimal)0.975;                
+                currency.BuyAt *= 1 + (decimal)markup / 200;
+                currency.SellAt *= 1 - (decimal)markup / 200;
                 _exchangeOfficeBoardService.UpdateCurrency(currency.Id, currency);
                
             }
