@@ -36,14 +36,15 @@ namespace JediApp.Database.Repositories
             return transactionHistory;
         }
 
-        public List<TransactionHistory> GetUserHistoryByUserId(Guid userId)
+        //public List<TransactionHistory> GetUserHistoryByUserId(Guid userId)
+        public List<TransactionHistory> GetUserHistoryByUserId(string userId)
         {
             List<TransactionHistory> transactionHistory = GetAllUsersHistories();
 
 
             //return transactionHistory.Where(x => x.UserId == userId).ToList();
 
-            return transactionHistory.Where(x => new Guid(x.UserId) == userId).ToList(); //czemu id jako string? może tak
+            return transactionHistory.Where(x => String.Equals(x.UserId, userId)).ToList(); //czemu id jako string? może tak
 
         }
     }
