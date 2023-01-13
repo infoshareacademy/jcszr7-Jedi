@@ -1,5 +1,6 @@
 ﻿using JediApp.Database.Domain;
 using JediApp.Database.Interface;
+using Microsoft.AspNetCore.Identity;
 
 namespace JediApp.Services.Services
 {
@@ -9,7 +10,7 @@ namespace JediApp.Services.Services
 
         public TransactionHistoryService(ITransactionHistoryRepository transactionHistoryRepository)
         {
-            _transactionHistoryRepository = transactionHistoryRepository;
+            _transactionHistoryRepository = transactionHistoryRepository;            
         }
 
         public bool AddTransaction(TransactionHistory transactionHistory)
@@ -17,7 +18,8 @@ namespace JediApp.Services.Services
             return _transactionHistoryRepository.AddTransaction(transactionHistory);
         }
 
-        public List<TransactionHistory> GetUserHistoryByUserId(Guid userId)
+        //public List<TransactionHistory> GetUserHistoryByUserId(Guid userId)
+        public List<TransactionHistory> GetUserHistoryByUserId(string userId)
         {
             return _transactionHistoryRepository.GetUserHistoryByUserId(userId);
         }        

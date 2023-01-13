@@ -45,13 +45,14 @@ namespace JediApp.Database.Repositories
             //return _jediAppDb.TransactionHistory.OrderBy(c => c.DateOfTransaction).ToList();
         }
 
-        public List<TransactionHistory> GetUserHistoryByUserId(Guid userId)
+        //public List<TransactionHistory> GetUserHistoryByUserId(Guid userId)
+        public List<TransactionHistory> GetUserHistoryByUserId(string userId)
         {
-            List<TransactionHistory> transactionHistory = GetAllUsersHistories();
+            //List<TransactionHistory> transactionHistory = GetAllUsersHistories();
 
-            //return transactionHistory.Where(x => x.UserId == userId).ToList();
+            return _jediAppDb.TransactionHistory.Where(x => x.UserId == userId).Include(t => t.User).OrderBy(c => c.DateOfTransaction).ToList();
 
-            return transactionHistory;
+            //return transactionHistory;
 
         }
     }
