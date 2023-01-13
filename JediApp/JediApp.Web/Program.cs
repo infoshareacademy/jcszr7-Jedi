@@ -49,12 +49,14 @@ builder.Services.AddTransient<IExchangeOfficeBoardRepository, ExchangeOfficeBoar
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<INbpJsonRepository, NbpJsonRepository>();
 builder.Services.AddTransient<ITransactionHistoryRepository, TransactionHistoryRepositoryDB>();
+builder.Services.AddTransient<IExchangeOfficeRepository, ExchangeOfficeRepositoryDB>();
 
 //register services
 builder.Services.AddTransient<IExchangeOfficeBoardService, ExchangeOfficeBoardService>();
 builder.Services.AddTransient<UserService>();
 builder.Services.AddTransient<INbpJsonService, NbpJsonService>();
 builder.Services.AddTransient<ITransactionHistoryService, TransactionHistoryService>();
+builder.Services.AddTransient<IExchangeOfficeService, ExchangeOfficeService>();
 
 
 
