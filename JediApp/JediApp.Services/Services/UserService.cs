@@ -10,9 +10,9 @@ namespace JediApp.Services.Services
     {
         private readonly IUserRepository _userRepository;
 
-        public UserService(IServiceProvider userRepository)
+        public UserService(IUserRepository userRepository)
         {
-            _userRepository = ActivatorUtilities.GetServiceOrCreateInstance<IUserRepository>(userRepository);
+            _userRepository = userRepository;
         }
 
         public async Task<User> UpdateUser(User user)

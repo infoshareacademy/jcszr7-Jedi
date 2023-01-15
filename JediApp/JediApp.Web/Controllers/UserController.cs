@@ -14,13 +14,11 @@ namespace JediApp.Web.Controllers
     {
         private readonly IUserService _userService;
         private readonly IUserRepository _userRepository;
-        private readonly JediAppDbContext _jediAppDb;
 
-        public UserController(UserService userService, IServiceProvider userRepository, JediAppDbContext jediAppDb)
+        public UserController(IUserService userService, IServiceProvider userRepository)
         {
             _userService = userService;
             _userRepository = ActivatorUtilities.GetServiceOrCreateInstance<IUserRepository>(userRepository);
-            _jediAppDb = jediAppDb;
         }
 
         public async Task<IActionResult> Index()
