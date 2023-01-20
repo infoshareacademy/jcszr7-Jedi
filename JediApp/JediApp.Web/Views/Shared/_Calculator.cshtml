@@ -4,11 +4,11 @@
 			<div class="hero-form__fields-with-connector">
 				<div class="hero-form__input-block ">
 					<div class="hero-form__input-block-label">
-						<div class="hero-form__input-block-label-text">Mam</div>
+						<div class="hero-form__input-block-label-text">I have</div>
 					</div>
 					<div class="hero-form__combined-inputs">
 						<div class="hero-form__text-input-holder">
-							<input id="txtMam" type="tel" onchange="obliczKwote(this);" value="1000" aria-label="Mam" class="bem-text-input in-hero-form-big-enter-amount w-input" inputmode="decimal" maxlength="7">
+							<input id="txtMam" type="tel" onchange="obliczKwote(this);" value="1000" aria-label="Otrzymam" class="bem-text-input in-hero-form-big-enter-amount w-input" inputmode="decimal" maxlength="7">
 						</div>
 						<div class="hero-form__dropdown-holder clearfix">
 							<div class="bem-select-dropdown ">
@@ -29,7 +29,7 @@
 				</div>
 				<div class="hero-form__input-block is-second">
 					<div class="hero-form__input-block-label">
-						<div class="hero-form__input-block-label-text">Otrzymam</div>
+						<div class="hero-form__input-block-label-text">I will receive</div>
 					</div>
 					<div class="hero-form__combined-inputs">
 						<div class="hero-form__text-input-holder">
@@ -53,7 +53,7 @@
 		</div>
 		<div class="hero-form__rate-texts bem-icon is-connector">
 			<div class="hero-form__rate-headers">
-				<span class="hero-form__rate-heading">Aktualny kurs:</span>
+				<span class="hero-form__rate-heading">Current rate:</span>
 				<div class="hero-form__rate-number-and-chart">
 					<div id="divKurs" class="hero-form__big-rate">@(ViewData["EUR_buy"])</div>
 					<div class="hero-form__exchange-info-icon bem-icon exchange-info-icon"></div>
@@ -103,16 +103,16 @@
 		var waluta = document.getElementById('dllOtrzymam').value;
 
 		if (waluta == 'GBP') {
-			document.getElementById('txtOtrzymam').value = (kwota * gbpBuyAt).toFixed(2);
+			document.getElementById('txtOtrzymam').value = (kwota / gbpBuyAt).toFixed(2);
 		}
 		if (waluta == 'USD') {
-			document.getElementById('txtOtrzymam').value = (kwota * usdBuyAt).toFixed(2);
+			document.getElementById('txtOtrzymam').value = (kwota / usdBuyAt).toFixed(2);
 		}
 		if (waluta == 'CHF') {
-			document.getElementById('txtOtrzymam').value = (kwota * chfBuyAt).toFixed(2);
+			document.getElementById('txtOtrzymam').value = (kwota / chfBuyAt).toFixed(2);
 		}
 		if (waluta == 'EUR') {
-			document.getElementById('txtOtrzymam').value = (kwota * euroBuyAt).toFixed(2);
+			document.getElementById('txtOtrzymam').value = (kwota / euroBuyAt).toFixed(2);
 		}
 	}
 
