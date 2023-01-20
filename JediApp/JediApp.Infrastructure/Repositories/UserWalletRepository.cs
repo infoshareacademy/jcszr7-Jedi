@@ -1,33 +1,72 @@
 ﻿using JediApp.Database.Domain;
 using JediApp.Database.Interface;
+using JediApp.Web.Areas.Identity.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace JediApp.Database.Repositories
 {
-    public class UserWalletRepository  /*:IUserWalletRepository*/
+    public class UserWalletRepository : IUserWalletRepository
     {
-        private readonly string _fileNameWallet = "..//..//..//..//Userwallets.csv";
+        private readonly JediAppDbContext _jediAppDb;
 
-        public void RegisterWalletToUser(Guid walletId, string userLogin, string newCurrencyCode, decimal newCurrencyAmount)
+        public UserWalletRepository(JediAppDbContext jediAppDb)
         {
-            using (StreamWriter file = new StreamWriter(_fileNameWallet, true))
-            {
-                file.WriteLine($"{walletId};{userLogin};{newCurrencyCode};{newCurrencyAmount}");
-            }
+            _jediAppDb = jediAppDb;
         }
 
-        //public Wallet GetWallet(Guid walletId)
-        //{
-        //    var userWallet = new Wallet(walletId.ToString());
-        //    var userWalletId = walletId.ToString();
+        public void Deposit(string userId, string currencyCode, decimal depositAmount)
+        {
+            var userWallet = GetWallet(userId);
 
-        //    if (!File.Exists(_fileNameWallet))
-        //        return userWallet;
+            WalletPosition walletCurrency;
+            if (userWallet.WalletPositions != null && userWallet.WalletPositions.Any())
+            {
+                walletCurrency = userWallet.WalletPositions.FirstOrDefault(cur => cur.Currency.ShortName == currencyCode);
+            }
+            else
+            {
+                userWallet.WalletPositions = new List<WalletPosition>();
+                walletCurrency = null;
+            }
 
-        //    var walletPositionsFromFile = File.ReadAllLines(_fileNameWallet);
+            // Update or add wallet currency
+            if (walletCurrency != null)
+            {
+                walletCurrency.CurrencyAmount = walletCurrency.CurrencyAmount + depositAmount;
+                _jediAppDb.Update(walletCurrency);
+            }
+            else
+            {
+                var currency = _jediAppDb.Currencys.Single(c => c.ShortName == currencyCode);
 
-        //    foreach (var line in walletPositionsFromFile)
-        //    {
-        //        string[] columns = line.Split(";");
+
+                userWallet.WalletPositions.Add(new Database.Domain.WalletPosition()
+                {
+                    CurrencyAmount = depositAmount,
+                    CurrencyId = currency.Id
+                });
+            }
+
+            _jediAppDb.SaveChanges();
+        }
+
+        public Wallet GetWallet(string userId)
+        {
+            var userWalletExists = _jediAppDb.Wallets.Any(a => a.UserId == userId);
+
+            if (!userWalletExists)
+            {
+                _jediAppDb.Wallets.Add(new Database.Domain.Wallet() { UserId = userId });
+                _jediAppDb.SaveChanges();
+            }
+
+            return _jediAppDb.Wallets.Include("WalletPositions.Currency").SingleOrDefault(a => a.UserId == userId);
+        }
+
+        public void Withdrawal(string userId, string currencyCode, decimal withdrawalAmount)
+        {
+            throw new NotImplementedException();
+        }
 
         //        var userWalletIdFromFile = columns[0];
         //        if (userWalletIdFromFile.Equals(userWalletId, StringComparison.InvariantCultureIgnoreCase))
@@ -103,7 +142,7 @@ namespace JediApp.Database.Repositories
         //            CurrencyAmount = amount,
         //        });
         //    }
-            
+
         //    // Add all users positions
         //    using (StreamWriter file = new StreamWriter(_fileNameWallet, true))
         //    {
@@ -124,6 +163,6 @@ namespace JediApp.Database.Repositories
         //            }
         //        }
         //    }
-        
+
     }
 }
