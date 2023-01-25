@@ -8,7 +8,5 @@
         public Guid ExchangeOfficeId { get; set; }
 
         public ExchangeOffice ExchangeOffice { get; set; }
-
-
     }
 }

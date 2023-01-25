@@ -51,6 +51,7 @@ builder.Services.AddTransient<INbpJsonRepository, NbpJsonRepository>();
 builder.Services.AddTransient<ITransactionHistoryRepository, TransactionHistoryRepositoryDB>();
 builder.Services.AddTransient<IExchangeOfficeRepository, ExchangeOfficeRepositoryDB>();
 builder.Services.AddTransient<IUserWalletRepository, UserWalletRepository>();
+builder.Services.AddTransient<IAvailableMoneyOnStockRepository, AvailableMoneyOnStockRepository>();
 
 //register services
 builder.Services.AddTransient<IExchangeOfficeBoardService, ExchangeOfficeBoardService>();
