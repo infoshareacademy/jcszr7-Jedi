@@ -39,6 +39,7 @@ namespace JediApp.Web.Controllers
 
             ViewData["currentSaldo"] = currentSaldo.CurrencyAmount;
             ViewData["currenncy"] = userDeposit.Currency;
+            ViewData["activePage"] = "UserDeposit";
 
             return View("DepositCompleted");
         }

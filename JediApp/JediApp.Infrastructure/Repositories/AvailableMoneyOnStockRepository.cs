@@ -1,53 +1,82 @@
 ﻿using JediApp.Database.Domain;
 using JediApp.Database.Interface;
+using JediApp.Web.Areas.Identity.Data;
 
 namespace JediApp.Database.Repositories
 {
     public class AvailableMoneyOnStockRepository : IAvailableMoneyOnStockRepository
-
     {
-        private readonly string fileName = "..//..//..//..//AvailableMoneyOnStock.csv";
+        private readonly JediAppDbContext _jediAppDb;
+
+        public AvailableMoneyOnStockRepository(JediAppDbContext jediAppDb)
+        {
+            _jediAppDb = jediAppDb;
+        }
+
         public void AddMoneyToStock(MoneyOnStock moneyOnStock)
         {
-            var currentMoneyOnStock = GetAvailableMoneyOnStock();
-            var allOtherMoneyOnStock = currentMoneyOnStock.Where(a => !a.CurrencyName.Equals(moneyOnStock.CurrencyName, StringComparison.InvariantCultureIgnoreCase));
-            File.Delete(fileName);
+            var office = _jediAppDb.ExchangeOffices.FirstOrDefault();
+            moneyOnStock.ExchangeOffice = office;
 
-            // Add requeste money to stock
-            using (StreamWriter file = new StreamWriter(fileName, true))
+            var currentMoneyOnStockForCurrency = _jediAppDb.MoneyOnStocks.Where(a => a.CurrencyName == moneyOnStock.CurrencyName).SingleOrDefault();
+            if (currentMoneyOnStockForCurrency != null)
             {
-                var id = Guid.NewGuid();
-                file.WriteLine($"{id};{moneyOnStock.Value};{moneyOnStock.CurrencyName}");
+                currentMoneyOnStockForCurrency.Value = currentMoneyOnStockForCurrency.Value + moneyOnStock.Value;
             }
-
-            // Add all other money
-            foreach (var money in allOtherMoneyOnStock)
+            else
             {
-                using (StreamWriter file = new StreamWriter(fileName, true))
-                {
-                    var id = Guid.NewGuid();
-                    file.WriteLine($"{id};{money.Value};{money.CurrencyName}");
-                }
+                _jediAppDb.MoneyOnStocks.Add(moneyOnStock);
             }
+            
+            _jediAppDb.SaveChanges();
         }
 
         public List<MoneyOnStock> GetAvailableMoneyOnStock()
         {
-            var moneyOnStockList = new List<MoneyOnStock>();
-
-            if (!File.Exists(fileName))
-                return new List<MoneyOnStock>();
-
-            var moneyOnStockFromFile = File.ReadAllLines(fileName);
-            foreach (var line in moneyOnStockFromFile)
-            {
-                var columns = line.Split(';');
-                Guid.TryParse(columns[0], out var newGuid);
-                decimal.TryParse(columns[1], out var currencyValue);
-                moneyOnStockList.Add(new MoneyOnStock { Id = newGuid, CurrencyName = columns[2], Value = currencyValue });
-            }
-
-            return moneyOnStockList;
+            return _jediAppDb.MoneyOnStocks.ToList();
         }
+
+        //public void AddMoneyToStock(MoneyOnStock moneyOnStock)
+        //{
+        //    var currentMoneyOnStock = GetAvailableMoneyOnStock();
+        //    var allOtherMoneyOnStock = currentMoneyOnStock.Where(a => !a.CurrencyName.Equals(moneyOnStock.CurrencyName, StringComparison.InvariantCultureIgnoreCase));
+        //    File.Delete(fileName);
+
+        //    // Add requeste money to stock
+        //    using (StreamWriter file = new StreamWriter(fileName, true))
+        //    {
+        //        var id = Guid.NewGuid();
+        //        file.WriteLine($"{id};{moneyOnStock.Value};{moneyOnStock.CurrencyName}");
+        //    }
+
+        //    // Add all other money
+        //    foreach (var money in allOtherMoneyOnStock)
+        //    {
+        //        using (StreamWriter file = new StreamWriter(fileName, true))
+        //        {
+        //            var id = Guid.NewGuid();
+        //            file.WriteLine($"{id};{money.Value};{money.CurrencyName}");
+        //        }
+        //    }
+        //}
+
+        //public List<MoneyOnStock> GetAvailableMoneyOnStock()
+        //{
+        //    var moneyOnStockList = new List<MoneyOnStock>();
+
+        //    if (!File.Exists(fileName))
+        //        return new List<MoneyOnStock>();
+
+        //    var moneyOnStockFromFile = File.ReadAllLines(fileName);
+        //    foreach (var line in moneyOnStockFromFile)
+        //    {
+        //        var columns = line.Split(';');
+        //        Guid.TryParse(columns[0], out var newGuid);
+        //        decimal.TryParse(columns[1], out var currencyValue);
+        //        moneyOnStockList.Add(new MoneyOnStock { Id = newGuid, CurrencyName = columns[2], Value = currencyValue });
+        //    }
+
+        //    return moneyOnStockList;
+        //}
     }
 }
