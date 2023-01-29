@@ -65,7 +65,22 @@ namespace JediApp.Database.Repositories
 
         public void Withdrawal(string userId, string currencyCode, decimal withdrawalAmount)
         {
-            throw new NotImplementedException();
+            var userWallet = GetWallet(userId);
+
+            WalletPosition walletCurrency;
+            if (userWallet.WalletPositions != null && userWallet.WalletPositions.Any())
+            {
+                walletCurrency = userWallet.WalletPositions.FirstOrDefault(cur => cur.Currency.ShortName == currencyCode);
+            }
+            else
+            {
+                return;
+            }
+
+            walletCurrency.CurrencyAmount = walletCurrency.CurrencyAmount - withdrawalAmount;
+            
+            _jediAppDb.Update(walletCurrency);
+            _jediAppDb.SaveChanges();
         }
 
         //        var userWalletIdFromFile = columns[0];
