@@ -2,6 +2,7 @@
 using JediApp.Database.Interface;
 using JediApp.Web.Areas.Identity.Data;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JediApp.Database.Repositories
 {
@@ -47,6 +48,18 @@ namespace JediApp.Database.Repositories
                 });
             }
 
+           var transactionHistory = new TransactionHistory 
+                {
+                    Id = Guid.NewGuid(),
+                    UserId = userId,
+                    CurrencyName = currencyCode,
+                    Amount = depositAmount,
+                    DateOfTransaction = DateTime.Now,
+                    Description = "Deposit"        
+                };
+
+            _jediAppDb.Add(transactionHistory);
+
             _jediAppDb.SaveChanges();
         }
 
@@ -80,6 +93,19 @@ namespace JediApp.Database.Repositories
             walletCurrency.CurrencyAmount = walletCurrency.CurrencyAmount - withdrawalAmount;
             
             _jediAppDb.Update(walletCurrency);
+
+            var transactionHistory = new TransactionHistory
+            {
+                Id = Guid.NewGuid(),
+                UserId = userId,
+                CurrencyName = currencyCode,
+                Amount = withdrawalAmount,
+                DateOfTransaction = DateTime.Now,
+                Description = "Withdrawal"
+            };
+
+            _jediAppDb.Add(transactionHistory);
+
             _jediAppDb.SaveChanges();
         }
 

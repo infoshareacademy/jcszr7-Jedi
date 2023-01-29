@@ -15,10 +15,8 @@ namespace JediApp.Database.Repositories
         }
         public bool AddTransaction(TransactionHistory transactionHistory)
         {
-            //using (StreamWriter file = new StreamWriter(fileName, true))
-            //{
-            //    file.WriteLine($"{transactionHistory.Id};{transactionHistory.UserId};{transactionHistory.UserLogin};{transactionHistory.CurrencyName};{transactionHistory.Amount};{transactionHistory.DateOfTransaction};{transactionHistory.Description}");
-            //}
+            _jediAppDb.Add(transactionHistory);
+            _jediAppDb.SaveChanges();
 
             return true;
         }

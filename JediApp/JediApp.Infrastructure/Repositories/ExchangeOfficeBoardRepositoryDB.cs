@@ -55,6 +55,89 @@ namespace JediApp.Database.Repositories
 
             }
             //end tmp
+            //tmp check if currencies exist
+            var pln = _jediAppDb.Currencys.Where(c => (c.ShortName.ToLower()).Equals("pln")).FirstOrDefault();
+            if (pln is null)
+            {
+                pln = new Currency
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Polish zloty",
+                    ShortName = "PLN",
+                    Country = "Poland",
+                    BuyAt = 0,
+                    SellAt = 0,
+                    ExchangeOfficeBoardId = _jediAppDb.ExchangeOfficeBoards.FirstOrDefault().Id
+                };
+                _jediAppDb.Add(pln);
+            }
+
+            var euro = _jediAppDb.Currencys.Where(c => (c.ShortName.ToLower()).Equals("eur")).FirstOrDefault();
+            if (euro is null)
+            {
+                euro = new Currency
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Euro",
+                    ShortName = "EUR",
+                    Country = "European Union (EU)",
+                    BuyAt = 0,
+                    SellAt = 0,
+                    ExchangeOfficeBoardId = _jediAppDb.ExchangeOfficeBoards.FirstOrDefault().Id
+                };
+                _jediAppDb.Add(euro);
+            }
+
+            var usd = _jediAppDb.Currencys.Where(c => (c.ShortName.ToLower()).Equals("usd")).FirstOrDefault();
+            if (usd is null)
+            {
+                usd = new Currency
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "United States dollar",
+                    ShortName = "USD",
+                    Country = "United States",
+                    BuyAt = 0,
+                    SellAt = 0,
+                    ExchangeOfficeBoardId = _jediAppDb.ExchangeOfficeBoards.FirstOrDefault().Id
+                };
+                _jediAppDb.Add(usd);
+            }
+
+            var chf = _jediAppDb.Currencys.Where(c => (c.ShortName.ToLower()).Equals("chf")).FirstOrDefault();
+            if (chf is null)
+            {
+                chf = new Currency
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Swiss franc",
+                    ShortName = "CHF",
+                    Country = "Switzerland",
+                    BuyAt = 0,
+                    SellAt = 0,
+                    ExchangeOfficeBoardId = _jediAppDb.ExchangeOfficeBoards.FirstOrDefault().Id
+                };
+                _jediAppDb.Add(chf);
+            }
+
+            var gbp = _jediAppDb.Currencys.Where(c => (c.ShortName.ToLower()).Equals("gbp")).FirstOrDefault();
+            if (gbp is null)
+            {
+                gbp = new Currency
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "British pound",
+                    ShortName = "GBP",
+                    Country = "United Kingdom",
+                    BuyAt = 0,
+                    SellAt = 0,
+                    ExchangeOfficeBoardId = _jediAppDb.ExchangeOfficeBoards.FirstOrDefault().Id
+                };
+                _jediAppDb.Add(gbp);
+            }
+
+            //end tmp
+            _jediAppDb.SaveChanges();
 
             return _jediAppDb.Currencys.OrderBy(c => c.ShortName).ToList();
 
