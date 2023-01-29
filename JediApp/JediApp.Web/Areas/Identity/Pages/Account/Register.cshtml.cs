@@ -73,13 +73,13 @@ namespace JediApp.Web.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
-            [Display(Name ="Firstname")]
-            [StringLength(50, ErrorMessage = "The firsname field should have a max 50 characters long.", MinimumLength = 6)]
+            [Display(Name ="First name")]
+            [StringLength(50, ErrorMessage = "The firsname field should have a max 50 characters long.", MinimumLength = 2)]
             public string FirstName { get; set; }
             
             [Required]
-            [Display(Name ="Lasttname")]
-            [StringLength(50, ErrorMessage = "The firsname field should have a max 50 characters long.", MinimumLength = 6)]
+            [Display(Name ="Last name")]
+            [StringLength(50, ErrorMessage = "The firsname field should have a max 50 characters long.", MinimumLength = 2)]
             public string LastName { get; set; }
 
             [Required]
