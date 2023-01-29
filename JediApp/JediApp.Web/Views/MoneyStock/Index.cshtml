@@ -7,10 +7,18 @@
     Money available on the stock
 </h2>
 
+@if(!Model.Any())
+{
+    <div style="margin: 45px auto; border: 1px solid black; padding: 20px 10px;">
+        <h1>Money Stock is currently empty. Perform Deposit first</h1>
+    </div>
+}
 <p>
     <input type="button" value="Add money to stock" class="btn btn-primary" onclick="location.href='@Url.Action("DepositIndex", "MoneyStock" )'" />
 </p>
 
+@if(Model.Any())
+{
 <div class="hero-form pb-3" style="margin: 30px auto; padding: 35px 10px; height: auto;">
     <table class="table table-bordered">
         <thead>
@@ -32,3 +40,4 @@
         </tbody>
     </table>
 </div>
+}
