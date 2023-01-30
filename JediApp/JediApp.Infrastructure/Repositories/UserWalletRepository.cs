@@ -15,7 +15,7 @@ namespace JediApp.Database.Repositories
             _jediAppDb = jediAppDb;
         }
 
-        public void Deposit(string userId, string currencyCode, decimal depositAmount)
+        public void Deposit(string userId, string currencyCode, decimal depositAmount, string description)
         {
             var userWallet = GetWallet(userId);
 
@@ -48,17 +48,23 @@ namespace JediApp.Database.Repositories
                 });
             }
 
-           var transactionHistory = new TransactionHistory 
-                {
-                    Id = Guid.NewGuid(),
-                    UserId = userId,
-                    CurrencyName = currencyCode,
-                    Amount = depositAmount,
-                    DateOfTransaction = DateTime.Now,
-                    Description = "Deposit"        
-                };
+            var transactionHistory = new TransactionHistory
+            {
+                Id = Guid.NewGuid(),
+                UserId = userId,
+                CurrencyName = currencyCode,
+                Amount = depositAmount,
+                DateOfTransaction = DateTime.Now,
+                Description = description
+            };
 
-            _jediAppDb.Add(transactionHistory);
+            if (description != "Sell")
+            {
+                _jediAppDb.Add(transactionHistory);
+            }
+           
+
+           
 
             _jediAppDb.SaveChanges();
         }
@@ -76,7 +82,7 @@ namespace JediApp.Database.Repositories
             return _jediAppDb.Wallets.Include("WalletPositions.Currency").SingleOrDefault(a => a.UserId == userId);
         }
 
-        public void Withdrawal(string userId, string currencyCode, decimal withdrawalAmount)
+        public void Withdrawal(string userId, string currencyCode, decimal withdrawalAmount, string description)
         {
             var userWallet = GetWallet(userId);
 
@@ -101,10 +107,13 @@ namespace JediApp.Database.Repositories
                 CurrencyName = currencyCode,
                 Amount = withdrawalAmount,
                 DateOfTransaction = DateTime.Now,
-                Description = "Withdrawal"
+                Description = description
             };
 
-            _jediAppDb.Add(transactionHistory);
+            if (description != "Buy")
+            {
+                _jediAppDb.Add(transactionHistory);
+            }
 
             _jediAppDb.SaveChanges();
         }

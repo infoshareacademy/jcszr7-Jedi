@@ -1,8 +1,11 @@
 ﻿using JediApp.Database.Domain;
+using JediApp.Database.Interface;
 using JediApp.Database.Repositories;
 using JediApp.Services.Services;
+using JediApp.Web.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace JediApp.Web.Controllers
 {
@@ -11,13 +14,16 @@ namespace JediApp.Web.Controllers
         private readonly IExchangeOfficeBoardService _exchangeOfficeBoardService;
         private readonly INbpJsonService _nbpJsonService;
         private readonly IExchangeOfficeService _exchangeOfficeService;
+        private readonly IUserWalletService _userWalletService;
 
 
-        public UserExchangeOfficeBoardController(IExchangeOfficeBoardService exchangeOfficeBoardService, INbpJsonService nbpJsonService, IExchangeOfficeService exchangeOfficeService)
+        public UserExchangeOfficeBoardController(IExchangeOfficeBoardService exchangeOfficeBoardService, INbpJsonService nbpJsonService, 
+            IExchangeOfficeService exchangeOfficeService, IUserWalletService userWalletService)
         {
             _exchangeOfficeBoardService = exchangeOfficeBoardService;
             _nbpJsonService = nbpJsonService;
             _exchangeOfficeService = exchangeOfficeService;
+            _userWalletService = userWalletService;
         }
 
         //public ExchangeOfficeBoardController()
@@ -28,7 +34,7 @@ namespace JediApp.Web.Controllers
         // GET: ExchangeOfficeBoardController
         public ActionResult Index()
         {
-            ViewData["activePage"] = "AdminExchange";
+            ViewData["activePage"] = "UserExchangeOfficeBoard";
 
             var model = _exchangeOfficeBoardService.GetAllCurrencies();
 
@@ -42,44 +48,32 @@ namespace JediApp.Web.Controllers
             return View(currency);
         }
 
-        // GET: ExchangeOfficeBoardController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: ExchangeOfficeBoardController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(Currency newCurrency)
-        {
-            _exchangeOfficeBoardService.AddCurrency(newCurrency);
-
-            return RedirectToAction(nameof(Index));
-
-            if (!ModelState.IsValid)
-            {
-                return View(newCurrency);
-            }
-            try
-            {
-                _exchangeOfficeBoardService.AddCurrency(newCurrency);
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
         // GET: ExchangeOfficeBoardController/Edit/5
-        public ActionResult Edit(Guid id)
+        public ActionResult Buy(Guid id)
         {
+            
             var currency = _exchangeOfficeBoardService.GetCurrencyById(id);
+            var exchangeFromCurrency = _exchangeOfficeBoardService.GetAllCurrencies().Where(c => (c.ShortName.ToLower()).Equals("pln")).FirstOrDefault();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var exchangeFromCurrencyAmount = _userWalletService.GetCurrencyBalanceById(userId, exchangeFromCurrency.Id).CurrencyAmount;
+
             if (currency != null)
             {
-                return View(currency);
+                var userExchange = new UserExchange()
+                {
+                    ExchangeFromCurrency = exchangeFromCurrency.ShortName,
+                    ExchangeFromCurrencyAmount = exchangeFromCurrencyAmount,
+                    ExchangeToCurrency = currency.ShortName,
+                    ExchangeToCurrencyAmount = 0,
+                    BuyAt = currency.BuyAt,
+                    SellAt = currency.SellAt,
+                    ExchangeMaxAmount = exchangeFromCurrencyAmount / currency.BuyAt
+
+                };
+
+
+                return View(userExchange);
+                //return View(currency);
             }
             else
             {
@@ -93,7 +87,7 @@ namespace JediApp.Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //public ActionResult Edit(int id, IFormCollection collection)
-        public ActionResult Edit(Guid id, Currency currency)
+        public ActionResult Buy(UserExchange userExchange)
         {
             //try
             //{
@@ -104,99 +98,115 @@ namespace JediApp.Web.Controllers
             //    return View();
             //}
 
-            _exchangeOfficeBoardService.UpdateCurrency(id, currency);
+            //----
+            //_exchangeOfficeBoardService.UpdateCurrency(id, currency);
 
-            return RedirectToAction(nameof(Index));
+            //return RedirectToAction(nameof(Index));
 
-            if (!ModelState.IsValid)
-            {
-                return View(currency);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return View(currency);
+            //}
 
-            try
+            //try
+            //{
+            //    _exchangeOfficeBoardService.UpdateCurrency(id, currency);
+            //    return RedirectToAction(nameof(Index));
+            //}
+            //catch
+            //{
+            //    return View();
+            //}
+            //----
+            //////
+
+            if (userExchange.ExchangeToCurrencyAmount > userExchange.ExchangeMaxAmount)
             {
-                _exchangeOfficeBoardService.UpdateCurrency(id, currency);
-                return RedirectToAction(nameof(Index));
+                ViewData["errorMessage"] = "Requested currency buy amount larger than current saldo.";
+                ViewData["currentBalance"] = userExchange.ExchangeMaxAmount;
+                return View("Buy", userExchange);
             }
-            catch
-            {
-                return View();
-            }
+            // Check balance after withdrawal
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            _userWalletService.Withdrawal(userId, userExchange.ExchangeFromCurrency, userExchange.ExchangeToCurrencyAmount * userExchange.BuyAt, "Buy");
+            _userWalletService.Deposit(userId, userExchange.ExchangeToCurrency, userExchange.ExchangeToCurrencyAmount, "Buy");
+
+            //var newBalance = GetCurrencyBalance(userWithdrawal.Currency);
+            var exchangeFromCurrency = _exchangeOfficeBoardService.GetAllCurrencies().Where(c => (c.ShortName.ToLower()).Equals(userExchange.ExchangeFromCurrency.ToLower())).FirstOrDefault();
+            var newBalance = _userWalletService.GetCurrencyBalanceById(userId, exchangeFromCurrency.Id).CurrencyAmount;
+            ViewData["currentSaldo"] = newBalance;
+            ViewData["currenncy"] = userExchange.ExchangeFromCurrency;
+            ViewData["activePage"] = "UserBuy";
+
+            return View("BuyCompleted");
+
         }
 
-        //// GET: ExchangeOfficeBoardController/Delete/5
-        public ActionResult Delete(Guid id)
-        {
-            var currency = _exchangeOfficeBoardService.GetCurrencyById(id);
-
-            return View(currency);
-        }
-
-        // POST: ExchangeOfficeBoardController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(Guid id, IFormCollection collection)
-        {
-            try
-            {
-                var currencyToDelete = _exchangeOfficeBoardService.GetCurrencyById(id);
-                _exchangeOfficeBoardService.DeleteCurrencyByShortName(currencyToDelete.ShortName);
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // POST: ExchangeOfficeBoardController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult AddCurrencyFromNbpApi()
+        // GET: ExchangeOfficeBoardController/Edit/5
+        public ActionResult Sell(Guid id)
         {
 
-            List<Currency> nbpCurrencies = _nbpJsonService.GetAllCurrencies();
+            //var currency = _exchangeOfficeBoardService.GetCurrencyById(id);
+            var currency = _exchangeOfficeBoardService.GetAllCurrencies().Where(c => (c.ShortName.ToLower()).Equals("pln")).FirstOrDefault();
+            var exchangeFromCurrency = _exchangeOfficeBoardService.GetCurrencyById(id);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //var exchangeFromCurrencyAmount = _userWalletService.GetCurrencyBalanceById(userId, exchangeFromCurrency.Id).CurrencyAmount;
+            var exchangeFromCurrencyAmount = _userWalletService.GetCurrencyBalanceById(userId, id).CurrencyAmount;
 
-            foreach (var currency in nbpCurrencies)
+            if (currency != null)
             {
-                _exchangeOfficeBoardService.AddCurrency(new Currency()
+                var userExchange = new UserExchange()
                 {
-                    Name = currency.Name,
-                    ShortName = currency.ShortName,
-                    Country = currency.Country,
+                    ExchangeFromCurrency = exchangeFromCurrency.ShortName,
+                    ExchangeFromCurrencyAmount = exchangeFromCurrencyAmount,
+                    ExchangeToCurrency = currency.ShortName,
+                    ExchangeToCurrencyAmount = _userWalletService.GetCurrencyBalanceById(userId, currency.Id).CurrencyAmount,
                     BuyAt = currency.BuyAt,
-                    SellAt = currency.SellAt
-                });
+                    SellAt = currency.SellAt,
+                    ExchangeMaxAmount = exchangeFromCurrencyAmount
+
+                };
+
+
+                return View(userExchange);
+                //return View(currency);
+            }
+            else
+            {
+                return RedirectToAction(nameof(Index));
             }
 
-            return RedirectToAction(nameof(Index));
-
-
+            //return View();
         }
 
+        //// POST: ExchangeOfficeBoardController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Markup()
+        //public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Sell(UserExchange userExchange)
         {
 
-            var currencies = _exchangeOfficeBoardService.GetAllCurrencies();
-
-            foreach (var currency in currencies)
+            if (userExchange.ExchangeFromCurrencyAmount > userExchange.ExchangeMaxAmount)
             {
-
-                var markup = _exchangeOfficeService.GetAllExchangeOffices().FirstOrDefault().Markup;
-                //spread 5%
-                //currency.BuyAt *= (decimal)1.025;
-                //currency.SellAt *= (decimal)0.975;                
-                currency.BuyAt *= 1 + (decimal)markup / 200;
-                currency.SellAt *= 1 - (decimal)markup / 200;
-                _exchangeOfficeBoardService.UpdateCurrency(currency.Id, currency);
-
+                ViewData["errorMessage"] = "Requested currency buy amount larger than current saldo.";
+                ViewData["currentBalance"] = userExchange.ExchangeMaxAmount;
+                return View("Sell", userExchange);
             }
 
-            return RedirectToAction(nameof(Index));
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
+            _userWalletService.Withdrawal(userId, userExchange.ExchangeFromCurrency, userExchange.ExchangeFromCurrencyAmount, "Sell");
+            _userWalletService.Deposit(userId, userExchange.ExchangeToCurrency, userExchange.ExchangeFromCurrencyAmount * userExchange.SellAt, "Sell");
+
+            var exchangetoCurrency = _exchangeOfficeBoardService.GetAllCurrencies().Where(c => (c.ShortName.ToLower()).Equals(userExchange.ExchangeToCurrency.ToLower())).FirstOrDefault();
+            var newBalance = _userWalletService.GetCurrencyBalanceById(userId, exchangetoCurrency.Id).CurrencyAmount;
+            ViewData["currentSaldo"] = newBalance;
+            ViewData["currenncy"] = userExchange.ExchangeToCurrency;
+            ViewData["activePage"] = "UserSell";
+
+            return View("SellCompleted");
 
         }
 

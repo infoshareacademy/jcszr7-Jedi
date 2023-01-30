@@ -54,7 +54,7 @@ namespace JediApp.Web.Controllers
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            _userWalletkRepository.Withdrawal(userId, userWithdrawal.Currency, userWithdrawal.Amount);
+            _userWalletkRepository.Withdrawal(userId, userWithdrawal.Currency, userWithdrawal.Amount, "Withdrawal");
 
             var newBalance = GetCurrencyBalance(userWithdrawal.Currency);
             ViewData["currentSaldo"] = newBalance.CurrencyAmount;

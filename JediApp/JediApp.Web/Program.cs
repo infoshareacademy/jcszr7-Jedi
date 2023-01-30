@@ -59,8 +59,7 @@ builder.Services.AddTransient<UserService>();
 builder.Services.AddTransient<INbpJsonService, NbpJsonService>();
 builder.Services.AddTransient<ITransactionHistoryService, TransactionHistoryService>();
 builder.Services.AddTransient<IExchangeOfficeService, ExchangeOfficeService>();
-
-
+builder.Services.AddTransient<IUserWalletService, UserWalletService>();
 
 var app = builder.Build();
 

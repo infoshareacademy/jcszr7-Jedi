@@ -4,7 +4,7 @@ namespace JediApp.Services.Services
 {
     public interface IExchangeOfficeBoardService
     {
-        public Currency AddCurrency(Currency currency);
+        Currency AddCurrency(Currency currency);
         List<Currency> GetAllCurrencies();
         Currency GetCurrencyById(Guid id);
         bool UpdateCurrency(Guid id, Currency currency);

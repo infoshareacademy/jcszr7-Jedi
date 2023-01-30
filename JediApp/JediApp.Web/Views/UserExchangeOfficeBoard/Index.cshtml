@@ -11,9 +11,8 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Short Name</th>
-                <th>Country</th>
+                <th>Currency name</th>
+                <th>Symbol</th>
                 <th>Buy At</th>
                 <th>Sell At</th>
                 <th>Options</th>
@@ -25,13 +24,12 @@
                 <tr>
                     <td>@item.Name</td>
                     <td>@item.ShortName</td>
-                    <td>@item.Country</td>
                     <td>@item.BuyAt</td>
                     <td>@item.SellAt</td>
                     <td>
                         <input type="button" value="Details / Chart" class="btn btn-info align-text-bottom" onclick="location.href='@Url.Action("Details", "UserExchangeOfficeBoard",new { Id = item.Id } )'" />
-                        <input type="button" value="Buy" class="btn btn-info align-text-bottom" onclick="location.href='@Url.Action("Buy", "ExchangeOfficeBoard",new { Id = item.Id } )'" />
-                        <input type="button" value="Sell" class="btn btn-info align-text-bottom" onclick="location.href='@Url.Action("Sell", "ExchangeOfficeBoard",new { Id = item.Id } )'" />
+                        <input type="button" value="Buy" class="btn btn-info align-text-bottom" onclick="location.href='@Url.Action("Buy", "UserExchangeOfficeBoard",new { Id = item.Id } )'" />
+                        <input type="button" value="Sell" class="btn btn-info align-text-bottom" onclick="location.href='@Url.Action("Sell", "UserExchangeOfficeBoard",new { Id = item.Id } )'" />
                     </td>
                 </tr>
             }

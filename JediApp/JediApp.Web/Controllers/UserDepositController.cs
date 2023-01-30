@@ -31,7 +31,7 @@ namespace JediApp.Web.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             // Perform deposit
-            _userWalletRepository.Deposit(userId, userDeposit.Currency, userDeposit.Amount);
+            _userWalletRepository.Deposit(userId, userDeposit.Currency, userDeposit.Amount, "Deposit");
 
             // Check balance after deposit
             var wallet = _userWalletRepository.GetWallet(userId);

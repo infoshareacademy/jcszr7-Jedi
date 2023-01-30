@@ -286,7 +286,7 @@
     </header><!-- End Header -->
     @{
         string[] adminPages = new string[] { "AdminUser", "MoneyStock", "AdminExchange", "AdminTransactionHistory", "AdminExchangeOfficeSettings" };
-        string[] userPages = new string[] { "AccountBalance", "UserDeposit", "UserExchange", "UserWithdrawal", "UserTransactionHistory" };
+        string[] userPages = new string[] { "AccountBalance", "UserDeposit", "UserExchangeOfficeBoard", "UserWithdrawal", "UserTransactionHistory" };
     }
     <!-- ======= Sidebar ======= -->
     <aside id="sidebar" class="sidebar">
@@ -359,7 +359,7 @@
                             </a>
                         </li>
                         <li>
-                            <a class="@(ViewData["activePage"] == "UserExchange" ? "active" : "")" asp-area="" asp-controller="UserExchangeOfficeBoard" asp-action="Index">
+                                <a class="@(ViewData["activePage"] == "UserExchangeOfficeBoard" ? "active" : "")" asp-area="" asp-controller="UserExchangeOfficeBoard" asp-action="Index">
                                 <i class="bi bi-circle"></i>
                                 <span>Exchange</span>
                             </a>

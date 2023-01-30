@@ -65,8 +65,8 @@ namespace JediApp.Database.Repositories
                     Name = "Polish zloty",
                     ShortName = "PLN",
                     Country = "Poland",
-                    BuyAt = 0,
-                    SellAt = 0,
+                    BuyAt = 1,
+                    SellAt = 1,
                     ExchangeOfficeBoardId = _jediAppDb.ExchangeOfficeBoards.FirstOrDefault().Id
                 };
                 _jediAppDb.Add(pln);
@@ -81,8 +81,8 @@ namespace JediApp.Database.Repositories
                     Name = "Euro",
                     ShortName = "EUR",
                     Country = "European Union (EU)",
-                    BuyAt = 0,
-                    SellAt = 0,
+                    BuyAt = 1,
+                    SellAt = 1,
                     ExchangeOfficeBoardId = _jediAppDb.ExchangeOfficeBoards.FirstOrDefault().Id
                 };
                 _jediAppDb.Add(euro);
@@ -97,8 +97,8 @@ namespace JediApp.Database.Repositories
                     Name = "United States dollar",
                     ShortName = "USD",
                     Country = "United States",
-                    BuyAt = 0,
-                    SellAt = 0,
+                    BuyAt = 1,
+                    SellAt = 1,
                     ExchangeOfficeBoardId = _jediAppDb.ExchangeOfficeBoards.FirstOrDefault().Id
                 };
                 _jediAppDb.Add(usd);
@@ -113,8 +113,8 @@ namespace JediApp.Database.Repositories
                     Name = "Swiss franc",
                     ShortName = "CHF",
                     Country = "Switzerland",
-                    BuyAt = 0,
-                    SellAt = 0,
+                    BuyAt = 1,
+                    SellAt = 1,
                     ExchangeOfficeBoardId = _jediAppDb.ExchangeOfficeBoards.FirstOrDefault().Id
                 };
                 _jediAppDb.Add(chf);
@@ -129,8 +129,8 @@ namespace JediApp.Database.Repositories
                     Name = "British pound",
                     ShortName = "GBP",
                     Country = "United Kingdom",
-                    BuyAt = 0,
-                    SellAt = 0,
+                    BuyAt = 1,
+                    SellAt = 1,
                     ExchangeOfficeBoardId = _jediAppDb.ExchangeOfficeBoards.FirstOrDefault().Id
                 };
                 _jediAppDb.Add(gbp);
