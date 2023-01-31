@@ -30,11 +30,19 @@
                             <div class="bem-select-dropdown ">
                                 <div id="divDeposit" class="hero-form__currency-flag icon-currency-round-PLN icon-currency-round-PLN-dims" style="margin-left: 5px;"></div>
                                     <select asp-for="Currency" name="Currency" onchange="getValDeposit(this)" class="form-select" style="height: 47px;width: 105px;text-align: right;font-weight: bold;">
-                                        <option selected="selected" value="PLN">PLN</option>
-                                        <option value="EUR">EUR</option>
-                                        <option value="CHF">CHF</option>
-                                        <option value="USD">USD</option>
-                                        <option value="GBP">GBP</option>
+                                        @foreach (var item in ViewData["currencies"] as IEnumerable<string>)
+                                        {
+                                            if (item == "PLN")
+                                            {
+                                                <option selected="selected" value="@item">@item</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item">@item</option>
+                                            }
+                                            
+                                        }
+
                                     </select>
                             </div>
                         </div>

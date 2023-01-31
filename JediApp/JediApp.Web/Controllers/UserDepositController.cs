@@ -1,5 +1,6 @@
 ﻿using JediApp.Database.Domain;
 using JediApp.Database.Interface;
+using JediApp.Services.Services;
 using JediApp.Web.Areas.Identity.Data;
 using JediApp.Web.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -14,15 +15,18 @@ namespace JediApp.Web.Controllers
     public class UserDepositController : Controller
     {
         private readonly IUserWalletRepository _userWalletRepository;
+        private readonly IExchangeOfficeBoardService _exchangeOfficeBoardService;
 
-        public UserDepositController(IUserWalletRepository userWalletRepository)
+        public UserDepositController(IUserWalletRepository userWalletRepository, IExchangeOfficeBoardService exchangeOfficeBoardService)
         {
             _userWalletRepository = userWalletRepository;
+            _exchangeOfficeBoardService = exchangeOfficeBoardService;
         }
 
         public IActionResult Index()
         {
             ViewData["activePage"] = "UserDeposit";
+            ViewData["currencies"] = _exchangeOfficeBoardService.GetAllCurrencies().Select(a => a.ShortName);
             return View();
         }
 
