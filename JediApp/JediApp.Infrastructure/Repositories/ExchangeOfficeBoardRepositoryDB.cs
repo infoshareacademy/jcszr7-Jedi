@@ -27,6 +27,18 @@ namespace JediApp.Database.Repositories
 
         }
 
+        public Currency UpdateCurrency(Currency currency)
+        {
+            var currencyFromDb = _jediAppDb.Currencys.Where(c => c.ShortName == currency.ShortName).FirstOrDefault();
+            currencyFromDb.SellAt = currency.SellAt;
+            currencyFromDb.BuyAt = currency.BuyAt;
+
+            _jediAppDb.Update(currencyFromDb);
+            _jediAppDb.SaveChanges();
+
+            return currencyFromDb;
+        }
+
         public List<Currency> GetAllCurrencies()
         {
             //tmp check if officeBoard exist

@@ -18,7 +18,10 @@ namespace JediApp.Services.Services
             {
                 return _exchangeOfficeBoardRepository.AddCurrency(currency);
             }
-            return null;
+            else
+            {
+                return _exchangeOfficeBoardRepository.UpdateCurrency(currency);
+            }
         }
 
         public List<Currency> GetAllCurrencies()

@@ -100,5 +100,10 @@ namespace JediApp.Database.Repositories
             }
             return true;
         }
+
+        public Currency UpdateCurrency(Currency currency)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
