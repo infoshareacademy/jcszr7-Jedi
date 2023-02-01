@@ -38,6 +38,13 @@ namespace JediApp.Web.Controllers
 
             var model = _exchangeOfficeBoardService.GetAllCurrencies();
 
+            //remove-hide pln from the board
+            var pln = model.Where(m => m.ShortName.ToLower().Equals("pln")).FirstOrDefault();
+            if(pln != null)
+            {
+                model.Remove(pln);
+            }
+
             return View(model);
         }
 

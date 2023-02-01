@@ -32,6 +32,13 @@ namespace JediApp.Web.Controllers
 
             var model = _exchangeOfficeBoardService.GetAllCurrencies();
 
+            //remove-hide pln from the board
+            var pln = model.Where(m => m.ShortName.ToLower().Equals("pln")).FirstOrDefault();
+            if (pln != null)
+            {
+                model.Remove(pln);
+            }
+
             return View(model);
         }
 
@@ -173,6 +180,35 @@ namespace JediApp.Web.Controllers
             return RedirectToAction(nameof(Index));
 
             
+        }
+
+        // POST: ExchangeOfficeBoardController/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdateCurrencyRatesFromNbpApi()
+        {
+
+            List<Currency> nbpCurrencies = _nbpJsonService.GetAllCurrencies();
+            var currencies = _exchangeOfficeBoardService.GetAllCurrencies();
+
+            foreach (var currency in currencies)
+            {
+                try
+                {
+                    currency.BuyAt = nbpCurrencies.Where(nc => nc.ShortName.ToLower().Equals(currency.ShortName.ToLower())).FirstOrDefault().BuyAt;
+                    currency.SellAt = nbpCurrencies.Where(nc => nc.ShortName.ToLower().Equals(currency.ShortName.ToLower())).FirstOrDefault().SellAt;
+                    _exchangeOfficeBoardService.UpdateCurrency(currency.Id, currency);
+                }
+                catch
+                {
+                    //pln
+                }
+
+            }
+
+            return RedirectToAction(nameof(Index));
+
+
         }
 
         [HttpPost]

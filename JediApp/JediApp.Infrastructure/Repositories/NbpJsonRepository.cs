@@ -8,6 +8,7 @@ namespace JediApp.Database.Repositories
     public class NbpJsonRepository : INbpJsonRepository
     {
         private readonly string apiPath = "http://api.nbp.pl/api/exchangerates/tables/C/"; //może przeniść do klasy statycznej ???
+        private readonly List<string> baseCurrenciesInExchangeOffice = new List<string> { "AUD", "CAD", "CHF", "CZK", "DKK", "EUR", "GBP", "HUF", "JPY", "NOK", "PLN", "SEK", "USD"};
 
         public List<Currency> GetAllCurrencies()
         {
@@ -28,10 +29,22 @@ namespace JediApp.Database.Repositories
                     {
                         //decimal.TryParse(currency.ask, out var ask);
                         //decimal.TryParse(currency.bid, out var bid);
-                        currencies.Add(new Currency { Id = Guid.NewGuid(), Name = currency.currency, ShortName = currency.code, Country = "bd", BuyAt = currency.ask, SellAt = currency.bid });
+                        if(baseCurrenciesInExchangeOffice.Any(c => c.ToLower().Equals(currency.code.ToLower())))
+                        {
+                            try
+                            {
+                                currencies.Add(new Currency { Id = Guid.NewGuid(), Name = currency.currency, ShortName = currency.code, Country = "bd", BuyAt = currency.ask, SellAt = currency.bid });
+                            }
+                            catch
+                            {
+
+                            }
+
+                        }
+                        
 
                     }
-                }
+                }  
 
             }
 

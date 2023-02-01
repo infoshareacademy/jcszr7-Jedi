@@ -20,6 +20,22 @@ namespace JediApp.Database.Repositories
             //_jediAppDb.AddAsync(currency);
             //_jediAppDb.SaveChangesAsync();
 
+            //if (currency.ShortName.ToLower().Equals("eur"))
+            //{
+            //    currency.Name = "Euro";
+            //    currency.ShortName = "EUR";
+            //    currency.Country = "European Union (EU)";
+            //}
+
+            //if exist in dic add full data
+            var currecyDic = _jediAppDb.CurrencyDictionaries.Where(cd => cd.ShortName.ToLower().Equals(currency.ShortName.ToLower())).FirstOrDefault();
+            if(currecyDic != null)
+            {
+                currency.Name = currecyDic.Name;
+                currency.ShortName = currecyDic.ShortName;
+                currency.Country = currecyDic.Country;
+            }
+
             _jediAppDb.Add(currency);
             _jediAppDb.SaveChanges();
 
@@ -67,7 +83,7 @@ namespace JediApp.Database.Repositories
 
             }
             //end tmp
-            //tmp check if currencies exist
+            //tmp check if currencies , DB initialization some data
             var pln = _jediAppDb.Currencys.Where(c => (c.ShortName.ToLower()).Equals("pln")).FirstOrDefault();
             if (pln is null)
             {
@@ -84,69 +100,197 @@ namespace JediApp.Database.Repositories
                 _jediAppDb.Add(pln);
             }
 
-            var euro = _jediAppDb.Currencys.Where(c => (c.ShortName.ToLower()).Equals("eur")).FirstOrDefault();
-            if (euro is null)
-            {
-                euro = new Currency
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "Euro",
-                    ShortName = "EUR",
-                    Country = "European Union (EU)",
-                    BuyAt = 1,
-                    SellAt = 1,
-                    ExchangeOfficeBoardId = _jediAppDb.ExchangeOfficeBoards.FirstOrDefault().Id
-                };
-                _jediAppDb.Add(euro);
-            }
+            //var euro = _jediAppDb.Currencys.Where(c => (c.ShortName.ToLower()).Equals("eur")).FirstOrDefault();
+            //if (euro is null)
+            //{
+            //    euro = new Currency
+            //    {
+            //        Id = Guid.NewGuid(),
+            //        Name = "Euro",
+            //        ShortName = "EUR",
+            //        Country = "European Union (EU)",
+            //        BuyAt = 1,
+            //        SellAt = 1,
+            //        ExchangeOfficeBoardId = _jediAppDb.ExchangeOfficeBoards.FirstOrDefault().Id
+            //    };
+            //    _jediAppDb.Add(euro);
+            //}
 
-            var usd = _jediAppDb.Currencys.Where(c => (c.ShortName.ToLower()).Equals("usd")).FirstOrDefault();
-            if (usd is null)
-            {
-                usd = new Currency
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "United States dollar",
-                    ShortName = "USD",
-                    Country = "United States",
-                    BuyAt = 1,
-                    SellAt = 1,
-                    ExchangeOfficeBoardId = _jediAppDb.ExchangeOfficeBoards.FirstOrDefault().Id
-                };
-                _jediAppDb.Add(usd);
-            }
+            //var usd = _jediAppDb.Currencys.Where(c => (c.ShortName.ToLower()).Equals("usd")).FirstOrDefault();
+            //if (usd is null)
+            //{
+            //    usd = new Currency
+            //    {
+            //        Id = Guid.NewGuid(),
+            //        Name = "United States dollar",
+            //        ShortName = "USD",
+            //        Country = "United States",
+            //        BuyAt = 1,
+            //        SellAt = 1,
+            //        ExchangeOfficeBoardId = _jediAppDb.ExchangeOfficeBoards.FirstOrDefault().Id
+            //    };
+            //    _jediAppDb.Add(usd);
+            //}
 
-            var chf = _jediAppDb.Currencys.Where(c => (c.ShortName.ToLower()).Equals("chf")).FirstOrDefault();
-            if (chf is null)
-            {
-                chf = new Currency
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "Swiss franc",
-                    ShortName = "CHF",
-                    Country = "Switzerland",
-                    BuyAt = 1,
-                    SellAt = 1,
-                    ExchangeOfficeBoardId = _jediAppDb.ExchangeOfficeBoards.FirstOrDefault().Id
-                };
-                _jediAppDb.Add(chf);
-            }
+            //var chf = _jediAppDb.Currencys.Where(c => (c.ShortName.ToLower()).Equals("chf")).FirstOrDefault();
+            //if (chf is null)
+            //{
+            //    chf = new Currency
+            //    {
+            //        Id = Guid.NewGuid(),
+            //        Name = "Swiss franc",
+            //        ShortName = "CHF",
+            //        Country = "Switzerland",
+            //        BuyAt = 1,
+            //        SellAt = 1,
+            //        ExchangeOfficeBoardId = _jediAppDb.ExchangeOfficeBoards.FirstOrDefault().Id
+            //    };
+            //    _jediAppDb.Add(chf);
+            //}
 
-            var gbp = _jediAppDb.Currencys.Where(c => (c.ShortName.ToLower()).Equals("gbp")).FirstOrDefault();
-            if (gbp is null)
-            {
-                gbp = new Currency
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "British pound",
-                    ShortName = "GBP",
-                    Country = "United Kingdom",
-                    BuyAt = 1,
-                    SellAt = 1,
-                    ExchangeOfficeBoardId = _jediAppDb.ExchangeOfficeBoards.FirstOrDefault().Id
-                };
-                _jediAppDb.Add(gbp);
-            }
+            //var gbp = _jediAppDb.Currencys.Where(c => (c.ShortName.ToLower()).Equals("gbp")).FirstOrDefault();
+            //if (gbp is null)
+            //{
+            //    gbp = new Currency
+            //    {
+            //        Id = Guid.NewGuid(),
+            //        Name = "British pound",
+            //        ShortName = "GBP",
+            //        Country = "United Kingdom",
+            //        BuyAt = 1,
+            //        SellAt = 1,
+            //        ExchangeOfficeBoardId = _jediAppDb.ExchangeOfficeBoards.FirstOrDefault().Id
+            //    };
+            //    _jediAppDb.Add(gbp);
+            //}
+
+            //var aud = _jediAppDb.Currencys.Where(c => (c.ShortName.ToLower()).Equals("aud")).FirstOrDefault();
+            //if (aud is null)
+            //{
+            //    aud = new Currency
+            //    {
+            //        Id = Guid.NewGuid(),
+            //        Name = "Australian dollar",
+            //        ShortName = "AUD",
+            //        Country = "Australia",
+            //        BuyAt = 1,
+            //        SellAt = 1,
+            //        ExchangeOfficeBoardId = _jediAppDb.ExchangeOfficeBoards.FirstOrDefault().Id
+            //    };
+            //    _jediAppDb.Add(aud);
+            //}
+
+            //var cad = _jediAppDb.Currencys.Where(c => (c.ShortName.ToLower()).Equals("cad")).FirstOrDefault();
+            //if (cad is null)
+            //{
+            //    cad = new Currency
+            //    {
+            //        Id = Guid.NewGuid(),
+            //        Name = "Canadian dollar",
+            //        ShortName = "CAD",
+            //        Country = "Canada",
+            //        BuyAt = 1,
+            //        SellAt = 1,
+            //        ExchangeOfficeBoardId = _jediAppDb.ExchangeOfficeBoards.FirstOrDefault().Id
+            //    };
+            //    _jediAppDb.Add(cad);
+            //}
+
+            //var czk = _jediAppDb.Currencys.Where(c => (c.ShortName.ToLower()).Equals("czk")).FirstOrDefault();
+            //if (czk is null)
+            //{
+            //    czk = new Currency
+            //    {
+            //        Id = Guid.NewGuid(),
+            //        Name = "Czech koruna",
+            //        ShortName = "CZK",
+            //        Country = "Czech Republic",
+            //        BuyAt = 1,
+            //        SellAt = 1,
+            //        ExchangeOfficeBoardId = _jediAppDb.ExchangeOfficeBoards.FirstOrDefault().Id
+            //    };
+            //    _jediAppDb.Add(czk);
+            //}
+
+            //var dkk = _jediAppDb.Currencys.Where(c => (c.ShortName.ToLower()).Equals("dkk")).FirstOrDefault();
+            //if (dkk is null)
+            //{
+            //    dkk = new Currency
+            //    {
+            //        Id = Guid.NewGuid(),
+            //        Name = "Danish krone",
+            //        ShortName = "DKK",
+            //        Country = "Denmark",
+            //        BuyAt = 1,
+            //        SellAt = 1,
+            //        ExchangeOfficeBoardId = _jediAppDb.ExchangeOfficeBoards.FirstOrDefault().Id
+            //    };
+            //    _jediAppDb.Add(dkk);
+            //}
+
+            //var huf = _jediAppDb.Currencys.Where(c => (c.ShortName.ToLower()).Equals("huf")).FirstOrDefault();
+            //if (huf is null)
+            //{
+            //    huf = new Currency
+            //    {
+            //        Id = Guid.NewGuid(),
+            //        Name = "Hungarian forint",
+            //        ShortName = "HUF",
+            //        Country = "Hungary",
+            //        BuyAt = 1,
+            //        SellAt = 1,
+            //        ExchangeOfficeBoardId = _jediAppDb.ExchangeOfficeBoards.FirstOrDefault().Id
+            //    };
+            //    _jediAppDb.Add(huf);
+            //}
+
+            //var jpy = _jediAppDb.Currencys.Where(c => (c.ShortName.ToLower()).Equals("jpy")).FirstOrDefault();
+            //if (jpy is null)
+            //{
+            //    jpy = new Currency
+            //    {
+            //        Id = Guid.NewGuid(),
+            //        Name = "Japanese yen",
+            //        ShortName = "JPY",
+            //        Country = "Japan",
+            //        BuyAt = 1,
+            //        SellAt = 1,
+            //        ExchangeOfficeBoardId = _jediAppDb.ExchangeOfficeBoards.FirstOrDefault().Id
+            //    };
+            //    _jediAppDb.Add(jpy);
+            //}
+
+            //var nok = _jediAppDb.Currencys.Where(c => (c.ShortName.ToLower()).Equals("nok")).FirstOrDefault();
+            //if (nok is null)
+            //{
+            //    nok = new Currency
+            //    {
+            //        Id = Guid.NewGuid(),
+            //        Name = "Norwegian krone",
+            //        ShortName = "NOK",
+            //        Country = "Norway",
+            //        BuyAt = 1,
+            //        SellAt = 1,
+            //        ExchangeOfficeBoardId = _jediAppDb.ExchangeOfficeBoards.FirstOrDefault().Id
+            //    };
+            //    _jediAppDb.Add(nok);
+            //}
+
+            //var sek = _jediAppDb.Currencys.Where(c => (c.ShortName.ToLower()).Equals("sek")).FirstOrDefault();
+            //if (sek is null)
+            //{
+            //    sek = new Currency
+            //    {
+            //        Id = Guid.NewGuid(),
+            //        Name = "Swedish krona",
+            //        ShortName = "SEK",
+            //        Country = "Sweden",
+            //        BuyAt = 1,
+            //        SellAt = 1,
+            //        ExchangeOfficeBoardId = _jediAppDb.ExchangeOfficeBoards.FirstOrDefault().Id
+            //    };
+            //    _jediAppDb.Add(sek);
+            //}
 
             //end tmp
             _jediAppDb.SaveChanges();

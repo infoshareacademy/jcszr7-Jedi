@@ -4,6 +4,7 @@ using JediApp.Web.Areas.Identity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JediApp.Services.Migrations
 {
     [DbContext(typeof(JediAppDbContext))]
-    partial class JediAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230201220818_changeCurrencyBuySellPrecisoin")]
+    partial class changeCurrencyBuySellPrecisoin
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,30 +58,6 @@ namespace JediApp.Services.Migrations
                     b.HasIndex("ExchangeOfficeBoardId");
 
                     b.ToTable("Currencys");
-                });
-
-            modelBuilder.Entity("JediApp.Database.Domain.CurrencyDictionary", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasDefaultValueSql("NEWID()");
-
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ShortName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CurrencyDictionaries");
                 });
 
             modelBuilder.Entity("JediApp.Database.Domain.ExchangeOffice", b =>

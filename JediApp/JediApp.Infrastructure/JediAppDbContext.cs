@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Reflection.Emit;
 using System;
+using System.Runtime.ConstrainedExecution;
 
 
 namespace JediApp.Web.Areas.Identity.Data;
@@ -19,6 +20,7 @@ public class JediAppDbContext : IdentityDbContext<User>
     public DbSet<ExchangeOffice> ExchangeOffices { get; set; }
     public DbSet<ExchangeOfficeBoard> ExchangeOfficeBoards { get; set; }
     public DbSet<MoneyOnStock> MoneyOnStocks { get; set; }
+    public DbSet<CurrencyDictionary> CurrencyDictionaries { get; set; }
 
     public JediAppDbContext()
     {
@@ -86,6 +88,17 @@ public class JediAppDbContext : IdentityDbContext<User>
                 .HasForeignKey<Wallet>(u => u.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
+
+        builder.Entity<Currency>(entity =>
+        {
+            entity.Property(e => e.BuyAt).HasPrecision(18, 4);
+            entity.Property(e => e.SellAt).HasPrecision(18, 4);
+        });
+
+        builder.Entity<CurrencyDictionary>(entity =>
+        {
+            entity.Property(e => e.Id).HasDefaultValueSql("NEWID()");
+        });
     }
 }
 
