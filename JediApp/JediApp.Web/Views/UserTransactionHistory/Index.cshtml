@@ -15,16 +15,16 @@
         });
     </script>
 
-<h2>Transaction History</h2>
+<h4>Transactions History</h4>
     <form asp-action="GetPDF">
         <input type="hidden" name="GridHtml" />
-        <input type="submit" id="btnSubmit" value="Download as PDF" class="btn btn-info" />
+        <input type="submit" id="btnSubmit" value="Download as PDF" class="btn btn-info btn-sm" />
     </form>
 <br />
 <div class=" pb-3" id="Grid">
 
     @*<table class="table table-bordered">*@
-        <table cellpadding="5" cellspacing="0" style="border: 1px solid #ccc;font-size: 9pt;">
+        <table cellpadding="5" cellspacing="0" style="border: 1px solid #ccc;font-size: 10pt;">
         <thead>
             <tr>
                 @*<th>ID</th>*@
@@ -32,7 +32,7 @@
                 <th style="background-color: #B8DBFD;border: 1px solid #ccc">Email</th>
                 <th style="background-color: #B8DBFD;border: 1px solid #ccc">Currency</th>
                 <th style="background-color: #B8DBFD;border: 1px solid #ccc">Amount</th>
-                <th style="background-color: #B8DBFD;border: 1px solid #ccc">Transaction Date</th>
+                <th style="background-color: #B8DBFD;border: 1px solid #ccc">Date</th>
                 <th style="background-color: #B8DBFD;border: 1px solid #ccc">Description</th>
             </tr>
         </thead>
@@ -41,8 +41,8 @@
             {
                         <tr>
                     @*<td>@item.Id</td>*@
-                                <td style="width:120px;border: 1px solid #ccc">@item.User.FirstName @item.User.LastName</td>
-                                <td style="width:120px;border: 1px solid #ccc">@item.User.Email</td>
+                                <td style="width:150px;border: 1px solid #ccc">@item.User.FirstName @item.User.LastName</td>
+                                <td style="width:150px;border: 1px solid #ccc">@item.User.Email</td>
                                 <td style="width:120px;border: 1px solid #ccc">@item.CurrencyName</td>
                                 <td style="width:120px;border: 1px solid #ccc">@item.Amount</td>
                                 <td style="width:120px;border: 1px solid #ccc">@item.DateOfTransaction</td>
