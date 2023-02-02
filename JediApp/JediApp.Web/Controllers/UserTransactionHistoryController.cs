@@ -1,4 +1,5 @@
-﻿using JediApp.Database.Domain;
+﻿using iText.Html2pdf;
+using JediApp.Database.Domain;
 using JediApp.Services.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +11,7 @@ namespace JediApp.Web.Controllers
     {
         private readonly ITransactionHistoryService _transactionHistoryService;
         //private readonly UserManager<User> _userManager;
+
 
         public UserTransactionHistoryController(ITransactionHistoryService transactionHistoryService)
         //public UserTransactionHistory(ITransactionHistoryService transactionHistoryService, UserManager<User> userManager)
@@ -30,6 +32,27 @@ namespace JediApp.Web.Controllers
             return View(model);
 
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult GetPDF(string GridHtml)
+        {
+
+            var userName = User.Identity.Name;
+
+            using (MemoryStream stream = new MemoryStream())
+            {
+                HtmlConverter.ConvertToPdf(GridHtml, stream);
+                return File(stream.ToArray(), "application/pdf", $"{ userName }_Transactions_History.pdf");
+            }
+
+            return RedirectToAction(nameof(Index));
+
+
+        }
+
+
+        
 
     }
 }

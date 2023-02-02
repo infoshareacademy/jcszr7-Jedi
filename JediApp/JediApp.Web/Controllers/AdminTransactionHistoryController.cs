@@ -1,5 +1,7 @@
-﻿using JediApp.Services.Services;
+﻿using iText.Html2pdf;
+using JediApp.Services.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace JediApp.Web.Controllers
 {
@@ -18,6 +20,22 @@ namespace JediApp.Web.Controllers
             var model = _transactionHistoryService.GetAllUsersHistories();
 
             return View(model);
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult GetPDF(string GridHtml)
+        {
+
+            using (MemoryStream stream = new MemoryStream())
+            {
+                HtmlConverter.ConvertToPdf(GridHtml, stream);
+                return File(stream.ToArray(), "application/pdf", "All_Transactions_History.pdf");
+            }
+
+            return RedirectToAction(nameof(Index));
+
 
         }
     }
