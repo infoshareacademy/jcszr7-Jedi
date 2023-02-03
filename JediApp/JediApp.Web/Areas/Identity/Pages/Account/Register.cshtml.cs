@@ -74,12 +74,12 @@ namespace JediApp.Web.Areas.Identity.Pages.Account
         {
             [Required]
             [Display(Name ="First name")]
-            [StringLength(50, ErrorMessage = "The firsname field should have a max 50 characters long.", MinimumLength = 2)]
+            [StringLength(50, ErrorMessage = "The first name field should have a max 50 characters long.", MinimumLength = 2)]
             public string FirstName { get; set; }
             
             [Required]
             [Display(Name ="Last name")]
-            [StringLength(50, ErrorMessage = "The firsname field should have a max 50 characters long.", MinimumLength = 2)]
+            [StringLength(50, ErrorMessage = "The last name field should have a max 50 characters long.", MinimumLength = 2)]
             public string LastName { get; set; }
 
             [Required]
