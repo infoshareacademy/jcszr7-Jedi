@@ -28,7 +28,7 @@
 <div>
    @* <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>*@
-    <input type="button" value="Edit" class="btn btn-outline-secondary" onclick="location.href='@Url.Action("Edit", "User", new { Id = Model.Id } )'" />
+    
     <input type="button" value="Back to List" class="btn btn-outline-secondary" onclick="location.href='@Url.Action("Index", "User" )'" />
 </div>
 

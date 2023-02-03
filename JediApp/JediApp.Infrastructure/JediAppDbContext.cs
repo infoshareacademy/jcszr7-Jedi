@@ -86,7 +86,7 @@ public class JediAppDbContext : IdentityDbContext<User>
                 .HasOne<User>(s => s.User)
                 .WithOne(ta => ta.Wallet)
                 .HasForeignKey<Wallet>(u => u.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
         }
 
         builder.Entity<Currency>(entity =>

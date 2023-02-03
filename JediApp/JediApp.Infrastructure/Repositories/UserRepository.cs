@@ -30,7 +30,7 @@ namespace JediApp.Database.Repositories
         {
             _jediAppDb.Remove(user);
 
-            _jediAppDb.SaveChangesAsync();
+            _jediAppDb.SaveChanges();
         }
 
         public void UpdateUser(User user)
