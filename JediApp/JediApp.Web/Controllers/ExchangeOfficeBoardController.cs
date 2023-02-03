@@ -195,9 +195,13 @@ namespace JediApp.Web.Controllers
             {
                 try
                 {
-                    currency.BuyAt = nbpCurrencies.Where(nc => nc.ShortName.ToLower().Equals(currency.ShortName.ToLower())).FirstOrDefault().BuyAt;
-                    currency.SellAt = nbpCurrencies.Where(nc => nc.ShortName.ToLower().Equals(currency.ShortName.ToLower())).FirstOrDefault().SellAt;
-                    _exchangeOfficeBoardService.UpdateCurrency(currency.Id, currency);
+                    if (!currency.ShortName.ToLower().Equals("pln"))
+                    {
+                        currency.BuyAt = nbpCurrencies.Where(nc => nc.ShortName.ToLower().Equals(currency.ShortName.ToLower())).FirstOrDefault().BuyAt;
+                        currency.SellAt = nbpCurrencies.Where(nc => nc.ShortName.ToLower().Equals(currency.ShortName.ToLower())).FirstOrDefault().SellAt;
+                        _exchangeOfficeBoardService.UpdateCurrency(currency.Id, currency);
+                    }
+
                 }
                 catch
                 {

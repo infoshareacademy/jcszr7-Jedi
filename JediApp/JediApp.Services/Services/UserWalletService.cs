@@ -19,6 +19,15 @@ namespace JediApp.Services.Services
 
             var currencyAmount = wallet.WalletPositions.Where(a => a.Currency.Id == currencyId).FirstOrDefault();
 
+            if (currencyAmount is null)
+            {
+                currencyAmount = new WalletPosition
+                {
+                    CurrencyId = currencyId,
+                    CurrencyAmount = 0
+                };
+            }
+
             return currencyAmount;
         }
 
