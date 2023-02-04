@@ -7,6 +7,8 @@ using JediApp.Database.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using JediApp.Services;
 using JediApp.Database.Interface;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using System.Configuration;
 
 //var builder = WebApplication.CreateBuilder(args);
 //var connectionString = builder.Configuration.GetConnectionString("JediAppDbContextConnection") ?? throw new InvalidOperationException("Connection string 'JediAppDbContextConnection' not found.");
@@ -32,7 +34,7 @@ builder.Services.AddDbContext<JediAppDbContext>(options =>
 //builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
 //   .AddEntityFrameworkStores<JediAppDbContext>();
 
-builder.Services.AddIdentity<User, IdentityRole>()
+builder.Services.AddIdentity<User, IdentityRole>(options => options.SignIn.RequireConfirmedEmail = true)
             .AddEntityFrameworkStores<JediAppDbContext>()
             .AddDefaultTokenProviders()
             .AddDefaultUI();
@@ -60,7 +62,15 @@ builder.Services.AddTransient<INbpJsonService, NbpJsonService>();
 builder.Services.AddTransient<ITransactionHistoryService, TransactionHistoryService>();
 builder.Services.AddTransient<IExchangeOfficeService, ExchangeOfficeService>();
 builder.Services.AddTransient<IUserWalletService, UserWalletService>();
-
+builder.Services.AddTransient<IEmailSender, EmailSender>(i =>
+                new EmailSender(
+                    builder.Configuration.GetSection("EmailSender:Host").Value,
+                    Convert.ToInt32(builder.Configuration.GetSection("EmailSender:Port").Value),
+                    Convert.ToBoolean(builder.Configuration.GetSection("EmailSender:EnableSSL").Value),
+                    builder.Configuration.GetSection("EmailSender:UserName").Value,
+                    builder.Configuration.GetSection("EmailSender:Password").Value
+                )
+            );
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
