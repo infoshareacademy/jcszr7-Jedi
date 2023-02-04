@@ -6,7 +6,7 @@
 <h5>
     Your current saldo:
     <b>
-        @(ViewData["currentSaldo"])
+        @(((decimal)ViewData["currentSaldo"]).ToString("0.00"))
         @(ViewData["currenncy"])
     </b>
 </h5>

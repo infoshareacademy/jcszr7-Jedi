@@ -19,7 +19,7 @@
                         </div>
                         <div class="hero-form__combined-inputs">
                             <div class="hero-form__text-input-holder">
-                                <input asp-for="Amount" id="txtDeposit" type="text" pattern="[0-9]+" value="@String.Format("{0:0.##}", Model.Amount)" aria-label="Deposit" class="bem-text-input in-hero-form-big-enter-amount w-input" maxlength="7">
+                                <input asp-for="Amount" id="txtDeposit" type="text" pattern="[0-9,]+" value="@String.Format("{0:0.##}", Model.Amount)" aria-label="Deposit" class="bem-text-input in-hero-form-big-enter-amount w-input" maxlength="7">
                             </div>
                             <div class="hero-form__dropdown-holder clearfix">
                                 <div class="bem-select-dropdown ">
