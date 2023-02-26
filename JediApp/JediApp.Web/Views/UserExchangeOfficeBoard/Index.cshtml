@@ -6,33 +6,33 @@
 
 <h4>Exchange Office Board</h4>
 
-<div class=" pb-3">
+<div class="hero-form pb-3">
 
     @*<table class="table table-bordered">*@
-        <table cellpadding="5" cellspacing="0" style="border: 1px solid #ccc;font-size: 10pt;">
+    <table class="table table-bordered table-hover">
         <thead>
             <tr>
-                <th style="background-color: #B8DBFD;border: 1px solid #ccc">Currency name</th>
-                <th style="background-color: #B8DBFD;border: 1px solid #ccc">Symbol</th>
-                <th style="background-color: #B8DBFD;border: 1px solid #ccc">Country</th>
-                <th style="background-color: #B8DBFD;border: 1px solid #ccc">Buy AT</th>
-                <th style="background-color: #B8DBFD;border: 1px solid #ccc">Sell AT</th>
-                <th style="background-color: #B8DBFD;border: 1px solid #ccc">Options</th>
+                <th >Currency name</th>
+                <th >Symbol</th>
+                <th >Country</th>
+                <th >Buy AT</th>
+                <th >Sell AT</th>
+                <th >Options</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
                 <tr>
-                        <td style="width:150px;border: 1px solid #ccc">@item.Name</td>
-                        <td style="width:120px;border: 1px solid #ccc">@item.ShortName</td>
-                            <td style="width:120px;border: 1px solid #ccc">@item.Country</td>
-                        <td style="width:120px;border: 1px solid #ccc">@item.BuyAt</td>
-                        <td style="width:120px;border: 1px solid #ccc">@item.SellAt</td>
+                        <td >@item.Name</td>
+                        <td >@item.ShortName</td>
+                            <td >@item.Country</td>
+                        <td >@item.BuyAt</td>
+                        <td >@item.SellAt</td>
                     <td>
-                            <input type="button" value="Details / Chart" class="btn btn-info btn-sm align-text-bottom" onclick="location.href='@Url.Action("Details", "UserExchangeOfficeBoard",new { Id = item.Id } )'" />
-                            <input type="button" value="Buy" class="btn btn-info btn-sm align-text-bottom" onclick="location.href='@Url.Action("Buy", "UserExchangeOfficeBoard",new { Id = item.Id } )'" />
-                            <input type="button" value="Sell" class="btn btn-info btn-sm align-text-bottom" onclick="location.href='@Url.Action("Sell", "UserExchangeOfficeBoard",new { Id = item.Id } )'" />
+                            <input type="button" value="Details / Chart" class="btn btn-outline-secondary btn-sm align-text-bottom" onclick="location.href='@Url.Action("Details", "UserExchangeOfficeBoard",new { Id = item.Id } )'" />
+                            <input type="button" value="Buy" class="btn btn-outline-secondary btn-sm align-text-bottom" onclick="location.href='@Url.Action("Buy", "UserExchangeOfficeBoard",new { Id = item.Id } )'" />
+                        <input type="button" value="Sell" class="btn btn-outline-secondary btn-sm align-text-bottom" onclick="location.href='@Url.Action("Sell", "UserExchangeOfficeBoard",new { Id = item.Id } )'" />
                     </td>
                 </tr>
             }

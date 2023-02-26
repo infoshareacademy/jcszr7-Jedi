@@ -386,7 +386,13 @@
     padding-top: 5px;
     position: relative;
     -webkit-transition: height .4s ease;
-    transition: height .4s ease
+    transition: height .4s ease; 
+
+    /*rozszerzenie klasy hero-form*/
+
+    margin: 30px auto; 
+    padding: 35px 10px; 
+    height: auto;
 }
 
 .hero-form__connection-error-message.is-hidden {
