@@ -18,9 +18,13 @@ body {
   color: #444444;
 }
 
+/*zmiany szblonu tabel */
+
+
+
 a {
-  color: #4154f1;
-  text-decoration: none;
+    color: #4154f1;
+    text-decoration: none;
 }
 
 a:hover {
@@ -1258,3 +1262,4 @@ h6 {
   font-size: 13px;
   color: #012970;
 }
+

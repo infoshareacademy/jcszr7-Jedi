@@ -27,19 +27,20 @@
     </form>
 </p>
 
-<div class=" pb-3">
+<div class="hero-form pb-3">
 
     @*<table class="table table-bordered">*@
-        <table cellpadding="5" cellspacing="0" style="border: 1px solid #ccc;font-size: 10pt;">
+        @*<table cellpadding="5" cellspacing="0" style="border: 1px solid #ccc;font-size: 10pt;">*@
+    <table class="table table-bordered table-hover">
         <thead>
             <tr>
                 @*<th>ID</th>*@
-                <th style="background-color: #B8DBFD;border: 1px solid #ccc">Currency name</th>
-                <th style="background-color: #B8DBFD;border: 1px solid #ccc">Symbol</th>
-                <th style="background-color: #B8DBFD;border: 1px solid #ccc">Country</th>
-                <th style="background-color: #B8DBFD;border: 1px solid #ccc">Buy AT</th>
-                <th style="background-color: #B8DBFD;border: 1px solid #ccc">Sell AT</th>
-                <th style="background-color: #B8DBFD;border: 1px solid #ccc">Options</th>
+                <th >Currency name</th>
+                <th >Symbol</th>
+                <th >Country</th>
+                <th >Buy AT</th>
+                <th >Sell AT</th>
+                <th >Options</th>
             </tr>
         </thead>
         <tbody>
@@ -47,19 +48,19 @@
             {
                 <tr>
                     @*<td>@item.Id</td>*@
-                            <td style="width:150px;border: 1px solid #ccc">@item.Name</td>
-                            <td style="width:120px;border: 1px solid #ccc">@item.ShortName</td>
-                            <td style="width:120px;border: 1px solid #ccc">@item.Country</td>
-                            <td style="width:120px;border: 1px solid #ccc">@item.BuyAt</td>
-                            <td style="width:120px;border: 1px solid #ccc">@item.SellAt</td>
-                            <td style="border: 1px solid #ccc">
+                            <td >@item.Name</td>
+                            <td >@item.ShortName</td>
+                            <td >@item.Country</td>
+                            <td >@item.BuyAt</td>
+                            <td >@item.SellAt</td>
+                            <td >
                         @*<a asp-controller="ExchangeOfficeBoard" asp-action="Edit" asp-route-id="@item.Id" asp-route-someName="some value">Edit</a>*@
                         @*              <a asp-controller="ExchangeOfficeBoard" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
                     <a asp-controller="ExchangeOfficeBoard" asp-action="Details" asp-route-id="@item.Id">Details</a>
                     <a asp-controller="ExchangeOfficeBoard" asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
-                            <input type="button" value="Details" class="btn btn-secondary  btn-sm align-text-bottom" onclick="location.href='@Url.Action("Details", "ExchangeOfficeBoard",new { Id = item.Id } )'" />
-                            <input type="button" value="Edit" class="btn btn-warning  btn-sm align-text-bottom " onclick="location.href='@Url.Action("Edit", "ExchangeOfficeBoard", new { Id = item.Id } )'" />
-                            <input type="button" value="Delete" class="btn btn-danger  btn-sm align-text-bottom" onclick="location.href='@Url.Action("Delete", "ExchangeOfficeBoard",new { Id = item.Id } )'" />
+                        <input type="button" value="Details" class="btn btn-outline-secondary btn-sm align-text-bottom" onclick="location.href='@Url.Action("Details", "ExchangeOfficeBoard",new { Id = item.Id } )'" />
+                            <input type="button" value="Edit" class="btn btn-outline-secondary btn-sm align-text-bottom " onclick="location.href='@Url.Action("Edit", "ExchangeOfficeBoard", new { Id = item.Id } )'" />
+                        <input type="button" value="Delete" class="btn btn-outline-secondary btn-sm align-text-bottom" onclick="location.href='@Url.Action("Delete", "ExchangeOfficeBoard",new { Id = item.Id } )'" />
                     </td>
                     @*            <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |

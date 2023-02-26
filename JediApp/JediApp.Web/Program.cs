@@ -10,9 +10,6 @@ using JediApp.Database.Interface;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using System.Configuration;
 
-//var builder = WebApplication.CreateBuilder(args);
-//var connectionString = builder.Configuration.GetConnectionString("JediAppDbContextConnection") ?? throw new InvalidOperationException("Connection string 'JediAppDbContextConnection' not found.");
-
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<JediAppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("JediAppDbContextConnection") ?? throw new InvalidOperationException("Connection string 'JediAppDbContextConnection' not found.")));
