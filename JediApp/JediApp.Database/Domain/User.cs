@@ -13,6 +13,7 @@ namespace JediApp.Database.Domain
         //public ExchangeOffice ExchangeOffice { get; set; }
         public virtual Wallet Wallet { get; set; }
         public ICollection<TransactionHistory> TransactionHistory { get; set; }
+        public ICollection<UserAlarm> UserAlarms { get; set; }
     }
 
 

@@ -1,4 +1,6 @@
-﻿namespace JediApp.Database.Domain
+﻿using System.Collections.Generic;
+
+namespace JediApp.Database.Domain
 {
     public class Currency 
     {

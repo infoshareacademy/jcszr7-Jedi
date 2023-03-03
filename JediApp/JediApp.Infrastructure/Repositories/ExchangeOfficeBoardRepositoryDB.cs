@@ -95,6 +95,8 @@ namespace JediApp.Database.Repositories
                     Country = "Poland",
                     BuyAt = 1,
                     SellAt = 1,
+                    //Fluctuation = "Decrease",
+                    //AlarmValue = 1,
                     ExchangeOfficeBoardId = _jediAppDb.ExchangeOfficeBoards.FirstOrDefault().Id
                 };
                 _jediAppDb.Add(pln);
@@ -327,6 +329,7 @@ namespace JediApp.Database.Repositories
                 currency.Country = currencyToEdit.Country;
                 currency.BuyAt = currencyToEdit.BuyAt;
                 currency.SellAt = currencyToEdit.SellAt;
+                //currency.Fluctuation = currencyToEdit.Fluctuation;
 
                 //_jediAppDb.SaveChangesAsync();
                 _jediAppDb.SaveChanges();

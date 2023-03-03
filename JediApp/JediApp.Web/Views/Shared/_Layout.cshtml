@@ -376,6 +376,12 @@
                                 <span>Transaction History</span>
                             </a>
                         </li>
+                        <li>
+                            <a class="@(ViewData["activePage"] == "UserAlarm" ? "active" : "")" asp-area="" asp-controller="UserAlarm" asp-action="Index">
+                                <i class="bi bi-circle"></i>
+                                <span>User alarms</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
             }

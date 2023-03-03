@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JediApp.Database", "JediApp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JediApp.Web", "JediApp.Web\JediApp.Web.csproj", "{264B6BAE-77FF-4467-BCCF-E718DD6E85FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JediApp.Infrastructure", "JediApp.Infrastructure\JediApp.Infrastructure.csproj", "{52B7D1B4-D3BF-4570-A328-A3CDB1EE6ADF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JediApp.Infrastructure", "JediApp.Infrastructure\JediApp.Infrastructure.csproj", "{52B7D1B4-D3BF-4570-A328-A3CDB1EE6ADF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

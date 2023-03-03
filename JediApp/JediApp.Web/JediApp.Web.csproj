@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\UserSettings\**" />
+    <Content Remove="Views\UserSettings\**" />
+    <EmbeddedResource Remove="Views\UserSettings\**" />
+    <None Remove="Views\UserSettings\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\JediApp.Infrastructure\JediApp.Infrastructure.csproj" />
     <ProjectReference Include="..\JediApp.Services\JediApp.Services.csproj" />
   </ItemGroup>
@@ -18,6 +25,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.14" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.12">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -27,6 +35,7 @@
     <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="6.0.12" />
     <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="6.0.12" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Core" Version="6.0.10" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.10" />
   </ItemGroup>
 
   <ItemGroup>

@@ -21,6 +21,7 @@ public class JediAppDbContext : IdentityDbContext<User>
     public DbSet<ExchangeOfficeBoard> ExchangeOfficeBoards { get; set; }
     public DbSet<MoneyOnStock> MoneyOnStocks { get; set; }
     public DbSet<CurrencyDictionary> CurrencyDictionaries { get; set; }
+    public DbSet<UserAlarm> UserAlarms { get; set; }
 
     public JediAppDbContext()
     {
@@ -86,6 +87,14 @@ public class JediAppDbContext : IdentityDbContext<User>
                 .HasOne<User>(s => s.User)
                 .WithOne(ta => ta.Wallet)
                 .HasForeignKey<Wallet>(u => u.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
+
+        {
+            builder.Entity<UserAlarm>()
+                .HasOne<User>(s => s.User)
+                .WithMany(ta => ta.UserAlarms)
+                .HasForeignKey(u => u.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
 

@@ -9,6 +9,7 @@ using JediApp.Services;
 using JediApp.Database.Interface;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using System.Configuration;
+using JediApp.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<JediAppDbContext>(options =>
@@ -51,6 +52,7 @@ builder.Services.AddTransient<ITransactionHistoryRepository, TransactionHistoryR
 builder.Services.AddTransient<IExchangeOfficeRepository, ExchangeOfficeRepositoryDB>();
 builder.Services.AddTransient<IUserWalletRepository, UserWalletRepository>();
 builder.Services.AddTransient<IAvailableMoneyOnStockRepository, AvailableMoneyOnStockRepository>();
+builder.Services.AddTransient<IUserAlarmsRepository, UserAlarmRepository>();
 
 //register services
 builder.Services.AddTransient<IExchangeOfficeBoardService, ExchangeOfficeBoardService>();
