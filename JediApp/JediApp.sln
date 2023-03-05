@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JediApp.Web", "JediApp.Web\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JediApp.Infrastructure", "JediApp.Infrastructure\JediApp.Infrastructure.csproj", "{52B7D1B4-D3BF-4570-A328-A3CDB1EE6ADF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jedi.Tests", "Jedi.Tests\Jedi.Tests.csproj", "{B4287082-6FA7-4536-AE3E-BA0D1F28475B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{52B7D1B4-D3BF-4570-A328-A3CDB1EE6ADF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52B7D1B4-D3BF-4570-A328-A3CDB1EE6ADF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52B7D1B4-D3BF-4570-A328-A3CDB1EE6ADF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4287082-6FA7-4536-AE3E-BA0D1F28475B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4287082-6FA7-4536-AE3E-BA0D1F28475B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4287082-6FA7-4536-AE3E-BA0D1F28475B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4287082-6FA7-4536-AE3E-BA0D1F28475B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
