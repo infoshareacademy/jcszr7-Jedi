@@ -46,8 +46,19 @@ namespace JediApp.Web.Controllers
 
         public IActionResult Edit(string id)
         {
+            ViewData["currencies"] = _exchangeOfficeBoardService.GetAllCurrencies().Select(a => a.ShortName);
+
             var userAlarm = _userAlarmRepository.GetUserAlarm(id);
             return View(userAlarm);
+        }
+
+        public IActionResult EditConfirmed(UserAlarm userAlarm)
+        {
+            userAlarm.CurrencyName = userAlarm.ShortName;
+
+            _userAlarmRepository.EditUserAlarm(userAlarm);
+
+            return RedirectToAction("Index");
         }
 
         public IActionResult Delete(string id)
