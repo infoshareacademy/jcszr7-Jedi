@@ -61,6 +61,7 @@ builder.Services.AddTransient<INbpJsonService, NbpJsonService>();
 builder.Services.AddTransient<ITransactionHistoryService, TransactionHistoryService>();
 builder.Services.AddTransient<IExchangeOfficeService, ExchangeOfficeService>();
 builder.Services.AddTransient<IUserWalletService, UserWalletService>();
+builder.Services.AddTransient<IUserAlarmsService, UserAlarmsService>();
 builder.Services.AddTransient<IEmailSender, EmailSender>(i =>
                 new EmailSender(
                     builder.Configuration.GetSection("EmailSender:Host").Value,
