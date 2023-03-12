@@ -41,6 +41,8 @@ namespace JediApp.Services.Services
             _userWalletRepository.Deposit(userId, currencyCode, depositAmount, description);
         }
 
+      
+
 
 
 

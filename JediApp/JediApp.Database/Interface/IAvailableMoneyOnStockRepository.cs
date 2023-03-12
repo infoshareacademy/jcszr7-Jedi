@@ -6,6 +6,7 @@ namespace JediApp.Database.Interface
     {
         void AddMoneyToStock(MoneyOnStock moneyOnStock);
         List<MoneyOnStock> GetAvailableMoneyOnStock();
+        string SubtractMoneyFromStock(MoneyOnStock moneyOnStock);
     }
 
 }
