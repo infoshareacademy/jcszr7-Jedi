@@ -1,4 +1,5 @@
 ﻿using JediApp.Database.Domain;
+using JediApp.Database.Interface;
 using JediApp.Database.Repositories;
 using JediApp.Services.Services;
 using Microsoft.AspNetCore.Http;
@@ -11,13 +12,14 @@ namespace JediApp.Web.Controllers
         private readonly IExchangeOfficeBoardService _exchangeOfficeBoardService;
         private readonly INbpJsonService _nbpJsonService;
         private readonly IExchangeOfficeService _exchangeOfficeService;
+        private readonly IUserAlarmsService _userAlarmService;
 
-
-        public ExchangeOfficeBoardController(IExchangeOfficeBoardService exchangeOfficeBoardService, INbpJsonService nbpJsonService, IExchangeOfficeService exchangeOfficeService)
+        public ExchangeOfficeBoardController(IExchangeOfficeBoardService exchangeOfficeBoardService, INbpJsonService nbpJsonService, IExchangeOfficeService exchangeOfficeService, IUserAlarmsService userAlarmService)
         {
             _exchangeOfficeBoardService = exchangeOfficeBoardService;
             _nbpJsonService = nbpJsonService;
             _exchangeOfficeService = exchangeOfficeService;
+            _userAlarmService = userAlarmService;
         }
 
         //public ExchangeOfficeBoardController()
@@ -197,9 +199,13 @@ namespace JediApp.Web.Controllers
                 {
                     if (!currency.ShortName.ToLower().Equals("pln"))
                     {
-                        currency.BuyAt = nbpCurrencies.Where(nc => nc.ShortName.ToLower().Equals(currency.ShortName.ToLower())).FirstOrDefault().BuyAt;
-                        currency.SellAt = nbpCurrencies.Where(nc => nc.ShortName.ToLower().Equals(currency.ShortName.ToLower())).FirstOrDefault().SellAt;
-                        _exchangeOfficeBoardService.UpdateCurrency(currency.Id, currency);
+                        var currencyToUpdate = nbpCurrencies.Where(nc => nc.ShortName.ToLower().Equals(currency.ShortName.ToLower())).FirstOrDefault();
+                        if (currencyToUpdate != null)
+                        {
+                            currency.BuyAt = currencyToUpdate.BuyAt;
+                            currency.SellAt = currencyToUpdate.SellAt;
+                            _exchangeOfficeBoardService.UpdateCurrency(currency.Id, currency);
+                        }
                     }
 
                 }
@@ -210,9 +216,11 @@ namespace JediApp.Web.Controllers
 
             }
 
+            // Execute User Alarm
+
+            _userAlarmService.ExecuteAlarms(currencies);
+
             return RedirectToAction(nameof(Index));
-
-
         }
 
         [HttpPost]

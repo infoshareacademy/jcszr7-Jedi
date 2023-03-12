@@ -1,6 +1,7 @@
 ﻿using JediApp.Database.Domain;
 using JediApp.Database.Interface;
 using JediApp.Web.Areas.Identity.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace JediApp.Infrastructure.Repositories
 {
@@ -41,6 +42,11 @@ namespace JediApp.Infrastructure.Repositories
         {
             var alarmIdGuid = Guid.Parse(alarmId);
             return _jediAppDb.UserAlarms.Where(a => a.Id == alarmIdGuid).SingleOrDefault();
+        }
+
+        public IEnumerable<UserAlarm> GetUserAlarms()
+        {
+            return _jediAppDb.UserAlarms.Include("User");
         }
 
         public IEnumerable<UserAlarm> GetUserAlarms(string userId)
