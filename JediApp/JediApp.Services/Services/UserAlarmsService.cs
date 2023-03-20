@@ -24,7 +24,7 @@ namespace JediApp.Services.Services
             {
                 var currency = currencies.Where(a => a.ShortName == userAlarm.ShortName).FirstOrDefault();
 
-                if (currency.BuyAt <= userAlarm.AlarmBuyAt)
+                if (userAlarm.AlarmBuyAt > 0 && currency.BuyAt <= userAlarm.AlarmBuyAt)
                 {
                     // EXECUTE ALARM
                     EmailContent = EmailContent.Replace("[CURRENCY]", currency.ShortName);
@@ -32,7 +32,7 @@ namespace JediApp.Services.Services
                     _emailSender.SendEmailAsync(userAlarm.User.Email, "Currency Exchange Alarm", EmailContent);
                 }
 
-                if (currency.SellAt >= userAlarm.AlarmSellAt)
+                if (userAlarm.AlarmSellAt > 0 && currency.SellAt >= userAlarm.AlarmSellAt)
                 {
                     // EXECUTE ALARM
                     EmailContent = EmailContent.Replace("[CURRENCY]", currency.ShortName);
