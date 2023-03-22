@@ -25,6 +25,8 @@ namespace JediApp.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
+            ViewData["activePage"] = "User";
+
             var users = await _userRepository.GetAllUsers();
 
             return View(users);

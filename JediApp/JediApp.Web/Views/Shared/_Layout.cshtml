@@ -285,7 +285,7 @@
         <partial name="_LoginPartial" />
     </header><!-- End Header -->
     @{
-        string[] adminPages = new string[] { "AdminUser", "MoneyStock", "AdminExchange", "AdminTransactionHistory", "AdminExchangeOfficeSettings" };
+        string[] adminPages = new string[] { "User", "MoneyStock", "AdminExchange", "AdminTransactionHistory", "AdminReport", "AdminExchangeOfficeSettings" };
         string[] userPages = new string[] { "AccountBalance", "UserDeposit", "UserExchangeOfficeBoard", "UserWithdrawal", "UserTransactionHistory" };
     }
     <!-- ======= Sidebar ======= -->
@@ -307,7 +307,7 @@
                     </a>
                     <ul id="admin-nav" class="nav-content collapse @(adminPages.Contains(ViewData["activePage"]) ? "show" : "")" data-bs-parent="#sidebar-nav" style="">
                         <li>
-                            <a class="@(ViewData["activePage"] == "AdminUser" ? "active" : "")" asp-area="" asp-controller="User" asp-action="Index">
+                                <a class="@(ViewData["activePage"] == "User" ? "active" : "")" asp-area="" asp-controller="User" asp-action="Index">
                                 <i class="bi bi-circle"></i>
                                 <span>Users</span>
                             </a>
@@ -324,12 +324,19 @@
                                 <span>Money Stock</span>
                             </a>
                         </li>
-                        <li>
-                            <a class="@(ViewData["activePage"] == "AdminTransactionHistory" ? "active" : "")" asp-area="" asp-controller="AdminTransactionHistory" asp-action="Index">
-                                <i class="bi bi-circle"></i>
-                                <span>Transaction History</span>
-                            </a>
-                        </li>
+                        
+                            <li>
+                                <a class="@(ViewData["activePage"] == "AdminTransactionHistory" ? "active" : "")" asp-area="" asp-controller="AdminTransactionHistory" asp-action="Index">
+                                    <i class="bi bi-circle"></i>
+                                    <span>Transaction History</span>
+                                </a>
+                            </li>
+                                <li>
+                                    <a class="@(ViewData["activePage"] == "AdminReport" ? "active" : "")" asp-area="" asp-controller="AdminReport" asp-action="Index">
+                                    <i class="bi bi-circle"></i>
+                                        <span>Report</span>
+                                </a>
+                            </li>
                                         <a class="@(ViewData["activePage"] == "AdminExchangeOfficeSettings" ? "active" : "")" asp-area="" asp-controller="AdminExchangeOfficeSettings" asp-action="Index">
                                     <i class="bi bi-circle"></i>
                                         <span>Settings</span>
