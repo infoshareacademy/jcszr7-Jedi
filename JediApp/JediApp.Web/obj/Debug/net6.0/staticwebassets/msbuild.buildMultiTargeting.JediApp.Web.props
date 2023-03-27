@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\JediApp.Web.props" />
+</Project>
