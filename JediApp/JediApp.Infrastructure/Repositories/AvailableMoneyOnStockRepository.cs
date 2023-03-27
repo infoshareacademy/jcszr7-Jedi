@@ -43,12 +43,12 @@ namespace JediApp.Database.Repositories
                 currentMoneyOnStockForCurrency.Value = currentMoneyOnStockForCurrency.Value - moneyOnStock.Value;
                 if (currentMoneyOnStockForCurrency.Value < 0)
                 {
-                    return "Nie ma wystarczającej ilości pieniędzy na koncie.";
+                    return "Not enough money in the account.";
                 }
             }
             else
             {
-                return "Nie znaleziono pieniędzy dla tej waluty.";
+                return "No money found for this currency.";
             }
 
             _jediAppDb.SaveChanges();
