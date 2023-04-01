@@ -39,8 +39,8 @@ namespace JediApp.Web.Controllers
 
 
             model.AnnualTransactions = allUsersHistories.Where(x => x.DateOfTransaction.Year == DateTime.Now.Year).Count();
-            model.MonthlyTransactions = allUsersHistories.Where(x => x.DateOfTransaction.Month == DateTime.Now.Year).Count();
-            model.DailyTTransactions = allUsersHistories.Where(x => x.DateOfTransaction.Day == DateTime.Now.Year).Count();
+            model.MonthlyTransactions = allUsersHistories.Where(x => x.DateOfTransaction.Month == DateTime.Now.Month).Count();
+            model.DailyTTransactions = allUsersHistories.Where(x => x.DateOfTransaction.Day == DateTime.Now.Day).Count();
 
             model.UserAccounts = _jediAppDb.Users.Count();
             model.UserEmailConfirmed = _jediAppDb.Users.Where(x => x.EmailConfirmed).Count();
